@@ -160,30 +160,159 @@
   </div>
 
   <script>
-    const QUESTIONS = [
-      { id: 1, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ABOLISH", choices: [{ text: "create", key: "A" }, { text: "eliminate", key: "B" }, { text: "decorate", key: "C" }, { text: "allow", key: "D" }, { text: "repair", key: "E" }], answer: "B", explanation: "ABOLISH means to end or eliminate completely." },
-      { id: 2, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ADHESIVE", choices: [{ text: "slippery", key: "A" }, { text: "glue", key: "B" }, { text: "scissors", key: "C" }, { text: "fragile", key: "D" }, { text: "heavy", key: "E" }], answer: "B", explanation: "ADHESIVE means sticky, like glue." },
-      { id: 3, type: "synonym", section: "PART 1: SYNONYMS", prompt: "APPROXIMATE", choices: [{ text: "estimated", key: "A" }, { text: "exact", key: "B" }, { text: "expensive", key: "C" }, { text: "distant", key: "D" }, { text: "colorful", key: "E" }], answer: "A", explanation: "APPROXIMATE means estimated or close." },
-      { id: 4, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BLUNT", choices: [{ text: "sharp", key: "A" }, { text: "dull", key: "B" }, { text: "quick", key: "C" }, { text: "polite", key: "D" }, { text: "smooth", key: "E" }], answer: "B", explanation: "BLUNT means dull or not sharp." },
-      { id: 5, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BURROW", choices: [{ text: "fly", key: "A" }, { text: "tunnel", key: "B" }, { text: "climb", key: "C" }, { text: "swim", key: "D" }, { text: "eat", key: "E" }], answer: "B", explanation: "BURROW means underground tunnel." },
-      { id: 6, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CAPABLE", choices: [{ text: "unable", key: "A" }, { text: "clumsy", key: "B" }, { text: "skilled", key: "C" }, { text: "careless", key: "D" }, { text: "slow", key: "E" }], answer: "C", explanation: "CAPABLE means skilled or able." },
-      { id: 7, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONCEAL", choices: [{ text: "display", key: "A" }, { text: "protect", key: "B" }, { text: "hide", key: "C" }, { text: "steal", key: "D" }, { text: "open", key: "E" }], answer: "C", explanation: "CONCEAL means to hide." },
-      { id: 8, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONTRADICTION", choices: [{ text: "agreement", key: "A" }, { text: "opposite", key: "B" }, { text: "summary", key: "C" }, { text: "question", key: "D" }, { text: "promise", key: "E" }], answer: "B", explanation: "CONTRADICTION is an opposite statement." },
-      { id: 9, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DEBATE", choices: [{ text: "argument", key: "A" }, { text: "whisper", key: "B" }, { text: "silence", key: "C" }, { text: "story", key: "D" }, { text: "celebration", key: "E" }], answer: "A", explanation: "DEBATE is a structured argument." },
-      { id: 10, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DECLINE", choices: [{ text: "increase", key: "A" }, { text: "refuse", key: "B" }, { text: "accept", key: "C" }, { text: "build", key: "D" }, { text: "climb", key: "E" }], answer: "B", explanation: "DECLINE means refuse." },
-      { id: 11, type: "analogy", section: "PART 2: ANALOGIES", stem: "LUXURIOUS is to WEALTHY as", choices: [{ text: "shabby is to poor", key: "A" }, { text: "valiant is to cowardly", key: "B" }, { text: "blunt is to sharp", key: "C" }, { text: "plentiful is to empty", key: "D" }, { text: "zany is to serious", key: "E" }], answer: "A", explanation: "LUXURIOUS describes wealthy; SHABBY describes poor." },
-      { id: 12, type: "analogy", section: "PART 2: ANALOGIES", stem: "FABLE is to MORAL as", choices: [{ text: "recipe is to ingredient", key: "A" }, { text: "riddle is to answer", key: "B" }, { text: "joke is to sadness", key: "C" }, { text: "novel is to cover", key: "D" }, { text: "myth is to fact", key: "E" }], answer: "B", explanation: "FABLE has a MORAL; RIDDLE has an ANSWER." },
-      { id: 13, type: "analogy", section: "PART 2: ANALOGIES", stem: "MYTH is to FACT as", choices: [{ text: "fiction is to truth", key: "A" }, { text: "novel is to book", key: "B" }, { text: "legend is to story", key: "C" }, { text: "debate is to speak", key: "D" }, { text: "taunt is to mock", key: "E" }], answer: "A", explanation: "MYTH vs FACT is FICTION vs TRUTH." },
-      { id: 14, type: "analogy", section: "PART 2: ANALOGIES", stem: "TYPEWRITER is to OBSOLETE as", choices: [{ text: "computer is to modern", key: "A" }, { text: "orchard is to fish", key: "B" }, { text: "hazard is to safe", key: "C" }, { text: "burrow is to sky", key: "D" }, { text: "furious is to happy", key: "E" }], answer: "A", explanation: "Typewriter is OBSOLETE; computer is MODERN." },
-      { id: 15, type: "analogy", section: "PART 2: ANALOGIES", stem: "APPLE is to ORCHARD as", choices: [{ text: "grape is to vineyard", key: "A" }, { text: "route is to car", key: "B" }, { text: "novel is to shelf", key: "C" }, { text: "kin is to friend", key: "D" }, { text: "hazard is to caution", key: "E" }], answer: "A", explanation: "Apples grow in an ORCHARD; grapes in a VINEYARD." }
+    const SSAT_CORE_DICTIONARY = [
+      ["ABOLISH", "eliminate", ["create", "decorate", "allow", "repair", "protect", "continue", "invite", "honor"], "to permanently eliminate or end"],
+      ["ADHESIVE", "glue", ["slippery", "scissors", "fragile", "heavy", "liquid", "fabric", "paint", "paper"], "a sticky substance like glue"],
+      ["APPROXIMATE", "estimated", ["exact", "expensive", "distant", "colorful", "measured", "certain", "narrow", "perfect"], "close to exact or estimated"],
+      ["BLUNT", "dull", ["sharp", "quick", "polite", "smooth", "shiny", "clever", "pointy", "sweet"], "having a dull, unsharpened edge"],
+      ["BURROW", "tunnel", ["fly", "climb", "swim", "eat", "nest", "bridge", "tower", "mountain"], "an underground tunnel dug by an animal"],
+      ["CAPABLE", "skilled", ["unable", "clumsy", "careless", "slow", "weak", "timid", "hesitant", "ignorant"], "having the skill or ability to perform well"],
+      ["CONCEAL", "hide", ["display", "protect", "steal", "open", "reveal", "explain", "exhibit", "uncover"], "to hide or keep out of sight"],
+      ["CONTRADICTION", "opposite", ["agreement", "summary", "question", "promise", "harmony", "evidence", "rule", "story"], "an opposite or conflicting statement"],
+      ["DEBATE", "argument", ["whisper", "silence", "story", "celebration", "peace", "lecture", "rumor", "song"], "a formal discussion or structured argument"],
+      ["DECLINE", "refuse", ["increase", "accept", "build", "climb", "welcome", "admire", "gather", "strengthen"], "to turn down or refuse politely"],
+      ["DETRIMENTAL", "harmful", ["helpful", "speedy", "pleasant", "generous", "safe", "valuable", "friendly", "cheerful"], "causing injury, damage, or harm"],
+      ["ENVY", "jealousy", ["sympathy", "kindness", "joy", "fear", "love", "gratitude", "pity", "generosity"], "feeling jealous of someone else's traits"],
+      ["EVACUATE", "vacate", ["enter", "gather", "rebuild", "protect", "invade", "settle", "remain", "crowd"], "to leave or vacate a dangerous area"],
+      ["FRAGILE", "delicate", ["sturdy", "tough", "flexible", "heavy", "solid", "durable", "unbreakable", "strong"], "delicate and easily broken"],
+      ["FURIOUS", "enraged", ["calm", "cheerful", "tired", "curious", "peaceful", "delighted", "relaxed", "gentle"], "violently angry or enraged"],
+      ["GENEROUS", "giving", ["greedy", "selfish", "lazy", "nervous", "stingy", "cruel", "harsh", "jealous"], "willing to give and share unselfishly"],
+      ["GUARDIAN", "protector", ["enemy", "stranger", "visitor", "servant", "attacker", "intruder", "traitor", "rival"], "a defender, protector, or keeper"],
+      ["HARDSHIP", "adversity", ["luxury", "pleasure", "fortune", "reward", "comfort", "ease", "prosperity", "joy"], "severe suffering, difficulty, or adversity"],
+      ["HAZARD", "peril", ["safety", "shelter", "prize", "comfort", "protection", "security", "cure", "haven"], "a source of danger or peril"],
+      ["IDEALISM", "noble beliefs", ["cynicism", "doubt", "fear", "anger", "greed", "cruelty", "envy", "confusion"], "the pursuit of noble principles and ideals"],
+      ["ILLUMINATE", "brighten", ["darken", "extinguish", "conceal", "shatter", "cloud", "dim", "hide", "bury"], "to light up or brighten"],
+      ["JAGGED", "spiky", ["smooth", "round", "flat", "soft", "straight", "curved", "polished", "level"], "having sharp, irregular, spiky points"],
+      ["JUBILATION", "delight", ["misery", "boredom", "worry", "confusion", "grief", "sadness", "despair", "anger"], "a state of immense joy, triumph, and delight"],
+      ["KIN", "relatives", ["strangers", "rivals", "neighbors", "villains", "enemies", "teachers", "tourists", "passersby"], "one's family members and relatives"],
+      ["LIBERATE", "free", ["imprison", "punish", "capture", "restrain", "trap", "cage", "bind", "confine"], "to set free from confinement or bondage"],
+      ["LUXURIOUS", "magnificent", ["shabby", "cheap", "poor", "simple", "plain", "broken", "crude", "dull"], "rich, elegant, and magnificent"],
+      ["MORAL", "ethical", ["dishonest", "harmful", "selfish", "foolish", "corrupt", "unjust", "wicked", "cruel"], "ethical and following righteous principles"],
+      ["MYTH", "fable", ["fact", "proof", "history", "truth", "reality", "science", "evidence", "document"], "a legendary story or imaginary fable"],
+      ["NONCHALANT", "unconcerned", ["worried", "anxious", "excited", "panicked", "nervous", "agitated", "furious", "eager"], "calm, relaxed, and unconcerned"],
+      ["NOVEL", "original", ["common", "ancient", "boring", "copied", "typical", "standard", "familiar", "ordinary"], "refreshingly new and original"],
+      ["OBSOLETE", "outdated", ["modern", "useful", "popular", "current", "fresh", "fashionable", "innovative", "advanced"], "no longer in use; outdated"],
+      ["ORCHARD", "grove", ["desert", "swamp", "ocean", "factory", "city", "meadow", "prairie", "jungle"], "a piece of land planted with fruit trees"],
+      ["PETRIFY", "terrify", ["soothe", "comfort", "cheer", "encourage", "delight", "calm", "entertain", "amuse"], "to paralyze with fear or terrify"],
+      ["PLENTIFUL", "abundant", ["scarce", "empty", "meager", "tiny", "rare", "lacking", "limited", "barren"], "existing in great amounts; abundant"],
+      ["PROTAGONIST", "hero", ["villain", "enemy", "monster", "critic", "stranger", "reader", "author", "spectator"], "the main character or hero of a story"],
+      ["QUEASY", "nauseated", ["healthy", "energetic", "relaxed", "joyful", "strong", "active", "vigorous", "cheerful"], "feeling sick or nauseated in the stomach"],
+      ["RESTORE", "renew", ["demolish", "ruin", "break", "discard", "spoil", "infect", "harm", "forget"], "to bring back to original condition or renew"],
+      ["REVEAL", "disclose", ["conceal", "hide", "cover", "ignore", "mask", "suppress", "bury", "withhold"], "to make known or disclose"],
+      ["ROUTE", "pathway", ["destination", "vehicle", "obstacle", "delay", "ticket", "station", "passenger", "luggage"], "a pathway or course traveled"],
+      ["SALVAGE", "rescue", ["abandon", "destroy", "ruin", "waste", "sink", "damage", "scatter", "lose"], "to save or rescue property from ruin"],
+      ["SELDOM", "rarely", ["frequently", "always", "daily", "regularly", "often", "endlessly", "constantly", "continually"], "infrequently or rarely"],
+      ["SHABBY", "worn-out", ["luxurious", "new", "elegant", "fancy", "polished", "pristine", "stylish", "immaculate"], "worn-out, faded, or in poor condition"],
+      ["TAUNT", "mock", ["compliment", "praise", "applaud", "comfort", "flatter", "encourage", "cheer", "honor"], "to mock or tease contemptuously"],
+      ["TRAGEDY", "catastrophe", ["celebration", "victory", "blessing", "comedy", "success", "fortune", "triumph", "miracle"], "a disastrous event or catastrophe"],
+      ["UPROOT", "eradicate", ["plant", "water", "nourish", "grow", "cultivate", "protect", "bury", "anchor"], "to pull out by roots or eradicate"],
+      ["VALIANT", "courageous", ["cowardly", "fearful", "weak", "timid", "hesitant", "scared", "shy", "frightened"], "brave and courageous"],
+      ["VIVID", "brilliant", ["dull", "faint", "pale", "dark", "cloudy", "drab", "foggy", "dim"], "producing bright, brilliant, and intense colors"],
+      ["WEARY", "exhausted", ["energetic", "refreshed", "active", "lively", "vibrant", "excited", "rested", "vigorous"], "worn out from fatigue or exhausted"],
+      ["WITHDRAW", "retreat", ["advance", "attack", "enter", "approach", "charge", "join", "pursue", "invade"], "to pull back, remove, or retreat"],
+      ["ZANY", "eccentric", ["serious", "boring", "somber", "strict", "grave", "dull", "formal", "quiet"], "clownish, wacky, or eccentric"],
+      ["ALERT", "watchful", ["sleepy", "careless", "lazy", "blind", "tired", "distracted", "clumsy", "slow"], "watchful and attentive to danger"],
+      ["AMPLE", "sufficient", ["scarce", "tiny", "meager", "narrow", "limited", "short", "empty", "few"], "large, roomy, or sufficient in amount"],
+      ["BARGAIN", "agreement", ["dispute", "loss", "hazard", "theft", "penalty", "argument", "mistake", "debt"], "a favorable deal or agreement"],
+      ["BEWILDER", "confuse", ["clarify", "explain", "guide", "soothe", "comfort", "teach", "enlighten", "inform"], "to deeply confuse or puzzle"],
+      ["CAUTION", "carefulness", ["recklessness", "speed", "anger", "laziness", "courage", "greed", "haste", "pride"], "carefulness in the face of risk"],
+      ["COMMENCE", "begin", ["terminate", "finish", "halt", "pause", "conclude", "delay", "cancel", "stop"], "to start or begin"],
+      ["COURTEOUS", "polite", ["rude", "clumsy", "furious", "harsh", "selfish", "cruel", "mean", "impolite"], "polite, respectful, and mannerly"],
+      ["CUNNING", "crafty", ["naive", "foolish", "clumsy", "honest", "simple", "innocent", "clueless", "dull"], "clever, sly, and crafty"],
+      ["DAZZLING", "splendid", ["dim", "drab", "ugly", "dull", "gloomy", "dark", "faint", "plain"], "extremely bright, splendid, and impressive"],
+      ["DECEIVE", "trick", ["support", "guide", "enlighten", "assist", "trust", "protect", "honor", "befriend"], "to mislead or trick intentionally"],
+      ["DENSE", "thick", ["sparse", "airy", "empty", "thin", "clear", "open", "light", "hollow"], "closely packed or thick"],
+      ["DILIGENT", "hardworking", ["lazy", "careless", "sluggish", "clumsy", "idle", "negligent", "tired", "distracted"], "steady, energetic, and hardworking"],
+      ["DWINDLE", "diminish", ["expand", "multiply", "increase", "grow", "flourish", "thrive", "swell", "rise"], "to shrink, lessen, or diminish"],
+      ["ELEGANT", "graceful", ["clumsy", "shabby", "awkward", "crude", "rough", "plain", "ugly", "cheap"], "graceful and refined in style"],
+      ["EMERGE", "appear", ["disappear", "vanish", "hide", "sink", "conceal", "retreat", "recede", "perish"], "to come into view or appear"],
+      ["ENDURE", "withstand", ["surrender", "collapse", "quit", "falter", "perish", "abandon", "yield", "weaken"], "to hold out against hardship or withstand"],
+      ["FEEBLE", "frail", ["robust", "powerful", "mighty", "energetic", "sturdy", "tough", "healthy", "brave"], "weak, fragile, and frail"],
+      ["FIERCE", "ferocious", ["tame", "gentle", "calm", "timid", "peaceful", "docile", "friendly", "quiet"], "savage, ferocious, and intense"],
+      ["FORBID", "prohibit", ["allow", "encourage", "permit", "authorize", "welcome", "invite", "suggest", "praise"], "to order not to do something; prohibit"],
+      ["GAUNT", "haggard", ["plump", "hefty", "stout", "cheerful", "robust", "healthy", "energetic", "bright"], "lean, bony, and haggard"],
+      ["GLEAM", "shine", ["fade", "darken", "hide", "tarnish", "dim", "sink", "smudge", "shadow"], "to shine with a flash of light"],
+      ["GRIEF", "sorrow", ["joy", "jubilation", "delight", "laughter", "cheer", "fortune", "victory", "triumph"], "deep distress and sorrow"],
+      ["HARSH", "severe", ["gentle", "mild", "pleasant", "kind", "soft", "sweet", "lenient", "calm"], "rough, severe, or strict"],
+      ["HAUGHTY", "arrogant", ["humble", "modest", "polite", "friendly", "timid", "meek", "respectful", "shy"], "blatantly proud and arrogant"],
+      ["HURTLE", "rush", ["crawl", "linger", "saunter", "pause", "halt", "creep", "drift", "stroll"], "to rush with great speed"],
+      ["IGNITE", "kindle", ["extinguish", "douse", "smother", "quench", "cool", "dampen", "freeze", "darken"], "to set on fire or kindle"],
+      ["IMPARTIAL", "unbiased", ["prejudiced", "unfair", "biased", "partisan", "hostile", "corrupt", "favoring", "unequal"], "unbiased, just, and fair"],
+      ["IMPULSIVE", "hasty", ["cautious", "careful", "deliberate", "thoughtful", "planned", "patient", "slow", "prudent"], "acting without thinking; hasty"]
     ];
 
+    function generateSSATPool() {
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      const pool = [];
+
+      SSAT_CORE_DICTIONARY.forEach((entry) => {
+        const [word, correctSyn, distractors, meaning] = entry;
+        for (let variant = 0; variant < 8; variant++) {
+          const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 4);
+          const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
+          const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
+          const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
+
+          pool.push({
+            id: pool.length + 1,
+            type: "synonym",
+            section: "PART 1: SYNONYMS",
+            prompt: word,
+            choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
+            answer: correctLetter,
+            explanation: `${word} means ${meaning}. Therefore, ${correctSyn.toUpperCase()} is the correct synonym.`
+          });
+        }
+      });
+
+      for (let aIdx = 0; aIdx < 600; aIdx++) {
+        const e1 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
+        const e2 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
+        const e3 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
+        const e4 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
+        const e5 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
+
+        const stem = `${e1[0]} is to ${e1[1].toUpperCase()} as`;
+        const target = `${e2[0]} is to ${e2[1]}`;
+        const d1 = `${e3[0]} is to ${e3[2][0]}`;
+        const d2 = `${e4[0]} is to ${e4[2][1]}`;
+        const d3 = `${e5[0]} is to ${e5[2][2]}`;
+        const d4 = `${e1[0]} is to ${e1[2][0]}`;
+
+        const rawChoices = [
+          { text: target, correct: true },
+          { text: d1, correct: false },
+          { text: d2, correct: false },
+          { text: d3, correct: false },
+          { text: d4, correct: false }
+        ];
+        const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
+        const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
+
+        pool.push({
+          id: pool.length + 1,
+          type: "analogy",
+          section: "PART 2: ANALOGIES",
+          stem: stem,
+          choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
+          answer: correctLetter,
+          explanation: `Bridge: ${e1[0]} means ${e1[1]}. Similarly, ${e2[0]} means ${e2[1]}.`
+        });
+      }
+
+      return pool;
+    }
+
+    let QUESTIONS = [];
     let current = 0;
     let answers = [];
     let timeLeft = 1800;
     let timer = null;
 
     function startTest() {
+      const fullPool = generateSSATPool();
+      QUESTIONS = [...fullPool].sort(() => 0.5 - Math.random()).slice(0, 50);
+
       answers = new Array(QUESTIONS.length).fill(null);
       current = 0;
       timeLeft = 1800;

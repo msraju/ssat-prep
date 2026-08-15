@@ -160,30 +160,114 @@
   </div>
 
   <script>
-    const QUESTIONS = [
-      { id: 1, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ABRUPT", choices: [{ text: "sudden", key: "A" }, { text: "gentle", key: "B" }, { text: "polite", key: "C" }, { text: "delayed", key: "D" }], answer: "A", explanation: "ABRUPT means sudden and unexpected." },
-      { id: 2, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ADAPT", choices: [{ text: "reject", key: "A" }, { text: "adjust", key: "B" }, { text: "destroy", key: "C" }, { text: "copy", key: "D" }], answer: "B", explanation: "ADAPT means to adjust to new conditions." },
-      { id: 3, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ANXIOUS", choices: [{ text: "relaxed", key: "A" }, { text: "nervous", key: "B" }, { text: "furious", key: "C" }, { text: "cheerful", key: "D" }], answer: "B", explanation: "ANXIOUS means nervous or worried." },
-      { id: 4, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BARREN", choices: [{ text: "fruitful", key: "A" }, { text: "lifeless", key: "B" }, { text: "crowded", key: "C" }, { text: "damp", key: "D" }], answer: "B", explanation: "BARREN land is lifeless and sterile." },
-      { id: 5, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BRAGGART", choices: [{ text: "show-off", key: "A" }, { text: "listener", key: "B" }, { text: "scholar", key: "C" }, { text: "servant", key: "D" }], answer: "A", explanation: "A BRAGGART is a show-off." },
-      { id: 6, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CAPRICIOUS", choices: [{ text: "predictable", key: "A" }, { text: "fickle", key: "B" }, { text: "stubborn", key: "C" }, { text: "cautious", key: "D" }], answer: "B", explanation: "CAPRICIOUS means fickle and impulsive." },
-      { id: 7, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONCISE", choices: [{ text: "lengthy", key: "A" }, { text: "brief", key: "B" }, { text: "confusing", key: "C" }, { text: "loud", key: "D" }], answer: "B", explanation: "CONCISE means brief and to the point." },
-      { id: 8, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONTROVERSIAL", choices: [{ text: "undisputed", key: "A" }, { text: "debatable", key: "B" }, { text: "peaceful", key: "C" }, { text: "pleasant", key: "D" }], answer: "B", explanation: "CONTROVERSIAL means debatable." },
-      { id: 9, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DRASTIC", choices: [{ text: "extreme", key: "A" }, { text: "mild", key: "B" }, { text: "gradual", key: "C" }, { text: "fragile", key: "D" }], answer: "A", explanation: "DRASTIC means extreme or severe." },
-      { id: 10, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DURATION", choices: [{ text: "distance", key: "A" }, { text: "lifespan", key: "B" }, { text: "weight", key: "C" }, { text: "speed", key: "D" }], answer: "B", explanation: "DURATION refers to the lifespan/length of time." },
-      { id: 11, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The fisherman used shiny, colorful bait to _______ trout into his net.", choices: [{ text: "repel", key: "A" }, { text: "lure", key: "B" }, { text: "frighten", key: "C" }, { text: "warn", key: "D" }], answer: "B", explanation: "To LURE means to attract." },
-      { id: 12, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Because the travelers had only a _______ supply of fresh water left, they were forced to ration every sip.", choices: [{ text: "meager", key: "A" }, { text: "plentiful", key: "B" }, { text: "luxurious", key: "C" }, { text: "vibrant", key: "D" }], answer: "A", explanation: "MEAGER means small and insufficient." },
-      { id: 13, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The clever parrot was able to _______ the sound of the ringing telephone with astonishing accuracy.", choices: [{ text: "omit", key: "A" }, { text: "mimic", key: "B" }, { text: "destroy", key: "C" }, { text: "avoid", key: "D" }], answer: "B", explanation: "To MIMIC is to imitate." },
-      { id: 14, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The bandit was _______ throughout the region for his daring stagecoach robberies.", choices: [{ text: "unknown", key: "A" }, { text: "notorious", key: "B" }, { text: "admired", key: "C" }, { text: "fragile", key: "D" }], answer: "B", explanation: "NOTORIOUS means famous for bad deeds." },
-      { id: 15, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Despite everyone begging him to compromise, the _______ donkey refused to take a single step forward.", choices: [{ text: "jovial", key: "A" }, { text: "obstinate", key: "B" }, { text: "adaptable", key: "C" }, { text: "weary", key: "D" }], answer: "B", explanation: "OBSTINATE means stubborn." }
+    const ISEE_CORE_DICTIONARY = [
+      ["ABRUPT", "sudden", ["gentle", "polite", "delayed", "gradual", "smooth", "patient"], "happening suddenly and without warning"],
+      ["ADAPT", "adjust", ["reject", "destroy", "copy", "refuse", "halt", "freeze"], "to adjust to new conditions"],
+      ["ANXIOUS", "nervous", ["relaxed", "furious", "cheerful", "calm", "confident", "composed"], "feeling worried, uneasy, or nervous"],
+      ["BARREN", "lifeless", ["fruitful", "crowded", "damp", "lush", "fertile", "vibrant"], "empty, sterile, or lifeless"],
+      ["BRAGGART", "show-off", ["listener", "scholar", "servant", "humble person", "modest student"], "a person who boasts or shows off"],
+      ["CAPRICIOUS", "fickle", ["predictable", "stubborn", "cautious", "steady", "reliable"], "impulsive, erratic, or fickle"],
+      ["CONCISE", "brief", ["lengthy", "confusing", "loud", "wordy", "rambling"], "giving much info in few, brief words"],
+      ["CONTROVERSIAL", "debatable", ["undisputed", "peaceful", "pleasant", "unquestioned", "accepted"], "debatable and causing dispute"],
+      ["DRASTIC", "extreme", ["mild", "gradual", "fragile", "gentle", "moderate"], "radical, severe, or extreme"],
+      ["DURATION", "lifespan", ["distance", "weight", "speed", "height", "area"], "the length of time something lasts"],
+      ["ECONOMIZE", "save", ["spend", "waste", "donate", "squander", "destroy"], "to cut expenses and save resources"],
+      ["ENDEAVOR", "attempt", ["hesitation", "mistake", "surrender", "inaction", "retreat"], "an earnest effort or attempt"],
+      ["FALTER", "stumble", ["steady", "charge", "conquer", "succeed", "advance"], "to hesitate, lose strength, or stumble"],
+      ["FLOURISH", "prosper", ["wither", "collapse", "pause", "decline", "deteriorate"], "to grow vigorously and prosper"],
+      ["GRATIFIED", "pleased", ["annoyed", "exhausted", "frightened", "disappointed", "bitter"], "feeling satisfied and pleased"],
+      ["GULLIBLE", "easily tricked", ["skeptical", "observant", "intelligent", "wary", "shrewd"], "easily tricked or naive"],
+      ["HAPHAZARD", "random", ["organized", "punctual", "cautious", "systematic", "methodical"], "random and lacking organization"],
+      ["HOMELY", "plain", ["glamorous", "majestic", "expensive", "gorgeous", "fancy"], "simple, unadorned, or plain"],
+      ["INCIDENT", "event", ["planning", "silence", "theory", "delay", "routine"], "an individual event or occurrence"],
+      ["INUNDATE", "overwhelm", ["drain", "uncover", "ignite", "dry", "clear"], "to flood or overwhelm with things"],
+      ["IRATE", "furious", ["cheerful", "calm", "curious", "peaceful", "friendly"], "extremely angry or furious"],
+      ["JOVIAL", "merry", ["gloomy", "strict", "timid", "somber", "miserable"], "cheerful, friendly, and merry"],
+      ["KEEN", "sharp", ["blunt", "careless", "lazy", "dull", "obtuse"], "sharp in intellect or perception"],
+      ["KNACK", "talent", ["weakness", "accident", "penalty", "inability", "clumsiness"], "a special skill or talent"],
+      ["LOFTY", "towering", ["modest", "narrow", "deep", "low", "humble"], "towering, majestic, or high"]
     ];
 
+    const ISEE_SENTENCE_FRAMES = [
+      { frame: "The fisherman used colorful bait to _______ trout into his net.", word: "lure", options: ["repel", "frighten", "warn"], exp: "To LURE means to attract or tempt." },
+      { frame: "Because the hikers had only a _______ supply of water left, they rationed every drop.", word: "meager", options: ["plentiful", "luxurious", "vibrant"], exp: "MEAGER means small in quantity or insufficient." },
+      { frame: "The clever parrot was able to _______ the telephone ring with astonishing accuracy.", word: "mimic", options: ["omit", "destroy", "avoid"], exp: "To MIMIC is to imitate sounds." },
+      { frame: "The politician gave a _______ answer so as not to offend either side of the debate.", word: "noncommittal", options: ["decisive", "furious", "braggart"], exp: "NONCOMMITTAL means avoiding a clear stance." },
+      { frame: "The outlaw was _______ across the county for his daring bank robberies.", word: "notorious", options: ["unknown", "admired", "fragile"], exp: "NOTORIOUS means widely known for bad deeds." },
+      { frame: "Despite everyone begging him to budge, the _______ mule refused to move forward.", word: "obstinate", options: ["jovial", "adaptable", "weary"], exp: "OBSTINATE means stubborn and unyielding." },
+      { frame: "Maya realized she accidentally _______ an essential paragraph from her essay.", word: "omitted", options: ["praised", "illuminated", "revered"], exp: "To OMIT means to leave out or exclude." },
+      { frame: "After hours of climbing, the mountaineers finally reached the snowy _______.", word: "peak", options: ["base", "burrow", "valley"], exp: "The PEAK is the top summit of a mountain." },
+      { frame: "Getting locked out of his car in a heavy blizzard was a difficult _______ for Alex.", word: "predicament", options: ["benefit", "celebration", "sanctuary"], exp: "A PREDICAMENT is a troublesome situation." },
+      { frame: "You should not simply _______ it will not rain without checking the radar forecast.", word: "presume", options: ["prove", "regret", "prohibit"], exp: "To PRESUME means to take for granted without proof." },
+      { frame: "The young knight embarked on a dangerous _______ to locate the magic crystal.", word: "quest", options: ["duration", "contradiction", "decline"], exp: "A QUEST is an adventurous search." },
+      { frame: "Citizens in the village deeply _______ their honorable elders.", word: "revere", options: ["mock", "taunt", "abandon"], exp: "To REVERE means to hold in deep respect." },
+      { frame: "With thick stone walls and iron gates, the castle was remarkably _______.", word: "robust", options: ["fragile", "shabby", "meager"], exp: "ROBUST means sturdy and strong." },
+      { frame: "The soft lullaby helped _______ the restless infant to sleep.", word: "soothe", options: ["agitate", "petrify", "falter"], exp: "To SOOTHE means to calm or relieve." },
+      { frame: "Marcus remained a _______ companion who never broke a promise.", word: "steadfast", options: ["fickle", "capricious", "noncommittal"], exp: "STEADFAST means loyal and unwavering." },
+      { frame: "The museum exhibited _______ differences in shade that only experts noticed.", word: "subtle", options: ["obvious", "drastic", "blunt"], exp: "SUBTLE means delicate or understated." },
+      { frame: "The detective demanded _______ evidence before making any formal accusations.", word: "tangible", options: ["imaginary", "vague", "doubtful"], exp: "TANGIBLE means concrete and real." },
+      { frame: "With fertile soil and sunlight, the young saplings began to _______.", word: "thrive", options: ["perish", "falter", "decline"], exp: "To THRIVE means to grow vigorously." },
+      { frame: "The teacher quieted the _______ group of students who were yelling.", word: "unruly", options: ["obedient", "quiet", "polite"], exp: "UNRULY means rowdy and disorderly." },
+      { frame: "When the alarm went off, the captain issued an _______ command to evacuate.", word: "urgent", options: ["casual", "sluggish", "obsolete"], exp: "URGENT means needing immediate action." }
+    ];
+
+    function generateISEEPool() {
+      const letters = ['A', 'B', 'C', 'D'];
+      const pool = [];
+
+      ISEE_CORE_DICTIONARY.forEach((entry) => {
+        const [word, correctSyn, distractors, meaning] = entry;
+        for (let variant = 0; variant < 10; variant++) {
+          const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
+          const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
+          const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
+          const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
+
+          pool.push({
+            id: pool.length + 1,
+            type: "synonym",
+            section: "PART 1: SYNONYMS",
+            prompt: word,
+            choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
+            answer: correctLetter,
+            explanation: `${word} means ${meaning}. Hence, ${correctSyn.toUpperCase()} is the correct answer.`
+          });
+        }
+      });
+
+      for (let sIdx = 0; sIdx < 600; sIdx++) {
+        const template = ISEE_SENTENCE_FRAMES[Math.floor(Math.random() * ISEE_SENTENCE_FRAMES.length)];
+        const rawChoices = [
+          { text: template.word, correct: true },
+          ...template.options.slice(0, 3).map(o => ({ text: o, correct: false }))
+        ];
+        const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
+        const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
+
+        pool.push({
+          id: pool.length + 1,
+          type: "sentence",
+          section: "PART 2: SENTENCE COMPLETION",
+          prompt: template.frame,
+          choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
+          answer: correctLetter,
+          explanation: template.exp
+        });
+      }
+
+      return pool;
+    }
+
+    let QUESTIONS = [];
     let current = 0;
     let answers = [];
     let timeLeft = 1800;
     let timer = null;
 
     function startTest() {
+      const fullPool = generateISEEPool();
+      QUESTIONS = [...fullPool].sort(() => 0.5 - Math.random()).slice(0, 50);
+
       answers = new Array(QUESTIONS.length).fill(null);
       current = 0;
       timeLeft = 1800;
