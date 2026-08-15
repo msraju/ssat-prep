@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSAT & ISEE Verbal Quest • 4,000+ Question Adaptive Arena</title>
+  <title>SSAT & ISEE Verbal Exam Quest • Interactive Master Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&family=Bungee&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #3b82f6;
+      --primary-dark: #2563eb;
       --secondary: #8b5cf6;
       --accent: #f59e0b;
       --success: #10b981;
       --danger: #ef4444;
       --bg: #090d16;
-      --card-bg: rgba(30, 41, 59, 0.8);
+      --card-bg: rgba(30, 41, 59, 0.9);
       --card-border: rgba(255, 255, 255, 0.12);
       --text: #f8fafc;
       --text-muted: #94a3b8;
@@ -34,40 +34,21 @@
       position: relative;
     }
 
-    /* Moving Cosmic Background */
+    /* Ambient Cosmic Background */
     .bg-mesh {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: -1;
-      background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.18) 0%, transparent 40%),
-                  radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 45%),
+      background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.22) 0%, transparent 45%),
                   radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
                   #090d16;
       filter: blur(40px);
-      animation: pulseGlow 12s ease-in-out infinite alternate;
-    }
-    @keyframes pulseGlow {
-      0% { transform: scale(1) rotate(0deg); }
-      100% { transform: scale(1.1) rotate(5deg); }
     }
 
-    /* Floating Particles */
-    .floating-orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.6;
-      animation: floatAround 18s linear infinite;
-    }
-    @keyframes floatAround {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-40px) rotate(180deg); }
-      100% { transform: translateY(0px) rotate(360deg); }
-    }
-
-    /* Universal App Bar */
+    /* Universal Header */
     .app-header {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(16px);
       border-bottom: 2px solid var(--card-border);
       padding: 12px 24px;
@@ -95,17 +76,14 @@
       justify-content: center;
       font-size: 1.5rem;
       box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
-      animation: iconSpin 6s ease-in-out infinite;
     }
-    @keyframes iconSpin { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(8deg) scale(1.08); } }
-
     .brand-title {
-      font-family: 'Bungee', cursive, sans-serif;
       font-size: 1.25rem;
+      font-weight: 900;
       background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
     }
     .brand-sub { font-size: 0.8rem; color: #94a3b8; font-weight: 600; }
 
@@ -113,7 +91,7 @@
     .top-stats-bar {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
     .badge-pill {
       background: #1e293b;
@@ -166,24 +144,14 @@
       backdrop-filter: blur(20px);
       border: 2px solid var(--card-border);
       border-radius: 28px;
-      padding: 40px;
+      padding: 36px;
       max-width: 800px;
       margin: 20px auto;
       box-shadow: 0 25px 60px rgba(0,0,0,0.6);
       position: relative;
-      overflow: hidden;
     }
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      top: -50%; left: -50%; width: 200%; height: 200%;
-      background: conic-gradient(from 0deg, transparent, rgba(59, 130, 246, 0.1), transparent 30%);
-      animation: rotateLight 15s linear infinite;
-      z-index: -1;
-    }
-    @keyframes rotateLight { 100% { transform: rotate(360deg); } }
 
-    .hero-head { text-align: center; margin-bottom: 30px; }
+    .hero-head { text-align: center; margin-bottom: 26px; }
     .hero-tag {
       display: inline-flex;
       align-items: center;
@@ -196,30 +164,30 @@
       font-size: 0.85rem;
       font-weight: 800;
       text-transform: uppercase;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .hero-head h2 {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       font-weight: 900;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       background: linear-gradient(135deg, #ffffff, #93c5fd);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .hero-head p { color: #cbd5e1; font-size: 1.1rem; }
+    .hero-head p { color: #cbd5e1; font-size: 1.05rem; }
 
     /* Avatar Picker */
     .avatar-grid {
       display: flex;
       justify-content: center;
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
     .avatar-btn {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
       background: #0f172a;
       border: 2px solid var(--card-border);
       font-size: 1.8rem;
@@ -229,22 +197,22 @@
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .avatar-btn:hover { transform: scale(1.15) rotate(5deg); border-color: #38bdf8; }
+    .avatar-btn:hover { transform: scale(1.15); border-color: #38bdf8; }
     .avatar-btn.selected {
       border-color: #ec4899;
       background: rgba(236, 72, 153, 0.2);
-      transform: scale(1.2);
+      transform: scale(1.18);
       box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
     }
 
-    .form-group { margin-bottom: 26px; }
+    .form-group { margin-bottom: 24px; }
     .form-label {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 800;
       color: #94a3b8;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -254,15 +222,15 @@
       width: 100%;
       background: #0f172a;
       border: 2px solid var(--card-border);
-      padding: 16px 20px;
-      border-radius: 14px;
+      padding: 14px 18px;
+      border-radius: 12px;
       color: #fff;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 600;
       font-family: inherit;
       transition: all 0.2s;
     }
-    .name-input:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
+    .name-input:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
 
     /* Test Arena Picker Cards */
     .arena-grid {
@@ -275,90 +243,86 @@
     .arena-card {
       background: #0f172a;
       border: 3px solid var(--card-border);
-      border-radius: 20px;
-      padding: 22px;
+      border-radius: 18px;
+      padding: 20px;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .arena-card:hover { transform: translateY(-4px) scale(1.02); border-color: #60a5fa; }
+    .arena-card:hover { transform: translateY(-3px); border-color: #60a5fa; }
     .arena-card.selected.ssat-card {
       border-color: #3b82f6;
       background: rgba(37, 99, 235, 0.2);
-      box-shadow: 0 0 30px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 0 25px rgba(37, 99, 235, 0.4);
     }
     .arena-card.selected.isee-card {
       border-color: #a855f7;
       background: rgba(168, 85, 247, 0.2);
-      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
     }
     .arena-badge {
       display: inline-block;
-      padding: 4px 12px;
-      border-radius: 8px;
+      padding: 4px 10px;
+      border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 800;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .badge-blue { background: #2563eb; color: #fff; }
     .badge-purple { background: #7c3aed; color: #fff; }
 
-    .arena-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
-    .arena-card p { font-size: 0.9rem; color: #cbd5e1; }
-    .arena-card ul { padding-left: 18px; margin-top: 10px; font-size: 0.85rem; color: #94a3b8; }
+    .arena-card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+    .arena-card p { font-size: 0.88rem; color: #cbd5e1; }
+    .arena-card ul { padding-left: 18px; margin-top: 8px; font-size: 0.82rem; color: #94a3b8; }
 
     /* Time Speed Grid */
     .speed-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
     }
     .speed-card {
       background: #0f172a;
       border: 2px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px 10px;
+      border-radius: 14px;
+      padding: 14px 8px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .speed-card:hover { border-color: #38bdf8; transform: translateY(-3px); }
+    .speed-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
     .speed-card.selected {
       border-color: #38bdf8;
       background: rgba(56, 189, 248, 0.2);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+      transform: scale(1.04);
     }
-    .speed-icon { font-size: 1.5rem; margin-bottom: 4px; }
-    .speed-time { font-size: 1.3rem; font-weight: 900; color: #fff; }
-    .speed-qs { font-size: 0.82rem; color: #38bdf8; font-weight: 800; margin-top: 2px; }
+    .speed-icon { font-size: 1.3rem; margin-bottom: 2px; }
+    .speed-time { font-size: 1.25rem; font-weight: 900; color: #fff; }
+    .speed-qs { font-size: 0.8rem; color: #38bdf8; font-weight: 800; margin-top: 2px; }
 
     .btn-launch {
       width: 100%;
       background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
-      background-size: 200% 200%;
       color: #fff;
       font-family: 'Outfit', sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 900;
-      padding: 18px 32px;
-      border-radius: 18px;
+      padding: 18px 30px;
+      border-radius: 16px;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
-      transition: all 0.3s;
-      animation: gradientShift 4s ease infinite;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+      transition: all 0.25s;
     }
-    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .btn-launch:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6); }
+    .btn-launch:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 15px 35px rgba(236, 72, 153, 0.6); }
 
     /* ==========================================
-       2. ACTIVE TEST ENGINE (GAMIFIED)
+       2. ACTIVE TEST ENGINE
        ========================================== */
     .quest-layout {
       display: grid;
@@ -372,7 +336,7 @@
       backdrop-filter: blur(16px);
       border: 2px solid var(--card-border);
       border-radius: 24px;
-      padding: 34px;
+      padding: 32px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.5);
     }
 
@@ -384,7 +348,6 @@
       border-radius: 9999px;
       overflow: hidden;
       margin-bottom: 24px;
-      position: relative;
     }
     .progress-fill {
       height: 100%;
@@ -392,22 +355,22 @@
       width: 0%;
       border-radius: 9999px;
       transition: width 0.3s ease;
-      box-shadow: 0 0 12px rgba(236, 72, 153, 0.8);
+      box-shadow: 0 0 10px rgba(236, 72, 153, 0.8);
     }
 
     .q-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
-    .q-title-tag { font-size: 1.25rem; font-weight: 900; color: #38bdf8; }
+    .q-title-tag { font-size: 1.2rem; font-weight: 900; color: #38bdf8; }
     .q-type-badge {
       background: #1e293b;
       border: 1px solid var(--card-border);
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: #c084fc;
     }
@@ -417,28 +380,27 @@
       background: #090d16;
       border: 2px solid var(--card-border);
       border-radius: 18px;
-      padding: 28px;
-      margin-bottom: 26px;
+      padding: 26px;
+      margin-bottom: 24px;
       text-align: center;
-      position: relative;
       box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
     }
     .stem-sub { font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
     .stem-synonym {
-      font-size: 2.6rem;
+      font-size: 2.5rem;
       font-weight: 900;
       color: #fff;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
     }
     .stem-analogy {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: #f8fafc;
     }
     .hl-word { color: #38bdf8; font-weight: 900; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
     .stem-sentence {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: #f8fafc;
       line-height: 1.8;
@@ -446,7 +408,7 @@
     }
     .clue-blank {
       display: inline-block;
-      min-width: 100px;
+      min-width: 90px;
       border-bottom: 3px solid #ec4899;
       color: #ec4899;
       font-weight: 800;
@@ -454,81 +416,71 @@
       margin: 0 4px;
     }
 
-    /* Answer Option Buttons */
+    /* Options */
     .option-list { display: flex; flex-direction: column; gap: 12px; }
     .opt-btn {
       background: #1e293b;
       border: 2px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px 20px;
+      border-radius: 14px;
+      padding: 15px 18px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
     }
     .opt-btn:hover { border-color: #60a5fa; transform: translateX(4px); background: #334155; }
     .opt-btn.selected {
       border-color: #38bdf8;
-      background: rgba(56, 189, 248, 0.2);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+      background: rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
       transform: scale(1.02);
     }
     .opt-letter {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: 2px solid #64748b;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: #94a3b8;
       flex-shrink: 0;
-      transition: all 0.2s;
     }
     .opt-btn.selected .opt-letter {
       background: #38bdf8;
       border-color: #38bdf8;
       color: #090d16;
-      box-shadow: 0 0 10px #38bdf8;
     }
-    .opt-text { font-size: 1.15rem; font-weight: 600; color: #f1f5f9; flex: 1; }
-
-    /* Cross-out (Elimination) Mode */
-    .opt-btn.eliminated {
-      opacity: 0.35;
-      text-decoration: line-through;
-      border-color: #475569;
-    }
+    .opt-text { font-size: 1.1rem; font-weight: 600; color: #f1f5f9; flex: 1; }
 
     .quest-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 30px;
-      padding-top: 20px;
+      margin-top: 28px;
+      padding-top: 18px;
       border-top: 2px solid var(--card-border);
     }
     .game-btn {
       font-family: 'Outfit', sans-serif;
       font-weight: 800;
-      font-size: 1.05rem;
-      padding: 12px 24px;
+      font-size: 1rem;
+      padding: 12px 22px;
       border-radius: 12px;
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.2s;
     }
     .game-btn-outline { background: #0f172a; border: 2px solid var(--card-border); color: #fff; }
-    .game-btn-outline:hover { background: #1e293b; border-color: #64748b; }
-    .game-btn-primary { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: #fff; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4); }
-    .game-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6); }
+    .game-btn-outline:hover { background: #1e293b; }
+    .game-btn-primary { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: #fff; }
+    .game-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(59, 130, 246, 0.5); }
 
     /* Side Quest Palette */
     .side-palette {
@@ -536,7 +488,7 @@
       backdrop-filter: blur(16px);
       border: 2px solid var(--card-border);
       border-radius: 24px;
-      padding: 24px;
+      padding: 22px;
       position: sticky;
       top: 90px;
     }
@@ -544,9 +496,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 800;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .grid-bubbles {
       display: grid;
@@ -554,7 +506,6 @@
       gap: 6px;
       max-height: 320px;
       overflow-y: auto;
-      padding-right: 4px;
     }
     .b-cell {
       background: #0f172a;
@@ -576,20 +527,19 @@
       background: linear-gradient(135deg, #dc2626, #ef4444);
       color: #fff;
       font-family: inherit;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       padding: 14px;
       border-radius: 12px;
       border: none;
       cursor: pointer;
-      margin-top: 18px;
-      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+      margin-top: 16px;
       transition: all 0.2s;
     }
-    .btn-finish-test:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.6); }
+    .btn-finish-test:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5); }
 
     /* ==========================================
-       3. VICTORY & DIAGNOSTIC REPORT SCREEN
+       3. REPORT SCREEN
        ========================================== */
     .victory-card {
       background: var(--card-bg);
@@ -601,11 +551,10 @@
       max-width: 860px;
       margin: 20px auto;
       box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-      position: relative;
     }
     .trophy-badge {
-      width: 160px;
-      height: 160px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       background: linear-gradient(135deg, #10b981, #059669);
       display: flex;
@@ -614,58 +563,59 @@
       justify-content: center;
       margin: 0 auto 20px;
       box-shadow: 0 0 35px rgba(16, 185, 129, 0.5);
-      animation: trophyBounce 1s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    @keyframes trophyBounce { 0% { transform: scale(0.3); } 80% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-    .score-big { font-size: 3.5rem; font-weight: 900; color: #fff; line-height: 1; font-family: 'JetBrains Mono', monospace; }
-    .score-denom { font-size: 0.95rem; color: #a7f3d0; font-weight: 800; }
+    .score-big { font-size: 3.2rem; font-weight: 900; color: #fff; line-height: 1; font-family: 'JetBrains Mono', monospace; }
+    .score-denom { font-size: 0.9rem; color: #a7f3d0; font-weight: 800; }
 
     .matrix-stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 12px;
-      margin: 28px 0;
+      margin: 26px 0;
     }
     .stat-box {
       background: #090d16;
       border: 2px solid var(--card-border);
       padding: 16px;
-      border-radius: 16px;
+      border-radius: 14px;
     }
     .stat-label { font-size: 0.78rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; }
-    .stat-number { font-size: 1.6rem; font-weight: 900; color: #fff; margin-top: 4px; }
+    .stat-number { font-size: 1.5rem; font-weight: 900; color: #fff; margin-top: 4px; }
 
     .review-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 14px;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 12px;
       text-align: left;
-      transition: transform 0.2s;
     }
-    .review-card:hover { transform: translateX(4px); }
-    .review-card.correct { border-left: 8px solid var(--success); }
-    .review-card.incorrect { border-left: 8px solid var(--danger); }
-    .review-card.unanswered { border-left: 8px solid var(--accent); }
+    .review-card.correct { border-left: 6px solid var(--success); }
+    .review-card.incorrect { border-left: 6px solid var(--danger); }
+    .review-card.unanswered { border-left: 6px solid var(--accent); }
 
     .exp-callout {
-      margin-top: 12px;
+      margin-top: 10px;
       background: #090d16;
-      padding: 14px 18px;
-      border-radius: 10px;
-      font-size: 0.95rem;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
       color: #cbd5e1;
-      border-left: 4px solid #38bdf8;
+      border-left: 3px solid #38bdf8;
+    }
+
+    /* Fallback Canvas for Confetti */
+    #confettiCanvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 999;
     }
   </style>
-  <script src="ssat_bank.js"></script>
-  <script src="isee_bank.js"></script>
 </head>
 <body>
 
-  <!-- Ambient Glow -->
+  <canvas id="confettiCanvas"></canvas>
   <div class="bg-mesh"></div>
 
   <!-- Header -->
@@ -674,7 +624,7 @@
       <div class="brand-icon">⚡</div>
       <div>
         <div class="brand-title">VERBAL QUEST</div>
-        <div id="subHeaderBadge" class="brand-sub">SSAT & ISEE 4,000+ Question Arena</div>
+        <div id="subHeaderBadge" class="brand-sub">SSAT & ISEE Verbal Exam Engine</div>
       </div>
     </div>
 
@@ -702,9 +652,9 @@
       <div class="hero-card">
         
         <div class="hero-head">
-          <span class="hero-tag">🌟 Massive 4,000+ Question Engine</span>
+          <span class="hero-tag">🌟 Adaptive Verbal Arena</span>
           <h2>Verbal Exam Quest</h2>
-          <p>Pick your avatar, choose your exam, set your timer, and test your vocabulary skills!</p>
+          <p>Pick your avatar, choose your exam, set your timer, and master vocabulary!</p>
         </div>
 
         <!-- Avatar Selection -->
@@ -723,7 +673,7 @@
         <!-- Student Name -->
         <div class="form-group">
           <div class="form-label">👤 Candidate Name</div>
-          <input type="text" id="studentNameInput" class="name-input" placeholder="Type your name here..." />
+          <input type="text" id="studentNameInput" class="name-input" placeholder="Type candidate name here..." />
         </div>
 
         <!-- Exam Mode Selection -->
@@ -738,7 +688,7 @@
               <ul>
                 <li><strong>5 Options:</strong> Choices A, B, C, D, E</li>
                 <li><strong>Types:</strong> Synonyms & Analogies</li>
-                <li><strong>Bank:</strong> 2,000 Verified Real Questions</li>
+                <li><strong>Format:</strong> Authentic SSAT Format</li>
               </ul>
             </div>
 
@@ -749,7 +699,7 @@
               <ul>
                 <li><strong>4 Options:</strong> Choices A, B, C, D</li>
                 <li><strong>Types:</strong> Synonyms & Sentence Completion</li>
-                <li><strong>Bank:</strong> 2,000 Verified Real Questions</li>
+                <li><strong>Format:</strong> Authentic ISEE Format</li>
               </ul>
             </div>
 
@@ -804,7 +754,6 @@
     <!-- 2. ACTIVE TEST ENGINE SCREEN -->
     <div id="screenTest" class="screen">
       
-      <!-- Top Dynamic Progress -->
       <div class="progress-track">
         <div id="progressFillBar" class="progress-fill"></div>
       </div>
@@ -858,8 +807,8 @@
           <span id="finalScoreDenominator" class="score-denom">/ 50</span>
         </div>
 
-        <h2 id="victoryHeading" style="font-size: 2.3rem; font-weight: 900; margin-bottom: 6px;">Magnificent Victory!</h2>
-        <p id="victoryScaleEstimate" style="color: #cbd5e1; font-size: 1.15rem; margin-bottom: 24px;">Estimated Score: <strong>580–600 / 600 (96th+ Percentile)</strong></p>
+        <h2 id="victoryHeading" style="font-size: 2.2rem; font-weight: 900; margin-bottom: 6px;">Magnificent Victory!</h2>
+        <p id="victoryScaleEstimate" style="color: #cbd5e1; font-size: 1.1rem; margin-bottom: 24px;">Estimated Score: <strong>580–600 / 600 (96th+ Percentile)</strong></p>
 
         <div class="matrix-stats">
           <div class="stat-box">
@@ -887,7 +836,7 @@
 
       </div>
 
-      <h3 style="font-size: 1.6rem; font-weight: 900; margin: 36px 0 18px;">Detailed Answer Keys & Explanations</h3>
+      <h3 style="font-size: 1.5rem; font-weight: 900; margin: 32px 0 16px;">Detailed Answer Keys & Explanations</h3>
       <div id="reviewBreakdownContainer"></div>
     </div>
 
@@ -913,6 +862,163 @@
       } catch (e) {}
     }
 
+    // Pure Vanilla Canvas Confetti Fallback
+    function triggerConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      const pieces = [];
+      const colors = ['#3b82f6', '#ec4899', '#f59e0b', '#10b981', '#8b5cf6', '#38bdf8'];
+      for (let i = 0; i < 150; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * -canvas.height,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: Math.random() * 4 - 2,
+          vy: Math.random() * 4 + 3,
+          rot: Math.random() * 360,
+          rotSpeed: Math.random() * 6 - 3
+        });
+      }
+      
+      let frames = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.rotSpeed;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot * Math.PI / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+          ctx.restore();
+        });
+        frames++;
+        if (frames < 200) requestAnimationFrame(animate);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      animate();
+    }
+
+    // ==========================================
+    // 50-WORD MASTER QUESTION POOLS
+    // ==========================================
+    const SSAT_MASTER_QUESTIONS = [
+      { id: 1, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ABOLISH", choices: [{ text: "create", key: "A" }, { text: "eliminate", key: "B" }, { text: "decorate", key: "C" }, { text: "allow", key: "D" }, { text: "repair", key: "E" }], answer: "B", explanation: "ABOLISH means to permanently end or eliminate something." },
+      { id: 2, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ADHESIVE", choices: [{ text: "slippery", key: "A" }, { text: "glue", key: "B" }, { text: "scissors", key: "C" }, { text: "fragile", key: "D" }, { text: "heavy", key: "E" }], answer: "B", explanation: "ADHESIVE is a sticky substance like glue." },
+      { id: 3, type: "synonym", section: "PART 1: SYNONYMS", prompt: "APPROXIMATE", choices: [{ text: "estimated", key: "A" }, { text: "exact", key: "B" }, { text: "expensive", key: "C" }, { text: "distant", key: "D" }, { text: "colorful", key: "E" }], answer: "A", explanation: "APPROXIMATE means close to actual, but not exact (estimated)." },
+      { id: 4, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BLUNT", choices: [{ text: "sharp", key: "A" }, { text: "dull", key: "B" }, { text: "quick", key: "C" }, { text: "polite", key: "D" }, { text: "smooth", key: "E" }], answer: "B", explanation: "BLUNT means having a dull, unsharpened edge." },
+      { id: 5, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BURROW", choices: [{ text: "fly", key: "A" }, { text: "tunnel", key: "B" }, { text: "climb", key: "C" }, { text: "swim", key: "D" }, { text: "eat", key: "E" }], answer: "B", explanation: "A BURROW is an underground tunnel dug by an animal." },
+      { id: 6, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CAPABLE", choices: [{ text: "unable", key: "A" }, { text: "clumsy", key: "B" }, { text: "skilled", key: "C" }, { text: "careless", key: "D" }, { text: "slow", key: "E" }], answer: "C", explanation: "CAPABLE means having the skill or power to do something." },
+      { id: 7, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONCEAL", choices: [{ text: "display", key: "A" }, { text: "protect", key: "B" }, { text: "hide", key: "C" }, { text: "steal", key: "D" }, { text: "open", key: "E" }], answer: "C", explanation: "CONCEAL means to hide or keep from sight." },
+      { id: 8, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONTRADICTION", choices: [{ text: "agreement", key: "A" }, { text: "opposite", key: "B" }, { text: "summary", key: "C" }, { text: "question", key: "D" }, { text: "promise", key: "E" }], answer: "B", explanation: "A CONTRADICTION is an opposite or conflicting statement." },
+      { id: 9, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DEBATE", choices: [{ text: "argument", key: "A" }, { text: "whisper", key: "B" }, { text: "silence", key: "C" }, { text: "story", key: "D" }, { text: "celebration", key: "E" }], answer: "A", explanation: "A DEBATE is a structured discussion or formal argument." },
+      { id: 10, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DECLINE", choices: [{ text: "increase", key: "A" }, { text: "refuse", key: "B" }, { text: "accept", key: "C" }, { text: "build", key: "D" }, { text: "climb", key: "E" }], answer: "B", explanation: "DECLINE means to politely turn down or refuse." },
+      { id: 11, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DETRIMENTAL", choices: [{ text: "helpful", key: "A" }, { text: "harmful", key: "B" }, { text: "speedy", key: "C" }, { text: "pleasant", key: "D" }, { text: "generous", key: "E" }], answer: "B", explanation: "DETRIMENTAL means damaging or harmful." },
+      { id: 12, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ENVY", choices: [{ text: "sympathy", key: "A" }, { text: "jealousy", key: "B" }, { text: "kindness", key: "C" }, { text: "joy", key: "D" }, { text: "fear", key: "E" }], answer: "B", explanation: "ENVY means feeling jealous of someone else's traits or possessions." },
+      { id: 13, type: "synonym", section: "PART 1: SYNONYMS", prompt: "EVACUATE", choices: [{ text: "enter", key: "A" }, { text: "vacate", key: "B" }, { text: "gather", key: "C" }, { text: "rebuild", key: "D" }, { text: "protect", key: "E" }], answer: "B", explanation: "EVACUATE means to vacate or leave an area of danger." },
+      { id: 14, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FRAGILE", choices: [{ text: "sturdy", key: "A" }, { text: "delicate", key: "B" }, { text: "tough", key: "C" }, { text: "flexible", key: "D" }, { text: "heavy", key: "E" }], answer: "B", explanation: "FRAGILE means delicate or easily broken." },
+      { id: 15, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FURIOUS", choices: [{ text: "calm", key: "A" }, { text: "enraged", key: "B" }, { text: "cheerful", key: "C" }, { text: "tired", key: "D" }, { text: "curious", key: "E" }], answer: "B", explanation: "FURIOUS means extremely angry or enraged." },
+      { id: 16, type: "synonym", section: "PART 1: SYNONYMS", prompt: "GENEROUS", choices: [{ text: "greedy", key: "A" }, { text: "giving", key: "B" }, { text: "selfish", key: "C" }, { text: "lazy", key: "D" }, { text: "nervous", key: "E" }], answer: "B", explanation: "GENEROUS means giving and unselfish." },
+      { id: 17, type: "synonym", section: "PART 1: SYNONYMS", prompt: "GUARDIAN", choices: [{ text: "enemy", key: "A" }, { text: "protector", key: "B" }, { text: "stranger", key: "C" }, { text: "visitor", key: "D" }, { text: "servant", key: "E" }], answer: "B", explanation: "A GUARDIAN is a protector or defender." },
+      { id: 18, type: "synonym", section: "PART 1: SYNONYMS", prompt: "HARDSHIP", choices: [{ text: "luxury", key: "A" }, { text: "adversity", key: "B" }, { text: "pleasure", key: "C" }, { text: "fortune", key: "D" }, { text: "reward", key: "E" }], answer: "B", explanation: "HARDSHIP means severe difficulty or adversity." },
+      { id: 19, type: "synonym", section: "PART 1: SYNONYMS", prompt: "HAZARD", choices: [{ text: "peril", key: "A" }, { text: "safety", key: "B" }, { text: "shelter", key: "C" }, { text: "prize", key: "D" }, { text: "comfort", key: "E" }], answer: "A", explanation: "HAZARD means risk, danger, or peril." },
+      { id: 20, type: "synonym", section: "PART 1: SYNONYMS", prompt: "IDEALISM", choices: [{ text: "cynicism", key: "A" }, { text: "noble beliefs", key: "B" }, { text: "doubt", key: "C" }, { text: "fear", key: "D" }, { text: "anger", key: "E" }], answer: "B", explanation: "IDEALISM is pursuing noble beliefs and high principles." },
+      { id: 21, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ILLUMINATE", choices: [{ text: "darken", key: "A" }, { text: "brighten", key: "B" }, { text: "extinguish", key: "C" }, { text: "conceal", key: "D" }, { text: "shatter", key: "E" }], answer: "B", explanation: "ILLUMINATE means to light up or brighten." },
+      { id: 22, type: "synonym", section: "PART 1: SYNONYMS", prompt: "JAGGED", choices: [{ text: "smooth", key: "A" }, { text: "spiky", key: "B" }, { text: "round", key: "C" }, { text: "flat", key: "D" }, { text: "soft", key: "E" }], answer: "B", explanation: "JAGGED means having sharp, spiky points." },
+      { id: 23, type: "synonym", section: "PART 1: SYNONYMS", prompt: "JUBILATION", choices: [{ text: "misery", key: "A" }, { text: "delight", key: "B" }, { text: "boredom", key: "C" }, { text: "worry", key: "D" }, { text: "confusion", key: "E" }], answer: "B", explanation: "JUBILATION is a feeling of immense delight and joy." },
+      { id: 24, type: "synonym", section: "PART 1: SYNONYMS", prompt: "KIN", choices: [{ text: "strangers", key: "A" }, { text: "relatives", key: "B" }, { text: "rivals", key: "C" }, { text: "neighbors", key: "D" }, { text: "villains", key: "E" }], answer: "B", explanation: "KIN means one's family and relatives." },
+      { id: 25, type: "synonym", section: "PART 1: SYNONYMS", prompt: "LIBERATE", choices: [{ text: "imprison", key: "A" }, { text: "free", key: "B" }, { text: "punish", key: "C" }, { text: "capture", key: "D" }, { text: "restrain", key: "E" }], answer: "B", explanation: "LIBERATE means to release or set free." },
+      
+      // Analogies (26-50)
+      { id: 26, type: "analogy", section: "PART 2: ANALOGIES", stem: "LUXURIOUS is to WEALTHY as", choices: [{ text: "shabby is to poor", key: "A" }, { text: "valiant is to cowardly", key: "B" }, { text: "blunt is to sharp", key: "C" }, { text: "plentiful is to empty", key: "D" }, { text: "zany is to serious", key: "E" }], answer: "A", explanation: "LUXURIOUS describes wealthy surroundings, as SHABBY describes poor ones." },
+      { id: 27, type: "analogy", section: "PART 2: ANALOGIES", stem: "FABLE is to MORAL as", choices: [{ text: "recipe is to ingredient", key: "A" }, { text: "riddle is to answer", key: "B" }, { text: "joke is to sadness", key: "C" }, { text: "novel is to cover", key: "D" }, { text: "myth is to fact", key: "E" }], answer: "B", explanation: "A FABLE ends with a MORAL lesson, as a RIDDLE ends with an ANSWER." },
+      { id: 28, type: "analogy", section: "PART 2: ANALOGIES", stem: "MYTH is to FACT as", choices: [{ text: "fiction is to truth", key: "A" }, { text: "novel is to book", key: "B" }, { text: "legend is to story", key: "C" }, { text: "debate is to speak", key: "D" }, { text: "taunt is to mock", key: "E" }], answer: "A", explanation: "MYTH is imaginary and FACT is true; FICTION is imaginary and TRUTH is true." },
+      { id: 29, type: "analogy", section: "PART 2: ANALOGIES", stem: "NONCHALANT is to ANXIOUS as", choices: [{ text: "valiant is to brave", key: "A" }, { text: "furious is to peaceful", key: "B" }, { text: "fragile is to breakable", key: "C" }, { text: "weary is to tired", key: "D" }, { text: "approximate is to close", key: "E" }], answer: "B", explanation: "NONCHALANT (calm) is opposite of ANXIOUS; FURIOUS is opposite of PEACEFUL." },
+      { id: 30, type: "analogy", section: "PART 2: ANALOGIES", stem: "NOVEL is to UNIQUE as", choices: [{ text: "obsolete is to outdated", key: "A" }, { text: "blunt is to sharp", key: "B" }, { text: "jagged is to smooth", key: "C" }, { text: "weary is to energetic", key: "D" }, { text: "queasy is to healthy", key: "E" }], answer: "A", explanation: "NOVEL means UNIQUE; OBSOLETE means OUTDATED." },
+      { id: 31, type: "analogy", section: "PART 2: ANALOGIES", stem: "TYPEWRITER is to OBSOLETE as", choices: [{ text: "computer is to modern", key: "A" }, { text: "orchard is to fish", key: "B" }, { text: "hazard is to safe", key: "C" }, { text: "burrow is to sky", key: "D" }, { text: "furious is to happy", key: "E" }], answer: "A", explanation: "A typewriter is OBSOLETE; a computer is MODERN." },
+      { id: 32, type: "analogy", section: "PART 2: ANALOGIES", stem: "APPLE is to ORCHARD as", choices: [{ text: "grape is to vineyard", key: "A" }, { text: "route is to car", key: "B" }, { text: "novel is to shelf", key: "C" }, { text: "kin is to friend", key: "D" }, { text: "hazard is to caution", key: "E" }], answer: "A", explanation: "APPLES grow in an ORCHARD; GRAPES grow in a VINEYARD." },
+      { id: 33, type: "analogy", section: "PART 2: ANALOGIES", stem: "FEAR is to PETRIFY as", choices: [{ text: "anger is to enrage", key: "A" }, { text: "joy is to sorrow", key: "B" }, { text: "calm is to excited", key: "C" }, { text: "sleep is to wake", key: "D" }, { text: "hunger is to full", key: "E" }], answer: "A", explanation: "FEAR can PETRIFY someone; ANGER can ENRAGE someone." },
+      { id: 34, type: "analogy", section: "PART 2: ANALOGIES", stem: "PLENTIFUL is to SCARCE as", choices: [{ text: "generous is to selfish", key: "A" }, { text: "vivid is to bright", key: "B" }, { text: "capable is to skilled", key: "C" }, { text: "adhesive is to sticky", key: "D" }, { text: "moral is to good", key: "E" }], answer: "A", explanation: "PLENTIFUL is opposite of SCARCE; GENEROUS is opposite of SELFISH." },
+      { id: 35, type: "analogy", section: "PART 2: ANALOGIES", stem: "PROTAGONIST is to HERO as", choices: [{ text: "antagonist is to villain", key: "A" }, { text: "tragedy is to joy", key: "B" }, { text: "myth is to fact", key: "C" }, { text: "debate is to silence", key: "D" }, { text: "taunt is to praise", key: "E" }], answer: "A", explanation: "PROTAGONIST is the HERO; ANTAGONIST is the VILLAIN." },
+      { id: 36, type: "analogy", section: "PART 2: ANALOGIES", stem: "QUEASY is to STOMACH as", choices: [{ text: "dizzy is to head", key: "A" }, { text: "blunt is to pencil", key: "B" }, { text: "valiant is to knight", key: "C" }, { text: "fragile is to glass", key: "D" }, { text: "shabby is to coat", key: "E" }], answer: "A", explanation: "QUEASY affects the STOMACH; DIZZY affects the HEAD." },
+      { id: 37, type: "analogy", section: "PART 2: ANALOGIES", stem: "RESTORE is to RENEW as", choices: [{ text: "demolish is to destroy", key: "A" }, { text: "conceal is to display", key: "B" }, { text: "withdraw is to charge", key: "C" }, { text: "taunt is to compliment", key: "D" }, { text: "uproot is to plant", key: "E" }], answer: "A", explanation: "RESTORE means to RENEW; DEMOLISH means to DESTROY." },
+      { id: 38, type: "analogy", section: "PART 2: ANALOGIES", stem: "CONCEAL is to REVEAL as", choices: [{ text: "withdraw is to advance", key: "A" }, { text: "salvage is to save", key: "B" }, { text: "envy is to admire", key: "C" }, { text: "illuminate is to shine", key: "D" }, { text: "kin is to family", key: "E" }], answer: "A", explanation: "CONCEAL (hide) is opposite of REVEAL (show); WITHDRAW is opposite of ADVANCE." },
+      { id: 39, type: "analogy", section: "PART 2: ANALOGIES", stem: "MAP is to ROUTE as", choices: [{ text: "cookbook is to recipe", key: "A" }, { text: "hazard is to danger", key: "B" }, { text: "burrow is to rabbit", key: "C" }, { text: "orchard is to tree", key: "D" }, { text: "tragedy is to tear", key: "E" }], answer: "A", explanation: "A MAP outlines a ROUTE; a COOKBOOK outlines a RECIPE." },
+      { id: 40, type: "analogy", section: "PART 2: ANALOGIES", stem: "SALVAGE is to SHIPWRECK as", choices: [{ text: "rescue is to fire", key: "A" }, { text: "taunt is to cheer", key: "B" }, { text: "envy is to share", key: "C" }, { text: "petrify is to soothe", key: "D" }, { text: "uproot is to water", key: "E" }], answer: "A", explanation: "One SALVAGES items from a SHIPWRECK; one RESCUES victims from a FIRE." },
+      { id: 41, type: "analogy", section: "PART 2: ANALOGIES", stem: "SELDOM is to OFTEN as", choices: [{ text: "rarely is to frequently", key: "A" }, { text: "vivid is to bright", key: "B" }, { text: "weary is to tired", key: "C" }, { text: "generous is to giving", key: "D" }, { text: "valiant is to brave", key: "E" }], answer: "A", explanation: "SELDOM is opposite of OFTEN; RARELY is opposite of FREQUENTLY." },
+      { id: 42, type: "analogy", section: "PART 2: ANALOGIES", stem: "SHABBY is to LUXURIOUS as", choices: [{ text: "blunt is to sharp", key: "A" }, { text: "jagged is to rough", key: "B" }, { text: "weary is to exhausted", key: "C" }, { text: "fragile is to delicate", key: "D" }, { text: "furious is to angry", key: "E" }], answer: "A", explanation: "SHABBY is opposite of LUXURIOUS; BLUNT is opposite of SHARP." },
+      { id: 43, type: "analogy", section: "PART 2: ANALOGIES", stem: "TAUNT is to INSULT as", choices: [{ text: "praise is to compliment", key: "A" }, { text: "debate is to agree", key: "B" }, { text: "conceal is to show", key: "C" }, { text: "liberate is to capture", key: "D" }, { text: "uproot is to plant", key: "E" }], answer: "A", explanation: "To TAUNT is to INSULT; to PRAISE is to COMPLIMENT." },
+      { id: 44, type: "analogy", section: "PART 2: ANALOGIES", stem: "TRAGEDY is to SORROW as", choices: [{ text: "celebration is to jubilation", key: "A" }, { text: "hazard is to safety", key: "B" }, { text: "defeat is to victory", key: "C" }, { text: "decline is to rise", key: "D" }, { text: "debate is to silence", key: "E" }], answer: "A", explanation: "A TRAGEDY causes SORROW; a CELEBRATION causes JUBILATION." },
+      { id: 45, type: "analogy", section: "PART 2: ANALOGIES", stem: "UPROOT is to TREE as", choices: [{ text: "demolish is to building", key: "A" }, { text: "illuminate is to darkness", key: "B" }, { text: "paint is to canvas", key: "C" }, { text: "drive is to road", key: "D" }, { text: "read is to book", key: "E" }], answer: "A", explanation: "UPROOT destroys a TREE from its roots; DEMOLISH destroys a BUILDING." },
+      { id: 46, type: "analogy", section: "PART 2: ANALOGIES", stem: "VALIANT is to HERO as", choices: [{ text: "cowardly is to traitor", key: "A" }, { text: "generous is to thief", key: "B" }, { text: "zany is to judge", key: "C" }, { text: "blunt is to needle", key: "D" }, { text: "queasy is to athlete", key: "E" }], answer: "A", explanation: "A HERO is VALIANT; a TRAITOR is COWARDLY." },
+      { id: 47, type: "analogy", section: "PART 2: ANALOGIES", stem: "VIVID is to DULL as", choices: [{ text: "jagged is to smooth", key: "A" }, { text: "fragile is to brittle", key: "B" }, { text: "capable is to able", key: "C" }, { text: "moral is to ethical", key: "D" }, { text: "adhesive is to glue", key: "E" }], answer: "A", explanation: "VIVID is opposite of DULL; JAGGED is opposite of SMOOTH." },
+      { id: 48, type: "analogy", section: "PART 2: ANALOGIES", stem: "RUNNING is to WEARY as", choices: [{ text: "eating is to full", key: "A" }, { text: "sleeping is to tired", key: "B" }, { text: "studying is to ignorant", key: "C" }, { text: "winning is to sad", key: "D" }, { text: "singing is to silent", key: "E" }], answer: "A", explanation: "Running makes one WEARY; eating makes one FULL." },
+      { id: 49, type: "analogy", section: "PART 2: ANALOGIES", stem: "WITHDRAW is to RETREAT as", choices: [{ text: "advance is to charge", key: "A" }, { text: "conceal is to show", key: "B" }, { text: "salvage is to destroy", key: "C" }, { text: "liberate is to jail", key: "D" }, { text: "petrify is to calm", key: "E" }], answer: "A", explanation: "To WITHDRAW is to RETREAT; to ADVANCE is to CHARGE." },
+      { id: 50, type: "analogy", section: "PART 2: ANALOGIES", stem: "ZANY is to CLOWN as", choices: [{ text: "studious is to scholar", key: "A" }, { text: "blunt is to sword", key: "B" }, { text: "furious is to monk", key: "C" }, { text: "shabby is to king", key: "D" }, { text: "fragile is to rock", key: "E" }], answer: "A", explanation: "A CLOWN is ZANY; a SCHOLAR is STUDIOUS." }
+    ];
+
+    const ISEE_MASTER_QUESTIONS = [
+      { id: 1, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ABRUPT", choices: [{ text: "sudden", key: "A" }, { text: "gentle", key: "B" }, { text: "polite", key: "C" }, { text: "delayed", key: "D" }], answer: "A", explanation: "ABRUPT means happening suddenly and without warning." },
+      { id: 2, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ADAPT", choices: [{ text: "reject", key: "A" }, { text: "adjust", key: "B" }, { text: "destroy", key: "C" }, { text: "copy", key: "D" }], answer: "B", explanation: "ADAPT means to adjust or modify to fit new circumstances." },
+      { id: 3, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ANXIOUS", choices: [{ text: "relaxed", key: "A" }, { text: "nervous", key: "B" }, { text: "furious", key: "C" }, { text: "cheerful", key: "D" }], answer: "B", explanation: "ANXIOUS means feeling worried, uneasy, or nervous." },
+      { id: 4, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BARREN", choices: [{ text: "fruitful", key: "A" }, { text: "lifeless", key: "B" }, { text: "crowded", key: "C" }, { text: "damp", key: "D" }], answer: "B", explanation: "BARREN land is empty, sterile, or lifeless." },
+      { id: 5, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BRAGGART", choices: [{ text: "show-off", key: "A" }, { text: "listener", key: "B" }, { text: "scholar", key: "C" }, { text: "servant", key: "D" }], answer: "A", explanation: "A BRAGGART is someone who boasts or shows off loudly." },
+      { id: 6, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CAPRICIOUS", choices: [{ text: "predictable", key: "A" }, { text: "fickle", key: "B" }, { text: "stubborn", key: "C" }, { text: "cautious", key: "D" }], answer: "B", explanation: "CAPRICIOUS means impulsive, erratic, or fickle." },
+      { id: 7, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONCISE", choices: [{ text: "lengthy", key: "A" }, { text: "brief", key: "B" }, { text: "confusing", key: "C" }, { text: "loud", key: "D" }], answer: "B", explanation: "CONCISE means giving a lot of information in few, brief words." },
+      { id: 8, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONTROVERSIAL", choices: [{ text: "undisputed", key: "A" }, { text: "debatable", key: "B" }, { text: "peaceful", key: "C" }, { text: "pleasant", key: "D" }], answer: "B", explanation: "CONTROVERSIAL means debatable and likely to cause dispute." },
+      { id: 9, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DRASTIC", choices: [{ text: "extreme", key: "A" }, { text: "mild", key: "B" }, { text: "gradual", key: "C" }, { text: "fragile", key: "D" }], answer: "A", explanation: "DRASTIC actions are radical, severe, or extreme." },
+      { id: 10, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DURATION", choices: [{ text: "distance", key: "A" }, { text: "lifespan", key: "B" }, { text: "weight", key: "C" }, { text: "speed", key: "D" }], answer: "B", explanation: "DURATION refers to the length of time something lasts (lifespan/span)." },
+      { id: 11, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ECONOMIZE", choices: [{ text: "spend", key: "A" }, { text: "save", key: "B" }, { text: "waste", key: "C" }, { text: "donate", key: "D" }], answer: "B", explanation: "ECONOMIZE means to cut expenses and save money." },
+      { id: 12, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ENDEAVOR", choices: [{ text: "attempt", key: "A" }, { text: "hesitation", key: "B" }, { text: "mistake", key: "C" }, { text: "surrender", key: "D" }], answer: "A", explanation: "An ENDEAVOR is an earnest attempt or effort toward a goal." },
+      { id: 13, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FALTER", choices: [{ text: "steady", key: "A" }, { text: "stumble", key: "B" }, { text: "charge", key: "C" }, { text: "conquer", key: "D" }], answer: "B", explanation: "FALTER means to stumble or lose strength/momentum." },
+      { id: 14, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FLOURISH", choices: [{ text: "wither", key: "A" }, { text: "prosper", key: "B" }, { text: "collapse", key: "C" }, { text: "pause", key: "D" }], answer: "B", explanation: "FLOURISH means to thrive, prosper, and grow strongly." },
+      { id: 15, type: "synonym", section: "PART 1: SYNONYMS", prompt: "GRATIFIED", choices: [{ text: "pleased", key: "A" }, { text: "annoyed", key: "B" }, { text: "exhausted", key: "C" }, { text: "frightened", key: "D" }], answer: "A", explanation: "GRATIFIED means feeling pleased, satisfied, or content." },
+      { id: 16, type: "synonym", section: "PART 1: SYNONYMS", prompt: "GULLIBLE", choices: [{ text: "skeptical", key: "A" }, { text: "easily tricked", key: "B" }, { text: "observant", key: "C" }, { text: "intelligent", key: "D" }], answer: "B", explanation: "GULLIBLE means easily tricked, naive, or credulous." },
+      { id: 17, type: "synonym", section: "PART 1: SYNONYMS", prompt: "HAPHAZARD", choices: [{ text: "random", key: "A" }, { text: "organized", key: "B" }, { text: "punctual", key: "C" }, { text: "cautious", key: "D" }], answer: "A", explanation: "HAPHAZARD means random, aimless, or lacking organization." },
+      { id: 18, type: "synonym", section: "PART 1: SYNONYMS", prompt: "HOMELY", choices: [{ text: "glamorous", key: "A" }, { text: "plain", key: "B" }, { text: "majestic", key: "C" }, { text: "expensive", key: "D" }], answer: "B", explanation: "HOMELY means simple, unadorned, or plain in appearance." },
+      { id: 19, type: "synonym", section: "PART 1: SYNONYMS", prompt: "INCIDENT", choices: [{ text: "event", key: "A" }, { text: "planning", key: "B" }, { text: "silence", key: "C" }, { text: "theory", key: "D" }], answer: "A", explanation: "An INCIDENT is an occurrence, episode, or event." },
+      { id: 20, type: "synonym", section: "PART 1: SYNONYMS", prompt: "INUNDATE", choices: [{ text: "drain", key: "A" }, { text: "overwhelm", key: "B" }, { text: "uncover", key: "C" }, { text: "ignite", key: "D" }], answer: "B", explanation: "INUNDATE means to overwhelm with things, or flood completely." },
+      { id: 21, type: "synonym", section: "PART 1: SYNONYMS", prompt: "IRATE", choices: [{ text: "cheerful", key: "A" }, { text: "furious", key: "B" }, { text: "calm", key: "C" }, { text: "curious", key: "D" }], answer: "B", explanation: "IRATE means extremely angry, furious, or incensed." },
+      { id: 22, type: "synonym", section: "PART 1: SYNONYMS", prompt: "JOVIAL", choices: [{ text: "merry", key: "A" }, { text: "gloomy", key: "B" }, { text: "strict", key: "C" }, { text: "timid", key: "D" }], answer: "A", explanation: "JOVIAL means cheerful, friendly, and merry." },
+      { id: 23, type: "synonym", section: "PART 1: SYNONYMS", prompt: "KEEN", choices: [{ text: "sharp", key: "A" }, { text: "blunt", key: "B" }, { text: "careless", key: "C" }, { text: "lazy", key: "D" }], answer: "A", explanation: "KEEN means sharp in intellect or perception, or eager." },
+      { id: 24, type: "synonym", section: "PART 1: SYNONYMS", prompt: "KNACK", choices: [{ text: "weakness", key: "A" }, { text: "talent", key: "B" }, { text: "accident", key: "C" }, { text: "penalty", key: "D" }], answer: "B", explanation: "A KNACK is a special skill, flair, or talent." },
+      { id: 25, type: "synonym", section: "PART 1: SYNONYMS", prompt: "LOFTY", choices: [{ text: "modest", key: "A" }, { text: "towering", key: "B" }, { text: "narrow", key: "C" }, { text: "deep", key: "D" }], answer: "B", explanation: "LOFTY means towering, majestic, or exalted." },
+      
+      // Sentence Completion (26-50)
+      { id: 26, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The fisherman used shiny, colorful bait to _______ trout into his net.", choices: [{ text: "repel", key: "A" }, { text: "lure", key: "B" }, { text: "frighten", key: "C" }, { text: "warn", key: "D" }], answer: "B", explanation: "To LURE means to tempt or attract someone/something toward a target." },
+      { id: 27, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Because the travelers had only a _______ supply of fresh water left in the desert, they were forced to ration every sip.", choices: [{ text: "meager", key: "A" }, { text: "plentiful", key: "B" }, { text: "luxurious", key: "C" }, { text: "vibrant", key: "D" }], answer: "A", explanation: "MEAGER means lacking in quantity; small and insufficient." },
+      { id: 28, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The clever parrot was able to _______ the sound of the ringing telephone with astonishing accuracy.", choices: [{ text: "omit", key: "A" }, { text: "mimic", key: "B" }, { text: "destroy", key: "C" }, { text: "avoid", key: "D" }], answer: "B", explanation: "To MIMIC is to imitate or copy sounds/actions closely." },
+      { id: 29, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "When asked which candidate she supported in the debate, the mayor gave a _______ answer so as not to alienate any voters.", choices: [{ text: "noncommittal", key: "A" }, { text: "decisive", key: "B" }, { text: "furious", key: "C" }, { text: "braggart", key: "D" }], answer: "A", explanation: "NONCOMMITTAL means not expressing a clear, decisive opinion." },
+      { id: 30, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The bandit was _______ throughout the region for his daring stagecoach robberies.", choices: [{ text: "unknown", key: "A" }, { text: "notorious", key: "B" }, { text: "admired", key: "C" }, { text: "fragile", key: "D" }], answer: "B", explanation: "NOTORIOUS means widely known for bad or villainous deeds." },
+      { id: 31, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Despite everyone begging him to compromise, the _______ donkey refused to take a single step forward.", choices: [{ text: "jovial", key: "A" }, { text: "obstinate", key: "B" }, { text: "adaptable", key: "C" }, { text: "weary", key: "D" }], answer: "B", explanation: "OBSTINATE means stubbornly refusing to change one's mind or yield." },
+      { id: 32, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "While proofreading her essay, Maya realized she accidentally _______ a critical sentence from the concluding paragraph.", choices: [{ text: "omitted", key: "A" }, { text: "praised", key: "B" }, { text: "illuminated", key: "C" }, { text: "revered", key: "D" }], answer: "A", explanation: "To OMIT means to leave out or exclude." },
+      { id: 33, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "After climbing for six grueling hours, the mountaineers finally stood at the snowy _______ of the mountain.", choices: [{ text: "base", key: "A" }, { text: "peak", key: "B" }, { text: "burrow", key: "C" }, { text: "valley", key: "D" }], answer: "B", explanation: "The PEAK is the pointed summit or top of a mountain." },
+      { id: 34, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Finding himself locked out of his apartment in the pouring rain with no phone was a difficult _______ for Alex.", choices: [{ text: "benefit", key: "A" }, { text: "predicament", key: "B" }, { text: "celebration", key: "C" }, { text: "sanctuary", key: "D" }], answer: "B", explanation: "A PREDICAMENT is a troublesome, perplexing, or difficult situation." },
+      { id: 35, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Without looking at the forecast, you should not _______ that it will be sunny all afternoon.", choices: [{ text: "prove", key: "A" }, { text: "presume", key: "B" }, { text: "regret", key: "C" }, { text: "prohibit", key: "D" }], answer: "B", explanation: "To PRESUME means to take for granted as true without verification." },
+      { id: 36, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The young knight embarked on a perilous _______ across the kingdom to recover the stolen enchanted crown.", choices: [{ text: "duration", key: "A" }, { text: "quest", key: "B" }, { text: "contradiction", key: "C" }, { text: "decline", key: "D" }], answer: "B", explanation: "A QUEST is a long, heroic search or journey." },
+      { id: 37, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "In ancient cultures, citizens would deeply _______ their wisest elders and seek their guidance before major decisions.", choices: [{ text: "mock", key: "A" }, { text: "revere", key: "B" }, { text: "taunt", key: "C" }, { text: "abandon", key: "D" }], answer: "B", explanation: "To REVERE means to hold in deep, respectful admiration." },
+      { id: 38, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Built from thick stone walls and steel beams, the fortress was remarkably _______ against winter storms.", choices: [{ text: "fragile", key: "A" }, { text: "robust", key: "B" }, { text: "shabby", key: "C" }, { text: "meager", key: "D" }], answer: "B", explanation: "ROBUST means sturdy, durable, and resilient." },
+      { id: 39, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The gentle melody played by the harpist helped _______ the crying baby to sleep.", choices: [{ text: "soothe", key: "A" }, { text: "agitate", key: "B" }, { text: "petrify", key: "C" }, { text: "falter", key: "D" }], answer: "A", explanation: "To SOOTHE means to gently calm and relieve distress." },
+      { id: 40, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Through all of life's hardships and challenges, Marcus remained a _______ friend who never betrayed a secret.", choices: [{ text: "fickle", key: "A" }, { text: "steadfast", key: "B" }, { text: "capricious", key: "C" }, { text: "noncommittal", key: "D" }], answer: "B", explanation: "STEADFAST means unwavering, loyal, and firmly committed." },
+      { id: 41, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The painting contained _______ changes in color that were so delicate only an experienced artist noticed them.", choices: [{ text: "obvious", key: "A" }, { text: "subtle", key: "B" }, { text: "drastic", key: "C" }, { text: "blunt", key: "D" }], answer: "B", explanation: "SUBTLE describes faint, delicate, and understated details." },
+      { id: 42, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The scientist insisted on seeing _______ evidence, such as laboratory measurements, before accepting the new theory.", choices: [{ text: "imaginary", key: "A" }, { text: "tangible", key: "B" }, { text: "vague", key: "C" }, { text: "questionable", key: "D" }], answer: "B", explanation: "TANGIBLE means physical, measurable, and real." },
+      { id: 43, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "With abundant sunlight and fertile soil, the rare orchids began to _______ in the botanical greenhouse.", choices: [{ text: "perish", key: "A" }, { text: "thrive", key: "B" }, { text: "falter", key: "C" }, { text: "decline", key: "D" }], answer: "B", explanation: "To THRIVE means to grow vigorously and flourish." },
+      { id: 44, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The substitute teacher struggled to control the _______ group of students who were shouting and running across the classroom.", choices: [{ text: "obedient", key: "A" }, { text: "unruly", key: "B" }, { text: "quiet", key: "C" }, { text: "polite", key: "D" }], answer: "B", explanation: "UNRULY means disruptive, rowdy, and disorderly." },
+      { id: 45, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "When the fire alarm blared through the building, the principal gave an _______ announcement to evacuate immediately.", choices: [{ text: "urgent", key: "A" }, { text: "casual", key: "B" }, { text: "sluggish", key: "C" }, { text: "obsolete", key: "D" }], answer: "A", explanation: "URGENT means requiring immediate attention." },
+      { id: 46, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The festival was filled with _______ street dancers dressed in bright neon costumes accompanied by lively music.", choices: [{ text: "drab", key: "A" }, { text: "vibrant", key: "B" }, { text: "barren", key: "C" }, { text: "mournful", key: "D" }], answer: "B", explanation: "VIBRANT means colorful, energetic, and bright." },
+      { id: 47, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The coach led the soccer team through a _______ forty-minute workout to prepare them for the championship match.", choices: [{ text: "vigorous", key: "A" }, { text: "lazy", key: "B" }, { text: "delicate", key: "C" }, { text: "gentle", key: "D" }], answer: "A", explanation: "VIGOROUS means energetic, strenuous, and active." },
+      { id: 48, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The _______ child insisted on wearing shorts and a t-shirt despite the freezing blizzard outside.", choices: [{ text: "willful", key: "A" }, { text: "cooperative", key: "B" }, { text: "timid", key: "C" }, { text: "generous", key: "D" }], answer: "A", explanation: "WILLFUL means stubbornly determined to do as one pleases." },
+      { id: 49, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "In Greek mythology, the gods unleashed their terrifying _______ upon mortals who displayed excessive pride.", choices: [{ text: "wrath", key: "A" }, { text: "kindness", key: "B" }, { text: "mercy", key: "C" }, { text: "gratitude", key: "D" }], answer: "A", explanation: "WRATH means fierce, intense anger or vengeance." },
+      { id: 50, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "After living in a crowded concrete city for many years, Elena began to _______ for the quiet beauty of her countryside home.", choices: [{ text: "yearn", key: "A" }, { text: "dread", key: "B" }, { text: "refuse", key: "C" }, { text: "conceal", key: "D" }], answer: "A", explanation: "To YEARN means to long for or desire intensely." }
+    ];
+
     // State Variables
     let currentAvatar = "🚀";
     let chosenExam = "SSAT";
@@ -926,10 +1032,9 @@
     let timerSeconds = 0;
     let timerTicker = null;
     let earnedXP = 0;
-    let streak = 0;
     let missedBank = [];
 
-    // URL Routing
+    // URL Auto-Routing
     window.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash.toLowerCase();
       const params = new URLSearchParams(window.location.search);
@@ -981,14 +1086,14 @@
       const sName = document.getElementById('studentNameInput').value.trim() || "Challenger";
       document.getElementById('subHeaderBadge').textContent = `${currentAvatar} Candidate: ${sName} • ${chosenExam} Verbal Exam (${chosenQCount} Questions)`;
 
-      let masterBank = (chosenExam === 'SSAT') ? SSAT_MASTER_BANK : ISEE_MASTER_BANK;
+      let masterBank = (chosenExam === 'SSAT') ? SSAT_MASTER_QUESTIONS : ISEE_MASTER_QUESTIONS;
       
       if (customSubset) {
         examSet = customSubset;
       } else {
-        // True random sampling from 2,000 question bank with zero duplicates
+        // Random sampling from pool
         const shuffled = [...masterBank].sort(() => 0.5 - Math.random());
-        examSet = shuffled.slice(0, chosenQCount);
+        examSet = shuffled.slice(0, Math.min(chosenQCount, shuffled.length));
       }
 
       currentQ = 0;
@@ -996,7 +1101,6 @@
       flaggedFlags = new Array(examSet.length).fill(false);
       timerSeconds = chosenMinutes * 60;
       earnedXP = 0;
-      streak = 0;
 
       document.getElementById('timerContainer').style.display = 'flex';
       document.getElementById('streakBadge').style.display = 'flex';
@@ -1030,7 +1134,6 @@
       document.getElementById('currentQDisplay').textContent = `Question ${currentQ + 1} of ${examSet.length}`;
       document.getElementById('sectionTypeBadge').textContent = q.section;
 
-      // Update progress bar
       const pctDone = Math.round(((currentQ + 1) / examSet.length) * 100);
       document.getElementById('progressFillBar').style.width = `${pctDone}%`;
 
@@ -1182,12 +1285,11 @@
       }
       document.getElementById('victoryScaleEstimate').innerHTML = `Estimated Score: <strong>${rating}</strong>`;
 
-      // Retry Missed Button visibility
       const bRetry = document.getElementById('btnRetryMissedPool');
       bRetry.style.display = (missedBank.length > 0) ? 'inline-flex' : 'none';
       if (missedBank.length > 0) bRetry.textContent = `🎯 Retry Missed (${missedBank.length})`;
 
-      // Render Answer Breakdown
+      // Render Review
       const rBox = document.getElementById('reviewBreakdownContainer');
       rBox.innerHTML = '';
       examSet.forEach((q, idx) => {
@@ -1219,11 +1321,7 @@
       });
 
       setScreen('screenReport');
-
-      // Celebration Confetti
-      if (typeof confetti === 'function') {
-        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
-      }
+      triggerConfetti();
       playChime(880, 'triangle', 0.4);
     }
 

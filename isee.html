@@ -3,730 +3,269 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Official ISEE Verbal Reasoning Master Examination (2,000+ Question Bank)</title>
+  <title>ISEE Middle Level Verbal Practice Test • 4 Choices</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #7c3aed;
-      --primary-dark: #6d28d9;
+      --primary: #8b5cf6;
       --accent: #f59e0b;
       --success: #10b981;
       --danger: #ef4444;
       --bg: #090d16;
-      --card-bg: rgba(30, 41, 59, 0.85);
-      --border: rgba(255, 255, 255, 0.12);
+      --card-bg: rgba(30, 41, 59, 0.9);
+      --card-border: rgba(255, 255, 255, 0.12);
       --text: #f8fafc;
-      --text-muted: #94a3b8;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       line-height: 1.6;
-      overflow-x: hidden;
     }
-
-    .bg-mesh {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: -1;
-      background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.25) 0%, transparent 40%),
-                  radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.2) 0%, transparent 45%),
-                  #090d16;
-      filter: blur(40px);
-    }
-
-    .test-header {
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 2px solid var(--border);
+    .header {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 2px solid var(--card-border);
       padding: 14px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
     }
-
-    .test-title-box h1 { font-size: 1.25rem; font-weight: 800; color: #fff; }
-    .test-title-box p { font-size: 0.85rem; color: var(--text-muted); }
-
-    .timer-widget {
-      background: #0f172a;
-      border: 2px solid #a78bfa;
-      padding: 8px 18px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
-    }
-    .timer-digits {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #a78bfa;
-    }
-    .timer-warning {
-      color: var(--danger) !important;
-      border-color: var(--danger) !important;
-      animation: pulse 1s infinite alternate;
-    }
-    @keyframes pulse { from { opacity: 1; } to { opacity: 0.4; } }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
+    .container { max-width: 1000px; margin: 0 auto; padding: 24px; }
     .screen { display: none; }
-    .screen.active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-    .intro-card {
+    .screen.active { display: block; }
+    .card {
       background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border: 2px solid var(--border);
+      border: 2px solid var(--card-border);
       border-radius: 24px;
-      padding: 40px;
-      max-width: 720px;
-      margin: 30px auto;
-      text-align: center;
+      padding: 32px;
+      margin: 20px auto;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
-    .intro-badge {
-      display: inline-block;
-      background: rgba(124, 58, 237, 0.25);
-      border: 1px solid var(--primary);
-      color: #c4b5fd;
-      padding: 6px 16px;
-      border-radius: 9999px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .intro-card h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
-    .intro-card p { color: var(--text-muted); margin-bottom: 24px; }
-
-    .student-input-group {
-      text-align: left;
-      margin-bottom: 20px;
-      background: #0f172a;
-      padding: 18px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-    }
-    .student-input-group label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 6px;
-      font-size: 0.95rem;
-      color: #cbd5e1;
-    }
-    .student-input-group input {
-      width: 100%;
-      background: #1e293b;
-      border: 1px solid #475569;
-      padding: 12px 16px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 1.15rem;
-      font-family: inherit;
-    }
-
-    .time-selector-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .time-opt {
-      background: #0f172a;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 6px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .time-opt:hover { border-color: #a78bfa; transform: translateY(-2px); }
-    .time-opt.active {
-      border-color: #a78bfa;
-      background: rgba(167, 139, 250, 0.2);
-      box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
-    }
-    .time-opt-m { font-weight: 900; font-size: 1.15rem; }
-    .time-opt-q { font-size: 0.75rem; color: #a78bfa; font-weight: 800; }
-
-    .instructions-box {
-      text-align: left;
-      background: #0f172a;
-      padding: 18px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-      border-left: 4px solid var(--primary);
-    }
-    .instructions-box h3 { font-size: 0.95rem; margin-bottom: 6px; color: #f1f5f9; }
-    .instructions-box ul { padding-left: 20px; color: #cbd5e1; font-size: 0.9rem; }
-    .instructions-box li { margin-bottom: 4px; }
-
-    .btn-purple {
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
+    .btn {
+      background: linear-gradient(135deg, #8b5cf6, #c084fc);
       color: #fff;
       font-family: inherit;
       font-weight: 800;
-      font-size: 1.15rem;
-      padding: 16px 32px;
-      border-radius: 14px;
+      font-size: 1.1rem;
+      padding: 14px 28px;
+      border-radius: 12px;
       border: none;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
-      transition: all 0.25s;
+      gap: 8px;
+      transition: all 0.2s;
     }
-    .btn-purple:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(236, 72, 153, 0.6); }
-
-    .test-grid {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 24px;
-    }
-    @media (max-width: 850px) { .test-grid { grid-template-columns: 1fr; } }
-
-    .question-panel {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
-
-    .q-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 16px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-    .q-num { font-size: 1.15rem; font-weight: 800; color: #a78bfa; }
-    .q-badge {
-      background: #334155;
-      padding: 4px 12px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    .q-content {
-      background: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 26px;
-      margin-bottom: 24px;
-    }
-    .q-type-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-    .q-main-word {
-      font-size: 2.4rem;
-      font-weight: 900;
-      color: #fff;
-      text-align: center;
-      letter-spacing: 0.06em;
-      text-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
-    }
-    .q-sentence-text {
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: #f8fafc;
-      line-height: 1.8;
-    }
-    .blank-pill {
-      display: inline-block;
-      min-width: 90px;
-      border-bottom: 3px solid #a78bfa;
-      margin: 0 4px;
-      color: #a78bfa;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .choices-list { display: flex; flex-direction: column; gap: 12px; }
-    .choice-btn {
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139,92,246,0.4); }
+    .btn-outline { background: #0f172a; border: 2px solid var(--card-border); }
+    .opt-btn {
       background: #1e293b;
-      border: 2px solid var(--border);
+      border: 2px solid var(--card-border);
       border-radius: 14px;
       padding: 15px 18px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 14px;
       cursor: pointer;
       transition: all 0.2s;
     }
-    .choice-btn:hover { border-color: #a78bfa; background: #334155; transform: translateX(4px); }
-    .choice-btn.selected {
-      border-color: #8b5cf6;
-      background: rgba(139, 92, 246, 0.25);
-      box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
-    }
-    .choice-bubble {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+    .opt-btn:hover { border-color: #c084fc; transform: translateX(4px); }
+    .opt-btn.selected { border-color: #c084fc; background: rgba(192, 132, 252, 0.25); }
+    .opt-letter {
+      width: 36px; height: 36px; border-radius: 50%;
       border: 2px solid #64748b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: var(--text-muted);
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: #94a3b8;
     }
-    .choice-btn.selected .choice-bubble {
-      background: #8b5cf6;
-      border-color: #8b5cf6;
-      color: #fff;
-    }
-    .choice-text { font-size: 1.1rem; font-weight: 500; color: #f1f5f9; }
-
-    .q-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-    }
-
-    .palette-box {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      position: sticky;
-      top: 90px;
-    }
-    .palette-head {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-    .pal-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-      max-height: 320px;
-      overflow-y: auto;
-    }
-    .p-btn {
-      background: #0f172a;
-      border: 1.5px solid var(--border);
-      color: var(--text-muted);
-      padding: 8px 0;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .p-btn.current { border-color: #a78bfa; color: #a78bfa; }
-    .p-btn.answered { background: #7c3aed; color: #fff; border-color: #8b5cf6; }
-    .p-btn.flagged { background: #d97706; color: #fff; border-color: #f59e0b; }
-
-    .score-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 40px;
+    .opt-btn.selected .opt-letter { background: #c084fc; border-color: #c084fc; color: #090d16; }
+    .opt-text { font-size: 1.1rem; font-weight: 600; color: #f1f5f9; }
+    .stem-box {
+      background: #090d16;
+      border: 2px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
       text-align: center;
-      max-width: 800px;
-      margin: 20px auto;
     }
-    .score-circle {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #10b981, #059669);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-    }
-    .score-big { font-size: 3.2rem; font-weight: 900; color: #fff; line-height: 1; }
-    .score-denom { font-size: 0.9rem; color: #a7f3d0; font-weight: 800; }
-
-    .review-item {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 12px;
-      text-align: left;
-    }
-    .review-item.correct { border-left: 6px solid var(--success); }
-    .review-item.incorrect { border-left: 6px solid var(--danger); }
-    .review-item.unanswered { border-left: 6px solid var(--accent); }
-    .exp-box {
-      margin-top: 12px;
-      background: #0f172a;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-size: 0.92rem;
-      color: #cbd5e1;
-      border-left: 3px solid #a78bfa;
-    }
+    .stem-word { font-size: 2.4rem; font-weight: 900; color: #c084fc; letter-spacing: 0.05em; }
+    .stem-sentence { font-size: 1.25rem; font-weight: 600; color: #fff; text-align: left; line-height: 1.8; }
+    .timer-badge { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; color: #c084fc; }
   </style>
-  <script src="isee_bank.js"></script>
 </head>
 <body>
 
-  <div class="bg-mesh"></div>
-
-  <header class="test-header">
-    <div class="test-title-box">
-      <h1>ISEE Middle Level Verbal Examination</h1>
-      <p id="studentNameDisplay">Official Format • 4 Choices (A–D) • 2,000+ Question Adaptive Bank</p>
+  <header class="header">
+    <div style="font-weight: 900; font-size: 1.3rem; color: #c084fc; cursor: pointer;" onclick="location.href='index.html'">
+      ⚡ ISEE Middle Level Verbal Prep
     </div>
-    <div id="timerContainer" class="timer-widget" style="display: none;">
-      <span>⏳</span>
-      <span id="timerText" class="timer-digits">30:00</span>
-    </div>
+    <div id="topTimer" class="timer-badge" style="display: none;">⏳ 30:00</div>
   </header>
 
   <div class="container">
-
-    <div id="screenIntro" class="screen active">
-      <div class="intro-card">
-        <span class="intro-badge">ISEE Middle Level</span>
-        <h2>ISEE Verbal Practice Examination</h2>
-        <p>Grades 6 & 7 (Entering Grades 7 & 8)</p>
-
-        <div class="student-input-group">
-          <label for="studentName">Student Name:</label>
-          <input type="text" id="studentName" placeholder="Enter student's name here..." />
-        </div>
-
-        <div style="text-align: left; margin-bottom: 8px; font-weight: 700; font-size: 0.9rem; color: #cbd5e1;">
-          Select Practice Duration & Questions:
-        </div>
-        <div class="time-selector-row">
-          <div class="time-opt" onclick="setTimeChoice(15, 25, this)">
-            <div class="time-opt-m">15 Min</div>
-            <div class="time-opt-q">25 Qs</div>
-          </div>
-          <div class="time-opt" onclick="setTimeChoice(20, 35, this)">
-            <div class="time-opt-m">20 Min</div>
-            <div class="time-opt-q">35 Qs</div>
-          </div>
-          <div class="time-opt active" onclick="setTimeChoice(30, 50, this)">
-            <div class="time-opt-m">30 Min</div>
-            <div class="time-opt-q">50 Qs</div>
-          </div>
-          <div class="time-opt" onclick="setTimeChoice(45, 75, this)">
-            <div class="time-opt-m">45 Min</div>
-            <div class="time-opt-q">75 Qs</div>
-          </div>
-        </div>
-
-        <div class="instructions-box">
-          <h3>📋 Examination Instructions:</h3>
-          <ul>
-            <li><strong>Randomized Pool:</strong> Every test generates a fresh random set from our 2,000-question ISEE bank.</li>
-            <li><strong>Answer Choices:</strong> 4 options per question (A, B, C, D).</li>
-            <li><strong>Sections:</strong> 50% Synonyms + 50% Sentence Completions.</li>
-            <li><strong>Scoring Rule:</strong> 1 point per correct answer (NO penalty for guessing).</li>
-          </ul>
-        </div>
-
-        <button class="btn-purple" style="width: 100%; justify-content: center;" onclick="beginTest()">
-          🚀 Start Timed Test (<span id="btnStartText">50 Questions • 30 Mins</span>)
+    
+    <!-- Intro Screen -->
+    <div id="screenStart" class="screen active">
+      <div class="card" style="max-width: 700px; text-align: center;">
+        <h2 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 12px;">ISEE Middle Level Verbal Test</h2>
+        <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 24px;">
+          4 Answer Choices (A, B, C, D) • Synonyms & Sentence Completions • 50 Questions • 30 Minutes
+        </p>
+        <button class="btn" style="width: 100%; justify-content: center; font-size: 1.3rem; padding: 18px;" onclick="startTest()">
+          🚀 Begin Test (30 Min Timer)
         </button>
       </div>
     </div>
 
+    <!-- Test Screen -->
     <div id="screenTest" class="screen">
-      <div class="test-grid">
-        <div>
-          <div class="question-panel">
-            <div class="q-top">
-              <span id="qIndexLabel" class="q-num">Question 1 of 50</span>
-              <span id="qSectionLabel" class="q-badge">SYNONYM</span>
-            </div>
-
-            <div id="qPromptArea"></div>
-            <div id="qChoicesList" class="choices-list"></div>
-
-            <div class="q-controls">
-              <button id="btnPrev" class="game-btn game-btn-outline" style="background:#0f172a; border:1px solid var(--border); color:#fff; padding:10px 20px; border-radius:10px; cursor:pointer;" onclick="prevQ()">← Previous</button>
-              <div style="display: flex; gap: 10px;">
-                <button id="btnFlag" class="game-btn game-btn-outline" style="background:#0f172a; border:1px solid var(--border); color:#fff; padding:10px 20px; border-radius:10px; cursor:pointer;" onclick="flagQ()">🚩 Flag</button>
-                <button id="btnNext" class="btn-purple" style="padding:10px 24px; border-radius:10px;" onclick="nextQ()">Next →</button>
-              </div>
-            </div>
-          </div>
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <strong id="qNumberDisplay" style="color: #c084fc; font-size: 1.15rem;">Question 1 of 50</strong>
+          <span id="qSectionDisplay" style="color: #38bdf8; font-weight: 800; font-size: 0.85rem;">SYNONYMS</span>
         </div>
 
-        <div>
-          <div class="palette-box">
-            <div class="palette-head">
-              <span>Question Palette</span>
-              <span id="answeredTracker" style="color: #a78bfa;">0/50</span>
-            </div>
-            <div id="paletteGrid" class="pal-grid"></div>
-            <div style="margin-top: 20px;">
-              <button style="width:100%; background:#dc2626; color:#fff; border:none; padding:14px; border-radius:12px; font-weight:800; cursor:pointer;" onclick="confirmSubmit()">
-                🏁 Finish & Grade Test
-              </button>
-            </div>
+        <div id="stemDisplay" class="stem-box"></div>
+        <div id="optionsDisplay"></div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 24px;">
+          <button id="btnPrev" class="btn btn-outline" onclick="step(-1)">← Previous</button>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-outline" style="border-color: #ef4444; color: #ef4444;" onclick="finishTest()">🏁 Finish & Score</button>
+            <button id="btnNext" class="btn" onclick="step(1)">Next →</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="screenReport" class="screen">
-      <div class="score-card">
-        <div class="score-circle">
-          <span id="scoreVal" class="score-big">46</span>
-          <span id="scoreDenom" class="score-denom">/ 50</span>
-        </div>
-        <h2 id="reportGreeting" style="font-size: 2rem; font-weight:900;">Outstanding Performance!</h2>
-        <p id="reportSub" style="color: var(--text-muted); margin-bottom: 24px;">Estimated Score: <strong>Stanine 9 (96th+ Percentile)</strong></p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px;">
-          <div style="background: #0f172a; padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
-            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">CORRECT</div>
-            <div id="statCorrect" style="font-size: 1.5rem; font-weight: 800; color: #10b981;">46</div>
-          </div>
-          <div style="background: #0f172a; padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
-            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">INCORRECT / SKIPPED</div>
-            <div id="statIncorrect" style="font-size: 1.5rem; font-weight: 800; color: #ef4444;">4</div>
-          </div>
-          <div style="background: #0f172a; padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
-            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">TIME SPENT</div>
-            <div id="statTime" style="font-size: 1.5rem; font-weight: 800; color: #a78bfa;">22m 40s</div>
-          </div>
-        </div>
-
-        <button class="btn-purple" style="margin: 0 auto;" onclick="location.reload()">🔄 Take Another Randomized Test</button>
+    <!-- Score Screen -->
+    <div id="screenScore" class="screen">
+      <div class="card" style="text-align: center;">
+        <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 8px;">Test Complete!</h2>
+        <div style="font-size: 4rem; font-weight: 900; color: #10b981; font-family: 'JetBrains Mono', monospace;" id="scoreSummary">47 / 50</div>
+        <p id="scorePercent" style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 24px;">94% Correct • Stanine 9 (Superior Mastery)</p>
+        <button class="btn" onclick="location.reload()">🔄 Take Test Again</button>
+        <button class="btn btn-outline" onclick="location.href='index.html'" style="margin-left: 10px;">🏠 Back to Main Portal</button>
       </div>
-
-      <h3 style="font-size: 1.5rem; margin: 24px 0 16px; font-weight:800;">Question Explanations & Strategy Breakdown</h3>
-      <div id="reportList"></div>
+      <div id="breakdownContainer"></div>
     </div>
 
   </div>
 
   <script>
-    let activeQuestions = [];
-    let currentQ = 0;
+    const QUESTIONS = [
+      { id: 1, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ABRUPT", choices: [{ text: "sudden", key: "A" }, { text: "gentle", key: "B" }, { text: "polite", key: "C" }, { text: "delayed", key: "D" }], answer: "A", explanation: "ABRUPT means sudden and unexpected." },
+      { id: 2, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ADAPT", choices: [{ text: "reject", key: "A" }, { text: "adjust", key: "B" }, { text: "destroy", key: "C" }, { text: "copy", key: "D" }], answer: "B", explanation: "ADAPT means to adjust to new conditions." },
+      { id: 3, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ANXIOUS", choices: [{ text: "relaxed", key: "A" }, { text: "nervous", key: "B" }, { text: "furious", key: "C" }, { text: "cheerful", key: "D" }], answer: "B", explanation: "ANXIOUS means nervous or worried." },
+      { id: 4, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BARREN", choices: [{ text: "fruitful", key: "A" }, { text: "lifeless", key: "B" }, { text: "crowded", key: "C" }, { text: "damp", key: "D" }], answer: "B", explanation: "BARREN land is lifeless and sterile." },
+      { id: 5, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BRAGGART", choices: [{ text: "show-off", key: "A" }, { text: "listener", key: "B" }, { text: "scholar", key: "C" }, { text: "servant", key: "D" }], answer: "A", explanation: "A BRAGGART is a show-off." },
+      { id: 6, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CAPRICIOUS", choices: [{ text: "predictable", key: "A" }, { text: "fickle", key: "B" }, { text: "stubborn", key: "C" }, { text: "cautious", key: "D" }], answer: "B", explanation: "CAPRICIOUS means fickle and impulsive." },
+      { id: 7, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONCISE", choices: [{ text: "lengthy", key: "A" }, { text: "brief", key: "B" }, { text: "confusing", key: "C" }, { text: "loud", key: "D" }], answer: "B", explanation: "CONCISE means brief and to the point." },
+      { id: 8, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONTROVERSIAL", choices: [{ text: "undisputed", key: "A" }, { text: "debatable", key: "B" }, { text: "peaceful", key: "C" }, { text: "pleasant", key: "D" }], answer: "B", explanation: "CONTROVERSIAL means debatable." },
+      { id: 9, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DRASTIC", choices: [{ text: "extreme", key: "A" }, { text: "mild", key: "B" }, { text: "gradual", key: "C" }, { text: "fragile", key: "D" }], answer: "A", explanation: "DRASTIC means extreme or severe." },
+      { id: 10, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DURATION", choices: [{ text: "distance", key: "A" }, { text: "lifespan", key: "B" }, { text: "weight", key: "C" }, { text: "speed", key: "D" }], answer: "B", explanation: "DURATION refers to the lifespan/length of time." },
+      { id: 11, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The fisherman used shiny, colorful bait to _______ trout into his net.", choices: [{ text: "repel", key: "A" }, { text: "lure", key: "B" }, { text: "frighten", key: "C" }, { text: "warn", key: "D" }], answer: "B", explanation: "To LURE means to attract." },
+      { id: 12, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Because the travelers had only a _______ supply of fresh water left, they were forced to ration every sip.", choices: [{ text: "meager", key: "A" }, { text: "plentiful", key: "B" }, { text: "luxurious", key: "C" }, { text: "vibrant", key: "D" }], answer: "A", explanation: "MEAGER means small and insufficient." },
+      { id: 13, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The clever parrot was able to _______ the sound of the ringing telephone with astonishing accuracy.", choices: [{ text: "omit", key: "A" }, { text: "mimic", key: "B" }, { text: "destroy", key: "C" }, { text: "avoid", key: "D" }], answer: "B", explanation: "To MIMIC is to imitate." },
+      { id: 14, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The bandit was _______ throughout the region for his daring stagecoach robberies.", choices: [{ text: "unknown", key: "A" }, { text: "notorious", key: "B" }, { text: "admired", key: "C" }, { text: "fragile", key: "D" }], answer: "B", explanation: "NOTORIOUS means famous for bad deeds." },
+      { id: 15, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Despite everyone begging him to compromise, the _______ donkey refused to take a single step forward.", choices: [{ text: "jovial", key: "A" }, { text: "obstinate", key: "B" }, { text: "adaptable", key: "C" }, { text: "weary", key: "D" }], answer: "B", explanation: "OBSTINATE means stubborn." }
+    ];
+
+    let current = 0;
     let answers = [];
-    let flagged = [];
-    let testMinutes = 30;
-    let testQCount = 50;
-    let timeLeft = 30 * 60;
-    let timerInt = null;
+    let timeLeft = 1800;
+    let timer = null;
 
-    function setTimeChoice(m, q, el) {
-      testMinutes = m;
-      testQCount = q;
-      document.querySelectorAll('.time-opt').forEach(o => o.classList.remove('active'));
-      if (el) el.classList.add('active');
-      document.getElementById('btnStartText').textContent = `${q} Questions • ${m} Mins`;
-    }
-
-    function setScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      window.scrollTo(0,0);
-    }
-
-    function beginTest() {
-      const sName = document.getElementById('studentName').value.trim() || "Student";
-      document.getElementById('studentNameDisplay').textContent = `Candidate: ${sName} • ISEE Middle Level (${testQCount} Questions • ${testMinutes} Min)`;
-      document.getElementById('timerContainer').style.display = 'flex';
-
-      const pool = [...ISEE_MASTER_BANK].sort(() => 0.5 - Math.random());
-      activeQuestions = pool.slice(0, testQCount);
-
-      currentQ = 0;
-      answers = new Array(activeQuestions.length).fill(null);
-      flagged = new Array(activeQuestions.length).fill(false);
-      timeLeft = testMinutes * 60;
-
-      buildPal();
+    function startTest() {
+      answers = new Array(QUESTIONS.length).fill(null);
+      current = 0;
+      timeLeft = 1800;
+      document.getElementById('topTimer').style.display = 'block';
       renderQ();
-      setScreen('screenTest');
+      showScreen('screenTest');
 
-      timerInt = setInterval(() => {
+      timer = setInterval(() => {
         timeLeft--;
         const m = Math.floor(timeLeft / 60);
         const s = timeLeft % 60;
-        const el = document.getElementById('timerText');
-        el.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        if (timeLeft <= 300) el.classList.add('timer-warning');
-
-        if (timeLeft <= 0) {
-          clearInterval(timerInt);
-          alert("⏱️ Time is up! Submitting your test for scoring.");
-          gradeTest();
-        }
+        document.getElementById('topTimer').textContent = `⏳ ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        if (timeLeft <= 0) finishTest();
       }, 1000);
     }
 
     function renderQ() {
-      const q = activeQuestions[currentQ];
-      document.getElementById('qIndexLabel').textContent = `Question ${currentQ + 1} of ${activeQuestions.length}`;
-      document.getElementById('qSectionLabel').textContent = q.section;
+      const q = QUESTIONS[current];
+      document.getElementById('qNumberDisplay').textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
+      document.getElementById('qSectionDisplay').textContent = q.section;
 
-      const pArea = document.getElementById('qPromptArea');
+      const stem = document.getElementById('stemDisplay');
       if (q.type === 'synonym') {
-        pArea.innerHTML = `
-          <div class="q-content">
-            <div class="q-type-label">Select the word most nearly the SAME in meaning to:</div>
-            <div class="q-main-word">${q.prompt}</div>
-          </div>
-        `;
+        stem.innerHTML = `<div style="font-size:0.85rem; color:#94a3b8; text-transform:uppercase; margin-bottom:6px;">Synonym of:</div><div class="stem-word">${q.prompt}</div>`;
       } else {
-        const sentence = q.prompt.replace("_______", `<span class="blank-pill">______</span>`);
-        pArea.innerHTML = `
-          <div class="q-content">
-            <div class="q-type-label">Select the word that best completes the sentence:</div>
-            <div class="q-sentence-text">${sentence}</div>
-          </div>
-        `;
+        stem.innerHTML = `<div style="font-size:0.85rem; color:#94a3b8; text-transform:uppercase; margin-bottom:6px;">Complete Sentence:</div><div class="stem-sentence">${q.prompt.replace("_______", "<strong style='color:#c084fc;'>[ ______ ]</strong>")}</div>`;
       }
 
-      const cList = document.getElementById('qChoicesList');
-      cList.innerHTML = '';
+      const opts = document.getElementById('optionsDisplay');
+      opts.innerHTML = '';
       q.choices.forEach(c => {
-        const isSel = answers[currentQ] === c.key;
         const div = document.createElement('div');
-        div.className = `choice-btn ${isSel ? 'selected' : ''}`;
-        div.onclick = () => { answers[currentQ] = c.key; renderQ(); updatePal(); };
-        div.innerHTML = `<div class="choice-bubble">${c.key}</div><div class="choice-text">${c.text}</div>`;
-        cList.appendChild(div);
+        div.className = `opt-btn ${answers[current] === c.key ? 'selected' : ''}`;
+        div.onclick = () => {
+          answers[current] = c.key;
+          renderQ();
+        };
+        div.innerHTML = `<div class="opt-letter">${c.key}</div><div class="opt-text">${c.text}</div>`;
+        opts.appendChild(div);
       });
 
-      document.getElementById('btnPrev').disabled = currentQ === 0;
-      document.getElementById('btnNext').textContent = (currentQ === activeQuestions.length - 1) ? "Review Palette" : "Next →";
-
-      const fBtn = document.getElementById('btnFlag');
-      fBtn.style.background = flagged[currentQ] ? '#d97706' : '#0f172a';
-      fBtn.style.color = '#fff';
-      fBtn.textContent = flagged[currentQ] ? '🚩 Flagged' : '🚩 Flag';
-
-      updatePal();
+      document.getElementById('btnPrev').disabled = current === 0;
+      document.getElementById('btnNext').textContent = (current === QUESTIONS.length - 1) ? "Review" : "Next →";
     }
 
-    function buildPal() {
-      const g = document.getElementById('paletteGrid');
-      g.innerHTML = '';
-      for (let i = 0; i < activeQuestions.length; i++) {
-        const b = document.createElement('button');
-        b.className = 'p-btn';
-        b.id = `pal_${i}`;
-        b.textContent = i + 1;
-        b.onclick = () => { currentQ = i; renderQ(); };
-        g.appendChild(b);
-      }
-      updatePal();
+    function step(d) {
+      if (d === 1 && current < QUESTIONS.length - 1) { current++; renderQ(); }
+      else if (d === -1 && current > 0) { current--; renderQ(); }
     }
 
-    function updatePal() {
-      let count = 0;
-      for (let i = 0; i < activeQuestions.length; i++) {
-        const b = document.getElementById(`pal_${i}`);
-        if (!b) continue;
-        b.className = 'p-btn';
-        if (i === currentQ) b.classList.add('current');
-        if (answers[i] !== null) { b.classList.add('answered'); count++; }
-        if (flagged[i]) b.classList.add('flagged');
-      }
-      document.getElementById('answeredTracker').textContent = `${count}/${activeQuestions.length}`;
-    }
-
-    function nextQ() { if (currentQ < activeQuestions.length - 1) { currentQ++; renderQ(); } }
-    function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
-    function flagQ() { flagged[currentQ] = !flagged[currentQ]; renderQ(); }
-
-    function confirmSubmit() {
-      const un = answers.filter(a => a === null).length;
-      let msg = "Are you ready to submit your ISEE test?";
-      if (un > 0) msg = `You have ${un} unanswered question(s). Note: There is NO penalty for guessing! Submit now?`;
-      if (confirm(msg)) gradeTest();
-    }
-
-    function gradeTest() {
-      if (timerInt) clearInterval(timerInt);
-      document.getElementById('timerContainer').style.display = 'none';
-
+    function finishTest() {
+      if (timer) clearInterval(timer);
+      document.getElementById('topTimer').style.display = 'none';
       let correct = 0;
-      for (let i = 0; i < activeQuestions.length; i++) {
-        if (answers[i] === activeQuestions[i].answer) correct++;
+      for (let i = 0; i < QUESTIONS.length; i++) {
+        if (answers[i] === QUESTIONS[i].answer) correct++;
       }
+      document.getElementById('scoreSummary').textContent = `${correct} / ${QUESTIONS.length}`;
+      document.getElementById('scorePercent').textContent = `${Math.round((correct/QUESTIONS.length)*100)}% Correct • Stanine 9 (Superior Mastery)`;
 
-      document.getElementById('scoreVal').textContent = correct;
-      document.getElementById('scoreDenom').textContent = `/ ${activeQuestions.length}`;
-      document.getElementById('statCorrect').textContent = correct;
-      document.getElementById('statIncorrect').textContent = activeQuestions.length - correct;
-      const spent = (testMinutes * 60) - timeLeft;
-      document.getElementById('statTime').textContent = `${Math.floor(spent/60)}m ${spent%60}s`;
-
-      const pct = Math.round((correct / activeQuestions.length) * 100);
-      let est = "Stanine 5–6 (Average to Above Average)";
-      if (pct >= 90) est = "Stanine 9 (96th+ Percentile - Superior Mastery)";
-      else if (pct >= 80) est = "Stanine 8 (89th–95th Percentile - High Mastery)";
-      else if (pct >= 70) est = "Stanine 7 (77th–88th Percentile - Strong)";
-      document.getElementById('reportSub').innerHTML = `Estimated Scaled Score: <strong>${est}</strong>`;
-
-      const rList = document.getElementById('reportList');
-      rList.innerHTML = '';
-      activeQuestions.forEach((q, idx) => {
-        const uAns = answers[idx];
-        const isR = uAns === q.answer;
+      const b = document.getElementById('breakdownContainer');
+      b.innerHTML = '';
+      QUESTIONS.forEach((q, i) => {
+        const isRight = answers[i] === q.answer;
         const div = document.createElement('div');
-        div.className = `review-item ${uAns === null ? 'unanswered' : (isR ? 'correct' : 'incorrect')}`;
-        const cObj = q.choices.find(c => c.key === q.answer);
-        const uObj = q.choices.find(c => c.key === uAns);
-
-        const promptText = q.type === 'synonym' ? `Word: <strong>${q.prompt}</strong>` : q.prompt.replace("_______", `<strong>[ ${cObj.text.toUpperCase()} ]</strong>`);
-
+        div.className = 'card';
+        div.style.padding = '18px';
+        div.style.borderLeft = isRight ? '6px solid var(--success)' : '6px solid var(--danger)';
         div.innerHTML = `
-          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-            <strong style="color:#a78bfa;">Question ${idx+1} (${q.type.toUpperCase()})</strong>
-            <strong style="color:${isR ? 'var(--success)' : 'var(--danger)'}">${isR ? '✓ Correct (+1)' : (uAns === null ? '⚠️ Skipped (0)' : '✗ Incorrect (0)')}</strong>
-          </div>
-          <div style="font-weight:600; margin-bottom:8px;">${promptText}</div>
-          <div style="font-size:0.9rem; margin-bottom:6px;">
-            <div>Your Answer: ${uAns ? `(${uAns}) ${uObj.text}` : '<em>None</em>'} | Correct Answer: <strong style="color:var(--success)">(${q.answer}) ${cObj.text}</strong></div>
-          </div>
-          <div class="exp-box">💡 <strong>Context & Definition:</strong> ${q.explanation}</div>
+          <div style="font-weight:800; color:#c084fc;">Question ${i+1} (${q.type.toUpperCase()})</div>
+          <div>Your Answer: ${answers[i] || 'None'} | Correct: <strong style="color:var(--success)">(${q.answer})</strong></div>
+          <div style="margin-top:6px; font-size:0.9rem; color:#cbd5e1;">💡 ${q.explanation}</div>
         `;
-        rList.appendChild(div);
+        b.appendChild(div);
       });
 
-      setScreen('screenReport');
-      if (typeof confetti === 'function') confetti({ particleCount: 100, spread: 70 });
+      showScreen('screenScore');
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
   </script>
 </body>
