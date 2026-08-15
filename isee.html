@@ -185,77 +185,111 @@
       ["JOVIAL", "merry", ["gloomy", "strict", "timid", "somber", "miserable"], "cheerful, friendly, and merry"],
       ["KEEN", "sharp", ["blunt", "careless", "lazy", "dull", "obtuse"], "sharp in intellect or perception"],
       ["KNACK", "talent", ["weakness", "accident", "penalty", "inability", "clumsiness"], "a special skill or talent"],
-      ["LOFTY", "towering", ["modest", "narrow", "deep", "low", "humble"], "towering, majestic, or high"]
+      ["LOFTY", "towering", ["modest", "narrow", "deep", "low", "humble"], "towering, majestic, or high"],
+      ["LURE", "entice", ["repel", "frighten", "warn", "reject", "discourage"], "to entice, tempt, or attract"],
+      ["MEAGER", "scanty", ["plentiful", "luxurious", "vibrant", "abundant", "rich"], "small in quantity and insufficient"],
+      ["MIMIC", "imitate", ["originate", "destroy", "avoid", "invent", "create"], "to imitate or copy closely"],
+      ["NONCOMMITTAL", "evasive", ["decisive", "furious", "boastful", "direct", "firm"], "not expressing a clear, decisive opinion"],
+      ["NOTORIOUS", "infamous", ["unknown", "admired", "fragile", "honored", "revered"], "famous for bad deeds; infamous"],
+      ["OBSTINATE", "stubborn", ["jovial", "adaptable", "weary", "flexible", "agreeable"], "stubbornly refusing to yield"],
+      ["OMIT", "exclude", ["include", "praise", "illuminate", "welcome", "retain"], "to leave out or exclude"],
+      ["PEAK", "summit", ["base", "burrow", "valley", "bottom", "plain"], "the pointed summit or top of a mountain"],
+      ["PREDICAMENT", "dilemma", ["benefit", "celebration", "sanctuary", "fortune", "advantage"], "a troublesome, perplexing situation or dilemma"],
+      ["PRESUME", "assume", ["prove", "regret", "prohibit", "verify", "confirm"], "to take for granted without proof; assume"],
+      ["QUEST", "journey", ["duration", "contradiction", "decline", "pause", "retreat"], "a long, heroic journey or search"],
+      ["REVERE", "honor", ["mock", "taunt", "abandon", "scorn", "criticize"], "to hold in deep, respectful admiration"],
+      ["ROBUST", "sturdy", ["fragile", "shabby", "meager", "weak", "flimsy"], "strong, sturdy, and durable"],
+      ["SOOTHE", "calm", ["agitate", "petrify", "falter", "inflame", "provoke"], "to gently calm and relieve distress"],
+      ["STEADFAST", "loyal", ["fickle", "capricious", "noncommittal", "hesitant", "unreliable"], "unwavering, loyal, and devoted"],
+      ["SUBTLE", "delicate", ["obvious", "drastic", "blunt", "harsh", "glaring"], "faint, delicate, and understated details"],
+      ["TANGIBLE", "concrete", ["imaginary", "vague", "doubtful", "abstract", "illusory"], "physical, measurable, and concrete"],
+      ["THRIVE", "flourish", ["perish", "falter", "decline", "wither", "decay"], "to grow vigorously and flourish"],
+      ["UNRULY", "disorderly", ["obedient", "quiet", "polite", "docile", "disciplined"], "disruptive, rowdy, and disorderly"],
+      ["URGENT", "critical", ["casual", "sluggish", "obsolete", "trivial", "relaxed"], "requiring immediate action; critical"],
+      ["VIBRANT", "energetic", ["drab", "barren", "mournful", "dull", "lifeless"], "colorful, lively, and full of energy"],
+      ["VIGOROUS", "strenuous", ["lazy", "delicate", "gentle", "feeble", "sluggish"], "energetic, forceful, and strenuous"],
+      ["WILLFUL", "headstrong", ["cooperative", "timid", "generous", "obedient", "yielding"], "stubbornly determined to have one's way"],
+      ["WRATH", "fury", ["kindness", "mercy", "gratitude", "calmness", "delight"], "fierce, intense anger or fury"],
+      ["YEARN", "crave", ["dread", "refuse", "conceal", "dislike", "hate"], "to long for, crave, or desire intensely"]
     ];
 
     const ISEE_SENTENCE_FRAMES = [
-      { frame: "The fisherman used colorful bait to _______ trout into his net.", word: "lure", options: ["repel", "frighten", "warn"], exp: "To LURE means to attract or tempt." },
-      { frame: "Because the hikers had only a _______ supply of water left, they rationed every drop.", word: "meager", options: ["plentiful", "luxurious", "vibrant"], exp: "MEAGER means small in quantity or insufficient." },
-      { frame: "The clever parrot was able to _______ the telephone ring with astonishing accuracy.", word: "mimic", options: ["omit", "destroy", "avoid"], exp: "To MIMIC is to imitate sounds." },
-      { frame: "The politician gave a _______ answer so as not to offend either side of the debate.", word: "noncommittal", options: ["decisive", "furious", "braggart"], exp: "NONCOMMITTAL means avoiding a clear stance." },
-      { frame: "The outlaw was _______ across the county for his daring bank robberies.", word: "notorious", options: ["unknown", "admired", "fragile"], exp: "NOTORIOUS means widely known for bad deeds." },
-      { frame: "Despite everyone begging him to budge, the _______ mule refused to move forward.", word: "obstinate", options: ["jovial", "adaptable", "weary"], exp: "OBSTINATE means stubborn and unyielding." },
-      { frame: "Maya realized she accidentally _______ an essential paragraph from her essay.", word: "omitted", options: ["praised", "illuminated", "revered"], exp: "To OMIT means to leave out or exclude." },
-      { frame: "After hours of climbing, the mountaineers finally reached the snowy _______.", word: "peak", options: ["base", "burrow", "valley"], exp: "The PEAK is the top summit of a mountain." },
-      { frame: "Getting locked out of his car in a heavy blizzard was a difficult _______ for Alex.", word: "predicament", options: ["benefit", "celebration", "sanctuary"], exp: "A PREDICAMENT is a troublesome situation." },
-      { frame: "You should not simply _______ it will not rain without checking the radar forecast.", word: "presume", options: ["prove", "regret", "prohibit"], exp: "To PRESUME means to take for granted without proof." },
-      { frame: "The young knight embarked on a dangerous _______ to locate the magic crystal.", word: "quest", options: ["duration", "contradiction", "decline"], exp: "A QUEST is an adventurous search." },
-      { frame: "Citizens in the village deeply _______ their honorable elders.", word: "revere", options: ["mock", "taunt", "abandon"], exp: "To REVERE means to hold in deep respect." },
-      { frame: "With thick stone walls and iron gates, the castle was remarkably _______.", word: "robust", options: ["fragile", "shabby", "meager"], exp: "ROBUST means sturdy and strong." },
-      { frame: "The soft lullaby helped _______ the restless infant to sleep.", word: "soothe", options: ["agitate", "petrify", "falter"], exp: "To SOOTHE means to calm or relieve." },
-      { frame: "Marcus remained a _______ companion who never broke a promise.", word: "steadfast", options: ["fickle", "capricious", "noncommittal"], exp: "STEADFAST means loyal and unwavering." },
-      { frame: "The museum exhibited _______ differences in shade that only experts noticed.", word: "subtle", options: ["obvious", "drastic", "blunt"], exp: "SUBTLE means delicate or understated." },
-      { frame: "The detective demanded _______ evidence before making any formal accusations.", word: "tangible", options: ["imaginary", "vague", "doubtful"], exp: "TANGIBLE means concrete and real." },
-      { frame: "With fertile soil and sunlight, the young saplings began to _______.", word: "thrive", options: ["perish", "falter", "decline"], exp: "To THRIVE means to grow vigorously." },
-      { frame: "The teacher quieted the _______ group of students who were yelling.", word: "unruly", options: ["obedient", "quiet", "polite"], exp: "UNRULY means rowdy and disorderly." },
-      { frame: "When the alarm went off, the captain issued an _______ command to evacuate.", word: "urgent", options: ["casual", "sluggish", "obsolete"], exp: "URGENT means needing immediate action." }
+      { frame: "The fisherman used colorful lures to _______ trout into his net.", word: "attract", options: ["repel", "frighten", "warn"], exp: "To attract means to draw or lure something closer." },
+      { frame: "Because the hikers had only a _______ supply of water left, they rationed every drop.", word: "scanty", options: ["plentiful", "luxurious", "vibrant"], exp: "Scanty (meager) means small in quantity." },
+      { frame: "The clever parrot was able to _______ the sound of the doorbell with astonishing accuracy.", word: "imitate", options: ["omit", "destroy", "avoid"], exp: "To imitate means to mimic or copy." },
+      { frame: "The politician gave a _______ answer so as not to alienate either side of the issue.", word: "noncommittal", options: ["decisive", "furious", "boastful"], exp: "Noncommittal means refusing to take a clear stance." },
+      { frame: "The bandit was _______ throughout the territory for his daring bank heists.", word: "infamous", options: ["unknown", "admired", "fragile"], exp: "Infamous (notorious) means famous for bad deeds." },
+      { frame: "Despite everyone begging him to budge, the _______ donkey refused to take a step.", word: "stubborn", options: ["jovial", "adaptable", "weary"], exp: "Stubborn (obstinate) means unyielding." },
+      { frame: "Maya realized she had accidentally _______ an important paragraph from her report.", word: "excluded", options: ["praised", "illuminated", "revered"], exp: "To exclude (omit) means to leave out." },
+      { frame: "After climbing for eight grueling hours, the hikers reached the snowy _______.", word: "summit", options: ["base", "burrow", "valley"], exp: "The summit (peak) is the top of a mountain." },
+      { frame: "Getting locked out of his home in the heavy rain was an annoying _______.", word: "dilemma", ["benefit", "celebration", "sanctuary"], exp: "A dilemma (predicament) is a troublesome situation." },
+      { frame: "You should not simply _______ that the train will arrive on schedule without checking.", word: "assume", options: ["prove", "regret", "prohibit"], exp: "To assume (presume) means to take for granted without proof." },
+      { frame: "The brave knight embarked on a dangerous _______ to recover the lost artifact.", word: "quest", options: ["duration", "contradiction", "decline"], exp: "A quest is a heroic search or journey." },
+      { frame: "In ancient times, citizens would deeply _______ their elders for their wisdom.", word: "honor", options: ["mock", "taunt", "abandon"], exp: "To honor (revere) means to show deep respect." },
+      { frame: "With reinforced concrete and steel pillars, the bridge was remarkably _______.", word: "sturdy", options: ["fragile", "shabby", "meager"], exp: "Sturdy (robust) means durable and well-built." },
+      { frame: "The harpist played a gentle lullaby to _______ the crying toddler to sleep.", word: "soothe", options: ["agitate", "petrify", "falter"], exp: "To soothe means to calm or comfort." },
+      { frame: "Marcus remained a _______ companion through all of life's unpredictable trials.", word: "steadfast", options: ["fickle", "capricious", "noncommittal"], exp: "Steadfast means loyal and unwavering." },
+      { frame: "The artist created _______ shifts in shading that only careful observers noticed.", word: "delicate", options: ["obvious", "drastic", "blunt"], exp: "Delicate (subtle) describes understated nuances." },
+      { frame: "The detective insisted on seeing _______ proof before filing charges against the suspect.", word: "concrete", options: ["imaginary", "vague", "doubtful"], exp: "Concrete (tangible) means measurable and physical." },
+      { frame: "With fertile soil and regular watering, the exotic orchids began to _______.", word: "flourish", options: ["perish", "falter", "decline"], exp: "To flourish (thrive) means to grow vigorously." },
+      { frame: "The teacher tried to manage the _______ children who were shouting loudly.", word: "disorderly", options: ["obedient", "quiet", "polite"], exp: "Disorderly (unruly) means chaotic and disruptive." },
+      { frame: "When the siren wailed, the fire captain gave an _______ order to evacuate the plant.", word: "urgent", options: ["casual", "sluggish", "obsolete"], exp: "Urgent means requiring immediate action." },
+      { frame: "The carnival was filled with _______ performers dressed in bright, dazzling costumes.", word: "vibrant", options: ["drab", "barren", "mournful"], exp: "Vibrant means lively and bright." },
+      { frame: "The athletes completed a _______ morning routine of running and conditioning.", word: "vigorous", options: ["lazy", "delicate", "gentle"], exp: "Vigorous means energetic and demanding." },
+      { frame: "The _______ toddler refused to put on his winter coat before going outside.", word: "willful", options: ["cooperative", "timid", "generous"], exp: "Willful means stubbornly headstrong." },
+      { frame: "The thunderstorm unleashed its furious _______ across the coastal town.", word: "wrath", options: ["kindness", "mercy", "gratitude"], exp: "Wrath means severe fury." },
+      { frame: "After months away at camp, Sarah began to _______ for her family's cooking.", word: "yearn", options: ["dread", "refuse", "conceal"], exp: "To yearn means to crave or long for deeply." }
     ];
 
-    function generateISEEPool() {
+    function generateUniqueISEESet(count = 50) {
       const letters = ['A', 'B', 'C', 'D'];
-      const pool = [];
+      const numSyn = Math.floor(count / 2);
+      const numSent = count - numSyn;
+      const result = [];
 
-      ISEE_CORE_DICTIONARY.forEach((entry) => {
+      // 1. Pick distinct synonyms
+      const shuffledWords = [...ISEE_CORE_DICTIONARY].sort(() => 0.5 - Math.random());
+      const selectedWords = shuffledWords.slice(0, Math.min(numSyn, shuffledWords.length));
+
+      selectedWords.forEach((entry, idx) => {
         const [word, correctSyn, distractors, meaning] = entry;
-        for (let variant = 0; variant < 10; variant++) {
-          const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
-          const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
-          const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
-          const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
-
-          pool.push({
-            id: pool.length + 1,
-            type: "synonym",
-            section: "PART 1: SYNONYMS",
-            prompt: word,
-            choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
-            answer: correctLetter,
-            explanation: `${word} means ${meaning}. Hence, ${correctSyn.toUpperCase()} is the correct answer.`
-          });
-        }
-      });
-
-      for (let sIdx = 0; sIdx < 600; sIdx++) {
-        const template = ISEE_SENTENCE_FRAMES[Math.floor(Math.random() * ISEE_SENTENCE_FRAMES.length)];
-        const rawChoices = [
-          { text: template.word, correct: true },
-          ...template.options.slice(0, 3).map(o => ({ text: o, correct: false }))
-        ];
+        const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
+        const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
         const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
         const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
 
-        pool.push({
-          id: pool.length + 1,
-          type: "sentence",
-          section: "PART 2: SENTENCE COMPLETION",
-          prompt: template.frame,
+        result.push({
+          id: idx + 1,
+          type: "synonym",
+          section: "PART 1: SYNONYMS",
+          prompt: word,
           choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
           answer: correctLetter,
-          explanation: template.exp
+          explanation: `${word} means ${meaning}. Therefore, "${correctSyn.toUpperCase()}" is the correct synonym.`
         });
-      }
+      });
 
-      return pool;
+      // 2. Pick distinct sentence completions
+      const shuffledSentences = [...ISEE_SENTENCE_FRAMES].sort(() => 0.5 - Math.random());
+      const selectedSentences = shuffledSentences.slice(0, Math.min(numSent, shuffledSentences.length));
+
+      selectedSentences.forEach((sItem, idx) => {
+        const rawChoices = [{ text: sItem.word, correct: true }, ...sItem.options.slice(0, 3).map(o => ({ text: o, correct: false }))];
+        const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
+        const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
+
+        result.push({
+          id: result.length + 1,
+          type: "sentence",
+          section: "PART 2: SENTENCE COMPLETION",
+          prompt: sItem.frame,
+          choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
+          answer: correctLetter,
+          explanation: sItem.exp
+        });
+      });
+
+      return result;
     }
 
     let QUESTIONS = [];
@@ -265,8 +299,8 @@
     let timer = null;
 
     function startTest() {
-      const fullPool = generateISEEPool();
-      QUESTIONS = [...fullPool].sort(() => 0.5 - Math.random()).slice(0, 50);
+      // Guaranteed 100% Unique, Non-Repeating 50-Question Exam Set
+      QUESTIONS = generateUniqueISEESet(50);
 
       answers = new Array(QUESTIONS.length).fill(null);
       current = 0;

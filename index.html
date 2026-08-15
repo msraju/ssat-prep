@@ -1047,115 +1047,140 @@
       { frame: "When the alarm went off, the captain issued an _______ command to evacuate.", word: "urgent", options: ["casual", "sluggish", "obsolete"], exp: "URGENT means needing immediate action." }
     ];
 
-    // Build massive 1,000+ question pool dynamically
-    function generateThousandQuestionPool(testType) {
+    // ==========================================
+    // ZERO-DUPLICATE TEST GENERATOR
+    // ==========================================
+    function generateUniqueExamSet(testType, count) {
       const isSSAT = testType === 'SSAT';
       const letters = isSSAT ? ['A', 'B', 'C', 'D', 'E'] : ['A', 'B', 'C', 'D'];
-      const pool = [];
+      const numSyn = Math.floor(count / 2);
+      const numPart2 = count - numSyn;
+      const result = [];
 
       if (isSSAT) {
-        // 1. Generate 500+ SSAT Synonyms
-        SSAT_CORE_DICTIONARY.forEach((entry, idx) => {
+        // Part 1: Distinct SSAT Synonyms (Strict 100% unique root words)
+        const shuffledWords = [...SSAT_CORE_DICTIONARY].sort(() => 0.5 - Math.random());
+        const selectedSynWords = shuffledWords.slice(0, Math.min(numSyn, shuffledWords.length));
+
+        selectedSynWords.forEach((entry, idx) => {
           const [word, correctSyn, distractors, meaning] = entry;
-          for (let variant = 0; variant < 8; variant++) {
-            const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 4);
-            const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
-            const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
-            const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
-
-            pool.push({
-              id: pool.length + 1,
-              type: "synonym",
-              section: "PART 1: SYNONYMS",
-              prompt: word,
-              choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
-              answer: correctLetter,
-              explanation: `${word} means ${meaning}. Therefore, ${correctSyn.toUpperCase()} is the correct synonym.`
-            });
-          }
-        });
-
-        // 2. Generate 500+ SSAT Analogies
-        for (let aIdx = 0; aIdx < 600; aIdx++) {
-          const e1 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
-          const e2 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
-          const e3 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
-          const e4 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
-          const e5 = SSAT_CORE_DICTIONARY[Math.floor(Math.random() * SSAT_CORE_DICTIONARY.length)];
-
-          const stem = `${e1[0]} is to ${e1[1].toUpperCase()} as`;
-          const target = `${e2[0]} is to ${e2[1]}`;
-          const d1 = `${e3[0]} is to ${e3[2][0]}`;
-          const d2 = `${e4[0]} is to ${e4[2][1]}`;
-          const d3 = `${e5[0]} is to ${e5[2][2]}`;
-          const d4 = `${e1[0]} is to ${e1[2][0]}`;
-
-          const rawChoices = [
-            { text: target, correct: true },
-            { text: d1, correct: false },
-            { text: d2, correct: false },
-            { text: d3, correct: false },
-            { text: d4, correct: false }
-          ];
+          const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 4);
+          const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
           const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
           const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
 
-          pool.push({
-            id: pool.length + 1,
+          result.push({
+            id: idx + 1,
+            type: "synonym",
+            section: "PART 1: SYNONYMS",
+            prompt: word,
+            choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
+            answer: correctLetter,
+            explanation: `${word} means ${meaning}. Therefore, "${correctSyn.toUpperCase()}" is the correct synonym.`
+          });
+        });
+
+        // Part 2: Distinct SSAT Analogies (Zero duplicate stems)
+        // Pool of unique analogy relationships
+        const analogyPool = [
+          { stem: "BLUNT is to SHARP as", target: "shabby is to luxurious", distractors: ["valiant is to brave", "fragile is to delicate", "adhesive is to glue", "weary is to tired"], exp: "Antonyms: BLUNT is opposite of SHARP, as SHABBY is opposite of LUXURIOUS." },
+          { stem: "ADHESIVE is to TAPE as", target: "ink is to pen", distractors: ["hazard is to safety", "burrow is to bird", "orchard is to fish", "tragedy is to joy"], exp: "Component to Tool: ADHESIVE makes TAPE work, as INK fills a PEN." },
+          { stem: "RABBIT is to BURROW as", target: "bird is to nest", distractors: ["apple is to orchard", "fish is to sky", "guardian is to danger", "protagonist is to villain"], exp: "Animal to Habitat: A RABBIT lives in a BURROW, as a BIRD lives in a NEST." },
+          { stem: "CONCEAL is to REVEAL as", target: "withdraw is to advance", distractors: ["salvage is to save", "taunt is to mock", "envy is to jealousy", "uproot is to plant"], exp: "Opposites: To CONCEAL is opposite of REVEAL, as WITHDRAW is opposite of ADVANCE." },
+          { stem: "PLENTIFUL is to SCARCE as", target: "furious is to calm", distractors: ["vivid is to bright", "capable is to skilled", "approximate is to rough", "moral is to lesson"], exp: "Antonyms: PLENTIFUL is opposite of SCARCE, as FURIOUS is opposite of CALM." },
+          { stem: "FRAGILE is to SHATTER as", target: "combustible is to burn", distractors: ["hazard is to protect", "nonchalant is to worry", "jagged is to smooth", "kin is to enemy"], exp: "Characteristic Outcome: FRAGILE items SHATTER, as COMBUSTIBLE items BURN." },
+          { stem: "APPLE is to ORCHARD as", target: "grape is to vineyard", distractors: ["route is to map", "novel is to cover", "guardian is to child", "debate is to quiet"], exp: "Crop to Location: APPLES grow in an ORCHARD, as GRAPES grow in a VINEYARD." },
+          { stem: "PROTAGONIST is to HERO as", target: "antagonist is to villain", distractors: ["tragedy is to comedy", "myth is to fact", "debate is to agreement", "taunt is to compliment"], exp: "Story Archetypes: PROTAGONIST is the HERO, as ANTAGONIST is the VILLAIN." },
+          { stem: "DANGER is to HAZARD as", target: "family is to kin", distractors: ["darkness is to illuminate", "truth is to contradiction", "bravery is to fear", "peace is to war"], exp: "Synonyms: DANGER means HAZARD, as FAMILY means KIN." },
+          { stem: "SALVAGE is to WRECK as", target: "evacuate is to danger", distractors: ["destroy is to build", "taunt is to cheer", "envy is to admire", "petrify is to soothe"], exp: "Emergency Action: One SALVAGES from a WRECK, as one EVACUATES from DANGER." },
+          { stem: "JAGGED is to SMOOTH as", target: "vivid is to dull", distractors: ["generous is to kind", "capable is to able", "moral is to ethical", "weary is to exhausted"], exp: "Antonyms: JAGGED is opposite of SMOOTH, as VIVID is opposite of DULL." },
+          { stem: "GUARDIAN is to PROTECT as", target: "teacher is to instruct", distractors: ["thief is to return", "enemy is to help", "novel is to sing", "hardship is to enjoy"], exp: "Agent to Purpose: A GUARDIAN PROTECTS, as a TEACHER INSTRUCTS." },
+          { stem: "UPROOT is to TREE as", target: "demolish is to building", distractors: ["illuminate is to darkness", "paint is to canvas", "drive is to road", "read is to book"], exp: "Destruction: To UPROOT destroys a TREE, as to DEMOLISH destroys a BUILDING." },
+          { stem: "FEAR is to PETRIFIED as", target: "anger is to furious", distractors: ["joy is to sorrow", "tired is to energetic", "calm is to excited", "brave is to cowardly"], exp: "Intensity: Extreme FEAR makes one PETRIFIED, as extreme ANGER makes one FURIOUS." },
+          { stem: "TRAGEDY is to SORROW as", target: "celebration is to jubilation", distractors: ["hazard is to safety", "defeat is to victory", "decline is to rise", "debate is to silence"], exp: "Event to Emotion: A TRAGEDY causes SORROW, as a CELEBRATION causes JUBILATION." },
+          { stem: "TYPEWRITER is to OBSOLETE as", target: "computer is to modern", distractors: ["orchard is to fruit", "hazard is to safe", "burrow is to sky", "furious is to happy"], exp: "Item to Trait: A TYPEWRITER is OBSOLETE, as a COMPUTER is MODERN." },
+          { stem: "FABLE is to MORAL as", target: "riddle is to answer", distractors: ["recipe is to ingredient", "joke is to sadness", "novel is to cover", "myth is to fact"], exp: "Structure: A FABLE has a MORAL, as a RIDDLE has an ANSWER." },
+          { stem: "RUNNING is to WEARY as", target: "eating is to full", distractors: ["sleeping is to tired", "studying is to ignorant", "winning is to sad", "singing is to silent"], exp: "Action to State: RUNNING makes one WEARY, as EATING makes one FULL." },
+          { stem: "CLOWN is to ZANY as", target: "scholar is to studious", distractors: ["blunt is to sword", "furious is to monk", "shabby is to king", "fragile is to rock"], exp: "Person to Trait: A CLOWN is ZANY, as a SCHOLAR is STUDIOUS." },
+          { stem: "MAP is to ROUTE as", target: "cookbook is to recipe", distractors: ["hazard is to danger", "burrow is to rabbit", "orchard is to tree", "tragedy is to tear"], exp: "Guide: A MAP defines a ROUTE, as a COOKBOOK defines a RECIPE." },
+          { stem: "TAUNT is to INSULT as", target: "praise is to compliment", distractors: ["debate is to agree", "conceal is to show", "liberate is to capture", "uproot is to plant"], exp: "Synonyms: To TAUNT is to INSULT, as to PRAISE is to COMPLIMENT." },
+          { stem: "SELDOM is to OFTEN as", target: "rarely is to frequently", distractors: ["vivid is to bright", "weary is to tired", "generous is to giving", "valiant is to brave"], exp: "Degree: SELDOM is opposite of OFTEN, as RARELY is opposite of FREQUENTLY." },
+          { stem: "QUEASY is to STOMACH as", target: "dizzy is to head", distractors: ["blunt is to pencil", "valiant is to knight", "fragile is to glass", "shabby is to coat"], exp: "Sensation: QUEASY affects the STOMACH, as DIZZY affects the HEAD." },
+          { stem: "LIBERATE is to PRISONER as", target: "heal is to patient", distractors: ["cage is to animal", "taunt is to friend", "demolish is to wall", "conceal is to truth"], exp: "Action to Beneficiary: LIBERATE helps a PRISONER, as HEAL helps a PATIENT." },
+          { stem: "VALIANT is to HERO as", target: "cowardly is to traitor", distractors: ["generous is to thief", "zany is to judge", "blunt is to needle", "queasy is to athlete"], exp: "Trait: A HERO is VALIANT, as a TRAITOR is COWARDLY." },
+          { stem: "SCALPEL is to SURGEON as", target: "chisel is to sculptor", distractors: ["paintbrush is to driver", "hammer is to teacher", "pen is to astronaut", "needle is to baker"], exp: "Tool to Worker: A SCALPEL is used by a SURGEON, as a CHISEL is used by a SCULPTOR." },
+          { stem: "AQUARIUM is to FISH as", target: "terrarium is to reptile", distractors: ["cage is to cloud", "nest is to lion", "barn is to whale", "kennel is to eagle"], exp: "Habitat: An AQUARIUM holds FISH, as a TERRARIUM holds REPTILES." },
+          { stem: "GLOVE is to HAND as", target: "sock is to foot", distractors: ["hat is to shoe", "belt is to neck", "ring is to wrist", "scarf is to ankle"], exp: "Apparel: A GLOVE covers a HAND, as a SOCK covers a FOOT." },
+          { stem: "DESERT is to ARID as", target: "swamp is to humid", distractors: ["ocean is to dry", "mountain is to flat", "jungle is to frozen", "prairie is to salty"], exp: "Environment: A DESERT is ARID, as a SWAMP is HUMID." },
+          { stem: "MICROPHONE is to AMPLIFY as", target: "microscope is to magnify", distractors: ["telescope is to darken", "camera is to erase", "compass is to confuse", "thermometer is to chill"], exp: "Tool: A MICROPHONE AMPLIFIES sound, as a MICROSCOPE MAGNIFIES images." }
+        ];
+
+        const shuffledAnalogies = [...analogyPool].sort(() => 0.5 - Math.random());
+        const selectedAnalogies = shuffledAnalogies.slice(0, Math.min(numPart2, shuffledAnalogies.length));
+
+        selectedAnalogies.forEach((aItem, idx) => {
+          const rawChoices = [{ text: aItem.target, correct: true }, ...aItem.distractors.slice(0, 4).map(d => ({ text: d, correct: false }))];
+          const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
+          const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
+
+          result.push({
+            id: result.length + 1,
             type: "analogy",
             section: "PART 2: ANALOGIES",
-            stem: stem,
+            stem: aItem.stem,
             choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
             answer: correctLetter,
-            explanation: `Bridge: ${e1[0]} means ${e1[1]}. Similarly, ${e2[0]} means ${e2[1]}.`
+            explanation: aItem.exp
           });
-        }
-      } else {
-        // 1. Generate 500+ ISEE Synonyms
-        ISEE_CORE_DICTIONARY.forEach((entry) => {
-          const [word, correctSyn, distractors, meaning] = entry;
-          for (let variant = 0; variant < 10; variant++) {
-            const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
-            const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
-            const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
-            const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
-
-            pool.push({
-              id: pool.length + 1,
-              type: "synonym",
-              section: "PART 1: SYNONYMS",
-              prompt: word,
-              choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
-              answer: correctLetter,
-              explanation: `${word} means ${meaning}. Hence, ${correctSyn.toUpperCase()} is the correct answer.`
-            });
-          }
         });
 
-        // 2. Generate 500+ ISEE Sentence Completions
-        for (let sIdx = 0; sIdx < 600; sIdx++) {
-          const template = ISEE_SENTENCE_FRAMES[Math.floor(Math.random() * ISEE_SENTENCE_FRAMES.length)];
-          const rawChoices = [
-            { text: template.word, correct: true },
-            ...template.options.slice(0, 3).map(o => ({ text: o, correct: false }))
-          ];
+      } else {
+        // Part 1: Distinct ISEE Synonyms (Zero duplicate words)
+        const shuffledWords = [...ISEE_CORE_DICTIONARY].sort(() => 0.5 - Math.random());
+        const selectedSynWords = shuffledWords.slice(0, Math.min(numSyn, shuffledWords.length));
+
+        selectedSynWords.forEach((entry, idx) => {
+          const [word, correctSyn, distractors, meaning] = entry;
+          const shuffledDist = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
+          const rawChoices = [{ text: correctSyn, correct: true }, ...shuffledDist.map(d => ({ text: d, correct: false }))];
           const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
           const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
 
-          pool.push({
-            id: pool.length + 1,
-            type: "sentence",
-            section: "PART 2: SENTENCE COMPLETION",
-            prompt: template.frame,
+          result.push({
+            id: idx + 1,
+            type: "synonym",
+            section: "PART 1: SYNONYMS",
+            prompt: word,
             choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
             answer: correctLetter,
-            explanation: template.exp
+            explanation: `${word} means ${meaning}. Therefore, "${correctSyn.toUpperCase()}" is the correct synonym.`
           });
-        }
+        });
+
+        // Part 2: Distinct ISEE Sentence Completions (Zero duplicate sentences)
+        const shuffledSentences = [...ISEE_SENTENCE_FRAMES].sort(() => 0.5 - Math.random());
+        const selectedSentences = shuffledSentences.slice(0, Math.min(numPart2, shuffledSentences.length));
+
+        selectedSentences.forEach((sItem, idx) => {
+          const rawChoices = [{ text: sItem.word, correct: true }, ...sItem.options.slice(0, 3).map(o => ({ text: o, correct: false }))];
+          const shuffledChoices = rawChoices.sort(() => 0.5 - Math.random());
+          const correctLetter = letters[shuffledChoices.findIndex(c => c.correct)];
+
+          result.push({
+            id: result.length + 1,
+            type: "sentence",
+            section: "PART 2: SENTENCE COMPLETION",
+            prompt: sItem.frame,
+            choices: shuffledChoices.map((c, i) => ({ text: c.text, key: letters[i] })),
+            answer: correctLetter,
+            explanation: sItem.exp
+          });
+        });
       }
 
-      return pool;
+      return result;
     }
+
 
 
     // State Variables
@@ -1225,14 +1250,11 @@
       const sName = document.getElementById('studentNameInput').value.trim() || "Challenger";
       document.getElementById('subHeaderBadge').textContent = `${currentAvatar} Candidate: ${sName} • ${chosenExam} Verbal Exam (${chosenQCount} Questions)`;
 
-      let masterBank = (window[chosenExam + '_MASTER_BANK'] && window[chosenExam + '_MASTER_BANK'].length > 100) ? window[chosenExam + '_MASTER_BANK'] : generateThousandQuestionPool(chosenExam);
-      
       if (customSubset) {
         examSet = customSubset;
       } else {
-        // Pure Random sampling from 1,000+ question master pool
-        const shuffled = [...masterBank].sort(() => 0.5 - Math.random());
-        examSet = shuffled.slice(0, Math.min(chosenQCount, shuffled.length));
+        // Guaranteed 100% Unique, Non-Repeating Question Permutation
+        examSet = generateUniqueExamSet(chosenExam, chosenQCount);
       }
 
       currentQ = 0;
