@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Official ISEE Verbal Reasoning Master Examination (50 Questions • 30 Minutes)</title>
+  <title>Official ISEE Verbal Reasoning Master Examination (2,000+ Question Bank)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
       --primary: #7c3aed;
@@ -14,9 +15,9 @@
       --accent: #f59e0b;
       --success: #10b981;
       --danger: #ef4444;
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --border: #334155;
+      --bg: #090d16;
+      --card-bg: rgba(30, 41, 59, 0.85);
+      --border: rgba(255, 255, 255, 0.12);
       --text: #f8fafc;
       --text-muted: #94a3b8;
     }
@@ -28,11 +29,23 @@
       color: var(--text);
       min-height: 100vh;
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-mesh {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1;
+      background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.25) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.2) 0%, transparent 45%),
+                  #090d16;
+      filter: blur(40px);
     }
 
     .test-header {
-      background: #1e293b;
-      border-bottom: 2px solid #475569;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 2px solid var(--border);
       padding: 14px 24px;
       display: flex;
       justify-content: space-between;
@@ -42,26 +55,28 @@
       z-index: 50;
     }
 
-    .test-title-box h1 { font-size: 1.25rem; font-weight: 700; color: #fff; }
+    .test-title-box h1 { font-size: 1.25rem; font-weight: 800; color: #fff; }
     .test-title-box p { font-size: 0.85rem; color: var(--text-muted); }
 
     .timer-widget {
       background: #0f172a;
-      border: 1px solid #475569;
+      border: 2px solid #a78bfa;
       padding: 8px 18px;
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
     }
     .timer-digits {
       font-family: 'JetBrains Mono', monospace;
       font-size: 1.3rem;
-      font-weight: 700;
+      font-weight: 800;
       color: #a78bfa;
     }
     .timer-warning {
       color: var(--danger) !important;
+      border-color: var(--danger) !important;
       animation: pulse 1s infinite alternate;
     }
     @keyframes pulse { from { opacity: 1; } to { opacity: 0.4; } }
@@ -73,45 +88,47 @@
     }
 
     .screen { display: none; }
-    .screen.active { display: block; }
+    .screen.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     .intro-card {
       background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      border: 2px solid var(--border);
+      border-radius: 24px;
       padding: 40px;
-      max-width: 700px;
-      margin: 40px auto;
+      max-width: 720px;
+      margin: 30px auto;
       text-align: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
     .intro-badge {
       display: inline-block;
       background: rgba(124, 58, 237, 0.25);
       border: 1px solid var(--primary);
       color: #c4b5fd;
-      padding: 4px 14px;
+      padding: 6px 16px;
       border-radius: 9999px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.85rem;
       text-transform: uppercase;
       margin-bottom: 16px;
     }
-    .intro-card h2 { font-size: 2rem; margin-bottom: 12px; }
+    .intro-card h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
     .intro-card p { color: var(--text-muted); margin-bottom: 24px; }
 
     .student-input-group {
       text-align: left;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       background: #0f172a;
-      padding: 20px;
-      border-radius: 12px;
+      padding: 18px;
+      border-radius: 14px;
       border: 1px solid var(--border);
     }
     .student-input-group label {
       display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-weight: 700;
+      margin-bottom: 6px;
       font-size: 0.95rem;
       color: #cbd5e1;
     }
@@ -120,47 +137,66 @@
       background: #1e293b;
       border: 1px solid #475569;
       padding: 12px 16px;
-      border-radius: 8px;
+      border-radius: 10px;
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-family: inherit;
     }
-    .student-input-group input:focus { outline: none; border-color: #8b5cf6; }
+
+    .time-selector-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .time-opt {
+      background: #0f172a;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .time-opt:hover { border-color: #a78bfa; transform: translateY(-2px); }
+    .time-opt.active {
+      border-color: #a78bfa;
+      background: rgba(167, 139, 250, 0.2);
+      box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
+    }
+    .time-opt-m { font-weight: 900; font-size: 1.15rem; }
+    .time-opt-q { font-size: 0.75rem; color: #a78bfa; font-weight: 800; }
 
     .instructions-box {
       text-align: left;
       background: #0f172a;
-      padding: 20px;
+      padding: 18px;
       border-radius: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       border-left: 4px solid var(--primary);
     }
-    .instructions-box h3 { font-size: 1rem; margin-bottom: 8px; color: #f1f5f9; }
-    .instructions-box ul { padding-left: 20px; color: #cbd5e1; font-size: 0.95rem; }
-    .instructions-box li { margin-bottom: 6px; }
+    .instructions-box h3 { font-size: 0.95rem; margin-bottom: 6px; color: #f1f5f9; }
+    .instructions-box ul { padding-left: 20px; color: #cbd5e1; font-size: 0.9rem; }
+    .instructions-box li { margin-bottom: 4px; }
 
-    .btn {
+    .btn-purple {
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      color: #fff;
       font-family: inherit;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 12px 24px;
-      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      padding: 16px 32px;
+      border-radius: 14px;
       border: none;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+      transition: all 0.25s;
     }
-    .btn-purple {
-      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
-    }
-    .btn-purple:hover { transform: translateY(-2px); }
-    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-    .btn-outline:hover { background: var(--border); }
-    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-purple:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(236, 72, 153, 0.6); }
 
     .test-grid {
       display: grid;
@@ -172,10 +208,11 @@
     .question-panel {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 32px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     }
+
     .q-top {
       display: flex;
       justify-content: space-between;
@@ -184,20 +221,20 @@
       margin-bottom: 24px;
       border-bottom: 1px solid var(--border);
     }
-    .q-num { font-size: 1.1rem; font-weight: 700; color: #a78bfa; }
+    .q-num { font-size: 1.15rem; font-weight: 800; color: #a78bfa; }
     .q-badge {
       background: #334155;
       padding: 4px 12px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .q-content {
       background: #0f172a;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 26px;
       margin-bottom: 24px;
     }
     .q-type-label {
@@ -205,16 +242,18 @@
       color: var(--text-muted);
       text-transform: uppercase;
       margin-bottom: 8px;
+      font-weight: 700;
     }
     .q-main-word {
-      font-size: 2.2rem;
-      font-weight: 800;
+      font-size: 2.4rem;
+      font-weight: 900;
       color: #fff;
       text-align: center;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
     }
     .q-sentence-text {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       font-weight: 500;
       color: #f8fafc;
       line-height: 1.8;
@@ -225,7 +264,7 @@
       border-bottom: 3px solid #a78bfa;
       margin: 0 4px;
       color: #a78bfa;
-      font-weight: 700;
+      font-weight: 800;
       text-align: center;
     }
 
@@ -233,28 +272,29 @@
     .choice-btn {
       background: #1e293b;
       border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 18px;
+      border-radius: 14px;
+      padding: 15px 18px;
       display: flex;
       align-items: center;
       gap: 14px;
       cursor: pointer;
       transition: all 0.2s;
     }
-    .choice-btn:hover { border-color: #a78bfa; background: #334155; }
+    .choice-btn:hover { border-color: #a78bfa; background: #334155; transform: translateX(4px); }
     .choice-btn.selected {
       border-color: #8b5cf6;
       background: rgba(139, 92, 246, 0.25);
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
     }
     .choice-bubble {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: 2px solid #64748b;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-muted);
       flex-shrink: 0;
     }
@@ -263,13 +303,13 @@
       border-color: #8b5cf6;
       color: #fff;
     }
-    .choice-text { font-size: 1.05rem; font-weight: 500; color: #f1f5f9; }
+    .choice-text { font-size: 1.1rem; font-weight: 500; color: #f1f5f9; }
 
     .q-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 32px;
+      margin-top: 30px;
       padding-top: 20px;
       border-top: 1px solid var(--border);
     }
@@ -277,7 +317,7 @@
     .palette-box {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 20px;
       position: sticky;
       top: 90px;
@@ -298,11 +338,11 @@
     }
     .p-btn {
       background: #0f172a;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       color: var(--text-muted);
       padding: 8px 0;
-      border-radius: 6px;
-      font-weight: 700;
+      border-radius: 8px;
+      font-weight: 800;
       font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.15s;
@@ -314,15 +354,15 @@
     .score-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 40px;
       text-align: center;
       max-width: 800px;
       margin: 20px auto;
     }
     .score-circle {
-      width: 140px;
-      height: 140px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       background: linear-gradient(135deg, #10b981, #059669);
       display: flex;
@@ -330,14 +370,15 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto 20px;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
     }
-    .score-big { font-size: 2.8rem; font-weight: 800; color: #fff; line-height: 1; }
-    .score-denom { font-size: 0.85rem; color: #a7f3d0; font-weight: 700; }
+    .score-big { font-size: 3.2rem; font-weight: 900; color: #fff; line-height: 1; }
+    .score-denom { font-size: 0.9rem; color: #a7f3d0; font-weight: 800; }
 
     .review-item {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 20px;
       margin-bottom: 12px;
       text-align: left;
@@ -350,18 +391,21 @@
       background: #0f172a;
       padding: 12px 16px;
       border-radius: 8px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: #cbd5e1;
       border-left: 3px solid #a78bfa;
     }
   </style>
+  <script src="isee_bank.js"></script>
 </head>
 <body>
 
+  <div class="bg-mesh"></div>
+
   <header class="test-header">
     <div class="test-title-box">
-      <h1>ISEE Middle Level Verbal Master Examination</h1>
-      <p id="studentNameDisplay">Official Format • 50 Questions (All Words Covered) • 30 Minutes</p>
+      <h1>ISEE Middle Level Verbal Examination</h1>
+      <p id="studentNameDisplay">Official Format • 4 Choices (A–D) • 2,000+ Question Adaptive Bank</p>
     </div>
     <div id="timerContainer" class="timer-widget" style="display: none;">
       <span>⏳</span>
@@ -373,28 +417,49 @@
 
     <div id="screenIntro" class="screen active">
       <div class="intro-card">
-        <span class="intro-badge">Master Exam • 50 Questions</span>
-        <h2>ISEE Verbal Reasoning Examination</h2>
-        <p>Middle Level • Grades 6 & 7 (Entering Grades 7 & 8)</p>
+        <span class="intro-badge">ISEE Middle Level</span>
+        <h2>ISEE Verbal Practice Examination</h2>
+        <p>Grades 6 & 7 (Entering Grades 7 & 8)</p>
 
         <div class="student-input-group">
           <label for="studentName">Student Name:</label>
           <input type="text" id="studentName" placeholder="Enter student's name here..." />
         </div>
 
+        <div style="text-align: left; margin-bottom: 8px; font-weight: 700; font-size: 0.9rem; color: #cbd5e1;">
+          Select Practice Duration & Questions:
+        </div>
+        <div class="time-selector-row">
+          <div class="time-opt" onclick="setTimeChoice(15, 25, this)">
+            <div class="time-opt-m">15 Min</div>
+            <div class="time-opt-q">25 Qs</div>
+          </div>
+          <div class="time-opt" onclick="setTimeChoice(20, 35, this)">
+            <div class="time-opt-m">20 Min</div>
+            <div class="time-opt-q">35 Qs</div>
+          </div>
+          <div class="time-opt active" onclick="setTimeChoice(30, 50, this)">
+            <div class="time-opt-m">30 Min</div>
+            <div class="time-opt-q">50 Qs</div>
+          </div>
+          <div class="time-opt" onclick="setTimeChoice(45, 75, this)">
+            <div class="time-opt-m">45 Min</div>
+            <div class="time-opt-q">75 Qs</div>
+          </div>
+        </div>
+
         <div class="instructions-box">
           <h3>📋 Examination Instructions:</h3>
           <ul>
-            <li><strong>Total Time:</strong> Exactly <strong>30 minutes</strong>.</li>
-            <li><strong>Total Questions:</strong> <strong>50 questions</strong> (25 Synonyms + 25 Sentence Completions).</li>
+            <li><strong>Randomized Pool:</strong> Every test generates a fresh random set from our 2,000-question ISEE bank.</li>
             <li><strong>Answer Choices:</strong> 4 options per question (A, B, C, D).</li>
-            <li><strong>Coverage:</strong> Tests 100% of all 50 vocabulary words from your list!</li>
+            <li><strong>Sections:</strong> 50% Synonyms + 50% Sentence Completions.</li>
             <li><strong>Scoring Rule:</strong> 1 point per correct answer (NO penalty for guessing).</li>
           </ul>
         </div>
 
-        <button class="btn btn-purple" style="font-size: 1.15rem; padding: 14px 32px;" onclick="beginTest()">
-          🚀 Start 30-Min Test (50 Questions)
+        <button class="btn-purple" style="width: 100%; justify-content: center;" onclick="beginTest()">
+          🚀 Start Timed Test (<span id="btnStartText">50 Questions • 30 Mins</span>)
         </button>
       </div>
     </div>
@@ -412,10 +477,10 @@
             <div id="qChoicesList" class="choices-list"></div>
 
             <div class="q-controls">
-              <button id="btnPrev" class="btn btn-outline" onclick="prevQ()">← Previous</button>
+              <button id="btnPrev" class="game-btn game-btn-outline" style="background:#0f172a; border:1px solid var(--border); color:#fff; padding:10px 20px; border-radius:10px; cursor:pointer;" onclick="prevQ()">← Previous</button>
               <div style="display: flex; gap: 10px;">
-                <button id="btnFlag" class="btn btn-outline" onclick="flagQ()">🚩 Flag</button>
-                <button id="btnNext" class="btn btn-purple" onclick="nextQ()">Next →</button>
+                <button id="btnFlag" class="game-btn game-btn-outline" style="background:#0f172a; border:1px solid var(--border); color:#fff; padding:10px 20px; border-radius:10px; cursor:pointer;" onclick="flagQ()">🚩 Flag</button>
+                <button id="btnNext" class="btn-purple" style="padding:10px 24px; border-radius:10px;" onclick="nextQ()">Next →</button>
               </div>
             </div>
           </div>
@@ -429,7 +494,7 @@
             </div>
             <div id="paletteGrid" class="pal-grid"></div>
             <div style="margin-top: 20px;">
-              <button class="btn btn-danger" style="width: 100%; justify-content: center;" onclick="confirmSubmit()">
+              <button style="width:100%; background:#dc2626; color:#fff; border:none; padding:14px; border-radius:12px; font-weight:800; cursor:pointer;" onclick="confirmSubmit()">
                 🏁 Finish & Grade Test
               </button>
             </div>
@@ -442,97 +507,52 @@
       <div class="score-card">
         <div class="score-circle">
           <span id="scoreVal" class="score-big">46</span>
-          <span class="score-denom">/ 50</span>
+          <span id="scoreDenom" class="score-denom">/ 50</span>
         </div>
-        <h2 id="reportGreeting" style="font-size: 1.8rem;">Outstanding Performance!</h2>
-        <p id="reportSub" style="color: var(--text-muted); margin-bottom: 24px;">Estimated Score: <strong>Stanine 9 (95th+ Percentile)</strong></p>
+        <h2 id="reportGreeting" style="font-size: 2rem; font-weight:900;">Outstanding Performance!</h2>
+        <p id="reportSub" style="color: var(--text-muted); margin-bottom: 24px;">Estimated Score: <strong>Stanine 9 (96th+ Percentile)</strong></p>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px;">
-          <div style="background: #0f172a; padding: 14px; border-radius: 10px; border: 1px solid var(--border);">
-            <div style="font-size: 0.8rem; color: var(--text-muted);">CORRECT</div>
-            <div id="statCorrect" style="font-size: 1.4rem; font-weight: 700; color: #10b981;">46</div>
+          <div style="background: #0f172a; padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">CORRECT</div>
+            <div id="statCorrect" style="font-size: 1.5rem; font-weight: 800; color: #10b981;">46</div>
           </div>
-          <div style="background: #0f172a; padding: 14px; border-radius: 10px; border: 1px solid var(--border);">
-            <div style="font-size: 0.8rem; color: var(--text-muted);">INCORRECT / SKIPPED</div>
-            <div id="statIncorrect" style="font-size: 1.4rem; font-weight: 700; color: #ef4444;">4</div>
+          <div style="background: #0f172a; padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">INCORRECT / SKIPPED</div>
+            <div id="statIncorrect" style="font-size: 1.5rem; font-weight: 800; color: #ef4444;">4</div>
           </div>
-          <div style="background: #0f172a; padding: 14px; border-radius: 10px; border: 1px solid var(--border);">
-            <div style="font-size: 0.8rem; color: var(--text-muted);">TIME SPENT</div>
-            <div id="statTime" style="font-size: 1.4rem; font-weight: 700; color: #a78bfa;">22m 40s</div>
+          <div style="background: #0f172a; padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">TIME SPENT</div>
+            <div id="statTime" style="font-size: 1.5rem; font-weight: 800; color: #a78bfa;">22m 40s</div>
           </div>
         </div>
 
-        <button class="btn btn-purple" onclick="location.reload()">🔄 Retake Test</button>
+        <button class="btn-purple" style="margin: 0 auto;" onclick="location.reload()">🔄 Take Another Randomized Test</button>
       </div>
 
-      <h3 style="font-size: 1.4rem; margin: 24px 0 16px;">Question Explanations & Strategy Breakdown</h3>
+      <h3 style="font-size: 1.5rem; margin: 24px 0 16px; font-weight:800;">Question Explanations & Strategy Breakdown</h3>
       <div id="reportList"></div>
     </div>
 
   </div>
 
   <script>
-    const ISEE_FULL_50 = [
-      // 1-25 Synonyms
-      { id: 1, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ABRUPT", choices: [{ text: "sudden", key: "A" }, { text: "gentle", key: "B" }, { text: "polite", key: "C" }, { text: "delayed", key: "D" }], answer: "A", explanation: "ABRUPT means happening suddenly and without warning." },
-      { id: 2, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ADAPT", choices: [{ text: "reject", key: "A" }, { text: "adjust", key: "B" }, { text: "destroy", key: "C" }, { text: "copy", key: "D" }], answer: "B", explanation: "ADAPT means to adjust or modify to fit new circumstances." },
-      { id: 3, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ANXIOUS", choices: [{ text: "relaxed", key: "A" }, { text: "nervous", key: "B" }, { text: "furious", key: "C" }, { text: "cheerful", key: "D" }], answer: "B", explanation: "ANXIOUS means feeling worried, uneasy, or nervous." },
-      { id: 4, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BARREN", choices: [{ text: "fruitful", key: "A" }, { text: "lifeless", key: "B" }, { text: "crowded", key: "C" }, { text: "damp", key: "D" }], answer: "B", explanation: "BARREN land is empty, sterile, or lifeless." },
-      { id: 5, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BRAGGART", choices: [{ text: "show-off", key: "A" }, { text: "listener", key: "B" }, { text: "scholar", key: "C" }, { text: "servant", key: "D" }], answer: "A", explanation: "A BRAGGART is someone who boasts or shows off loudly." },
-      { id: 6, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CAPRICIOUS", choices: [{ text: "predictable", key: "A" }, { text: "fickle", key: "B" }, { text: "stubborn", key: "C" }, { text: "cautious", key: "D" }], answer: "B", explanation: "CAPRICIOUS means impulsive, erratic, or fickle." },
-      { id: 7, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONCISE", choices: [{ text: "lengthy", key: "A" }, { text: "brief", key: "B" }, { text: "confusing", key: "C" }, { text: "loud", key: "D" }], answer: "B", explanation: "CONCISE means giving a lot of information in few, brief words." },
-      { id: 8, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONTROVERSIAL", choices: [{ text: "undisputed", key: "A" }, { text: "debatable", key: "B" }, { text: "peaceful", key: "C" }, { text: "pleasant", key: "D" }], answer: "B", explanation: "CONTROVERSIAL means debatable and likely to cause dispute." },
-      { id: 9, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DRASTIC", choices: [{ text: "extreme", key: "A" }, { text: "mild", key: "B" }, { text: "gradual", key: "C" }, { text: "fragile", key: "D" }], answer: "A", explanation: "DRASTIC actions are radical, severe, or extreme." },
-      { id: 10, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DURATION", choices: [{ text: "distance", key: "A" }, { text: "lifespan", key: "B" }, { text: "weight", key: "C" }, { text: "speed", key: "D" }], answer: "B", explanation: "DURATION refers to the length of time something lasts (lifespan/span)." },
-      { id: 11, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ECONOMIZE", choices: [{ text: "spend", key: "A" }, { text: "save", key: "B" }, { text: "waste", key: "C" }, { text: "donate", key: "D" }], answer: "B", explanation: "ECONOMIZE means to cut expenses and save money." },
-      { id: 12, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ENDEAVOR", choices: [{ text: "attempt", key: "A" }, { text: "hesitation", key: "B" }, { text: "mistake", key: "C" }, { text: "surrender", key: "D" }], answer: "A", explanation: "An ENDEAVOR is an earnest attempt or effort toward a goal." },
-      { id: 13, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FALTER", choices: [{ text: "steady", key: "A" }, { text: "stumble", key: "B" }, { text: "charge", key: "C" }, { text: "conquer", key: "D" }], answer: "B", explanation: "FALTER means to stumble or lose strength/momentum." },
-      { id: 14, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FLOURISH", choices: [{ text: "wither", key: "A" }, { text: "prosper", key: "B" }, { text: "collapse", key: "C" }, { text: "pause", key: "D" }], answer: "B", explanation: "FLOURISH means to thrive, prosper, and grow strongly." },
-      { id: 15, type: "synonym", section: "PART 1: SYNONYMS", prompt: "GRATIFIED", choices: [{ text: "pleased", key: "A" }, { text: "annoyed", key: "B" }, { text: "exhausted", key: "C" }, { text: "frightened", key: "D" }], answer: "A", explanation: "GRATIFIED means feeling pleased, satisfied, or content." },
-      { id: 16, type: "synonym", section: "PART 1: SYNONYMS", prompt: "GULLIBLE", choices: [{ text: "skeptical", key: "A" }, { text: "easily tricked", key: "B" }, { text: "observant", key: "C" }, { text: "intelligent", key: "D" }], answer: "B", explanation: "GULLIBLE means easily tricked, naive, or credulous." },
-      { id: 17, type: "synonym", section: "PART 1: SYNONYMS", prompt: "HAPHAZARD", choices: [{ text: "random", key: "A" }, { text: "organized", key: "B" }, { text: "punctual", key: "C" }, { text: "cautious", key: "D" }], answer: "A", explanation: "HAPHAZARD means random, aimless, or lacking organization." },
-      { id: 18, type: "synonym", section: "PART 1: SYNONYMS", prompt: "HOMELY", choices: [{ text: "glamorous", key: "A" }, { text: "plain", key: "B" }, { text: "majestic", key: "C" }, { text: "expensive", key: "D" }], answer: "B", explanation: "HOMELY means simple, unadorned, or plain in appearance." },
-      { id: 19, type: "synonym", section: "PART 1: SYNONYMS", prompt: "INCIDENT", choices: [{ text: "event", key: "A" }, { text: "planning", key: "B" }, { text: "silence", key: "C" }, { text: "theory", key: "D" }], answer: "A", explanation: "An INCIDENT is an occurrence, episode, or event." },
-      { id: 20, type: "synonym", section: "PART 1: SYNONYMS", prompt: "INUNDATE", choices: [{ text: "drain", key: "A" }, { text: "overwhelm", key: "B" }, { text: "uncover", key: "C" }, { text: "ignite", key: "D" }], answer: "B", explanation: "INUNDATE means to overwhelm with things, or flood completely." },
-      { id: 21, type: "synonym", section: "PART 1: SYNONYMS", prompt: "IRATE", choices: [{ text: "cheerful", key: "A" }, { text: "furious", key: "B" }, { text: "calm", key: "C" }, { text: "curious", key: "D" }], answer: "B", explanation: "IRATE means extremely angry, furious, or incensed." },
-      { id: 22, type: "synonym", section: "PART 1: SYNONYMS", prompt: "JOVIAL", choices: [{ text: "merry", key: "A" }, { text: "gloomy", key: "B" }, { text: "strict", key: "C" }, { text: "timid", key: "D" }], answer: "A", explanation: "JOVIAL means cheerful, friendly, and merry." },
-      { id: 23, type: "synonym", section: "PART 1: SYNONYMS", prompt: "KEEN", choices: [{ text: "sharp", key: "A" }, { text: "blunt", key: "B" }, { text: "careless", key: "C" }, { text: "lazy", key: "D" }], answer: "A", explanation: "KEEN means sharp in intellect or perception, or eager." },
-      { id: 24, type: "synonym", section: "PART 1: SYNONYMS", prompt: "KNACK", choices: [{ text: "weakness", key: "A" }, { text: "talent", key: "B" }, { text: "accident", key: "C" }, { text: "penalty", key: "D" }], answer: "B", explanation: "A KNACK is a special skill, flair, or talent." },
-      { id: 25, type: "synonym", section: "PART 1: SYNONYMS", prompt: "LOFTY", choices: [{ text: "modest", key: "A" }, { text: "towering", key: "B" }, { text: "narrow", key: "C" }, { text: "deep", key: "D" }], answer: "B", explanation: "LOFTY means towering, majestic, or exalted." },
-
-      // 26-50 Sentence Completion
-      { id: 26, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The fisherman used shiny, colorful bait to _______ trout into his net.", choices: [{ text: "repel", key: "A" }, { text: "lure", key: "B" }, { text: "frighten", key: "C" }, { text: "warn", key: "D" }], answer: "B", explanation: "To LURE means to tempt or attract someone/something toward a target." },
-      { id: 27, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Because the travelers had only a _______ supply of fresh water left in the desert, they were forced to ration every sip.", choices: [{ text: "meager", key: "A" }, { text: "plentiful", key: "B" }, { text: "luxurious", key: "C" }, { text: "vibrant", key: "D" }], answer: "A", explanation: "MEAGER means lacking in quantity; small and insufficient." },
-      { id: 28, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The clever parrot was able to _______ the sound of the ringing telephone with astonishing accuracy.", choices: [{ text: "omit", key: "A" }, { text: "mimic", key: "B" }, { text: "destroy", key: "C" }, { text: "avoid", key: "D" }], answer: "B", explanation: "To MIMIC is to imitate or copy sounds/actions closely." },
-      { id: 29, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "When asked which candidate she supported in the debate, the mayor gave a _______ answer so as not to alienate any voters.", choices: [{ text: "noncommittal", key: "A" }, { text: "decisive", key: "B" }, { text: "furious", key: "C" }, { text: "braggart", key: "D" }], answer: "A", explanation: "NONCOMMITTAL means not expressing a clear, decisive opinion." },
-      { id: 30, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The bandit was _______ throughout the region for his daring stagecoach robberies.", choices: [{ text: "unknown", key: "A" }, { text: "notorious", key: "B" }, { text: "admired", key: "C" }, { text: "fragile", key: "D" }], answer: "B", explanation: "NOTORIOUS means widely known for bad or villainous deeds." },
-      { id: 31, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Despite everyone begging him to compromise, the _______ donkey refused to take a single step forward.", choices: [{ text: "jovial", key: "A" }, { text: "obstinate", key: "B" }, { text: "adaptable", key: "C" }, { text: "weary", key: "D" }], answer: "B", explanation: "OBSTINATE means stubbornly refusing to change one's mind or yield." },
-      { id: 32, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "While proofreading her essay, Maya realized she accidentally _______ a critical sentence from the concluding paragraph.", choices: [{ text: "omitted", key: "A" }, { text: "praised", key: "B" }, { text: "illuminated", key: "C" }, { text: "revered", key: "D" }], answer: "A", explanation: "To OMIT means to leave out or exclude." },
-      { id: 33, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "After climbing for six grueling hours, the mountaineers finally stood at the snowy _______ of the mountain.", choices: [{ text: "base", key: "A" }, { text: "peak", key: "B" }, { text: "burrow", key: "C" }, { text: "valley", key: "D" }], answer: "B", explanation: "The PEAK is the pointed summit or top of a mountain." },
-      { id: 34, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Finding himself locked out of his apartment in the pouring rain with no phone was a difficult _______ for Alex.", choices: [{ text: "benefit", key: "A" }, { text: "predicament", key: "B" }, { text: "celebration", key: "C" }, { text: "sanctuary", key: "D" }], answer: "B", explanation: "A PREDICAMENT is a troublesome, perplexing, or difficult situation." },
-      { id: 35, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Without looking at the forecast, you should not _______ that it will be sunny all afternoon.", choices: [{ text: "prove", key: "A" }, { text: "presume", key: "B" }, { text: "regret", key: "C" }, { text: "prohibit", key: "D" }], answer: "B", explanation: "To PRESUME means to take for granted as true without verification." },
-      { id: 36, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The young knight embarked on a perilous _______ across the kingdom to recover the stolen enchanted crown.", choices: [{ text: "duration", key: "A" }, { text: "quest", key: "B" }, { text: "contradiction", key: "C" }, { text: "decline", key: "D" }], answer: "B", explanation: "A QUEST is a long, heroic search or journey." },
-      { id: 37, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "In ancient cultures, citizens would deeply _______ their wisest elders and seek their guidance before major decisions.", choices: [{ text: "mock", key: "A" }, { text: "revere", key: "B" }, { text: "taunt", key: "C" }, { text: "abandon", key: "D" }], answer: "B", explanation: "To REVERE means to hold in deep, respectful admiration." },
-      { id: 38, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Built from thick stone walls and steel beams, the fortress was remarkably _______ against winter storms.", choices: [{ text: "fragile", key: "A" }, { text: "robust", key: "B" }, { text: "shabby", key: "C" }, { text: "meager", key: "D" }], answer: "B", explanation: "ROBUST means sturdy, durable, and resilient." },
-      { id: 39, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The gentle melody played by the harpist helped _______ the crying baby to sleep.", choices: [{ text: "soothe", key: "A" }, { text: "agitate", key: "B" }, { text: "petrify", key: "C" }, { text: "falter", key: "D" }], answer: "A", explanation: "To SOOTHE means to gently calm and relieve distress." },
-      { id: 40, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "Through all of life's hardships and challenges, Marcus remained a _______ friend who never betrayed a secret.", choices: [{ text: "fickle", key: "A" }, { text: "steadfast", key: "B" }, { text: "capricious", key: "C" }, { text: "noncommittal", key: "D" }], answer: "B", explanation: "STEADFAST means unwavering, loyal, and firmly committed." },
-      { id: 41, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The painting contained _______ changes in color that were so delicate only an experienced artist noticed them.", choices: [{ text: "obvious", key: "A" }, { text: "subtle", key: "B" }, { text: "drastic", key: "C" }, { text: "blunt", key: "D" }], answer: "B", explanation: "SUBTLE describes faint, delicate, and understated details." },
-      { id: 42, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The scientist insisted on seeing _______ evidence, such as laboratory measurements, before accepting the new theory.", choices: [{ text: "imaginary", key: "A" }, { text: "tangible", key: "B" }, { text: "vague", key: "C" }, { text: "questionable", key: "D" }], answer: "B", explanation: "TANGIBLE means physical, measurable, and real." },
-      { id: 43, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "With abundant sunlight and fertile soil, the rare orchids began to _______ in the botanical greenhouse.", choices: [{ text: "perish", key: "A" }, { text: "thrive", key: "B" }, { text: "falter", key: "C" }, { text: "decline", key: "D" }], answer: "B", explanation: "To THRIVE means to grow vigorously and flourish." },
-      { id: 44, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The substitute teacher struggled to control the _______ group of students who were shouting and running across the classroom.", choices: [{ text: "obedient", key: "A" }, { text: "unruly", key: "B" }, { text: "quiet", key: "C" }, { text: "polite", key: "D" }], answer: "B", explanation: "UNRULY means disruptive, rowdy, and disorderly." },
-      { id: 45, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "When the fire alarm blared through the building, the principal gave an _______ announcement to evacuate immediately.", choices: [{ text: "urgent", key: "A" }, { text: "casual", key: "B" }, { text: "sluggish", key: "C" }, { text: "obsolete", key: "D" }], answer: "A", explanation: "URGENT means requiring immediate attention." },
-      { id: 46, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The festival was filled with _______ street dancers dressed in bright neon costumes accompanied by lively music.", choices: [{ text: "drab", key: "A" }, { text: "vibrant", key: "B" }, { text: "barren", key: "C" }, { text: "mournful", key: "D" }], answer: "B", explanation: "VIBRANT means colorful, energetic, and bright." },
-      { id: 47, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The coach led the soccer team through a _______ forty-minute workout to prepare them for the championship match.", choices: [{ text: "vigorous", key: "A" }, { text: "lazy", key: "B" }, { text: "delicate", key: "C" }, { text: "gentle", key: "D" }], answer: "A", explanation: "VIGOROUS means energetic, strenuous, and active." },
-      { id: 48, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "The _______ child insisted on wearing shorts and a t-shirt despite the freezing blizzard outside.", choices: [{ text: "willful", key: "A" }, { text: "cooperative", key: "B" }, { text: "timid", key: "C" }, { text: "generous", key: "D" }], answer: "A", explanation: "WILLFUL means stubbornly determined to do as one pleases." },
-      { id: 49, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "In Greek mythology, the gods unleashed their terrifying _______ upon mortals who displayed excessive pride.", choices: [{ text: "wrath", key: "A" }, { text: "kindness", key: "B" }, { text: "mercy", key: "C" }, { text: "gratitude", key: "D" }], answer: "A", explanation: "WRATH means fierce, intense anger or vengeance." },
-      { id: 50, type: "sentence", section: "PART 2: SENTENCE COMPLETION", prompt: "After living in a crowded concrete city for many years, Elena began to _______ for the quiet beauty of her countryside home.", choices: [{ text: "yearn", key: "A" }, { text: "dread", key: "B" }, { text: "refuse", key: "C" }, { text: "conceal", key: "D" }], answer: "A", explanation: "To YEARN means to long for or desire intensely." }
-    ];
-
+    let activeQuestions = [];
     let currentQ = 0;
-    let answers = new Array(ISEE_FULL_50.length).fill(null);
-    let flagged = new Array(ISEE_FULL_50.length).fill(false);
+    let answers = [];
+    let flagged = [];
+    let testMinutes = 30;
+    let testQCount = 50;
     let timeLeft = 30 * 60;
     let timerInt = null;
+
+    function setTimeChoice(m, q, el) {
+      testMinutes = m;
+      testQCount = q;
+      document.querySelectorAll('.time-opt').forEach(o => o.classList.remove('active'));
+      if (el) el.classList.add('active');
+      document.getElementById('btnStartText').textContent = `${q} Questions • ${m} Mins`;
+    }
 
     function setScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -542,8 +562,16 @@
 
     function beginTest() {
       const sName = document.getElementById('studentName').value.trim() || "Student";
-      document.getElementById('studentNameDisplay').textContent = `Candidate: ${sName} • ISEE Middle Level Master Exam (50 Questions)`;
+      document.getElementById('studentNameDisplay').textContent = `Candidate: ${sName} • ISEE Middle Level (${testQCount} Questions • ${testMinutes} Min)`;
       document.getElementById('timerContainer').style.display = 'flex';
+
+      const pool = [...ISEE_MASTER_BANK].sort(() => 0.5 - Math.random());
+      activeQuestions = pool.slice(0, testQCount);
+
+      currentQ = 0;
+      answers = new Array(activeQuestions.length).fill(null);
+      flagged = new Array(activeQuestions.length).fill(false);
+      timeLeft = testMinutes * 60;
 
       buildPal();
       renderQ();
@@ -566,8 +594,8 @@
     }
 
     function renderQ() {
-      const q = ISEE_FULL_50[currentQ];
-      document.getElementById('qIndexLabel').textContent = `Question ${currentQ + 1} of ${ISEE_FULL_50.length}`;
+      const q = activeQuestions[currentQ];
+      document.getElementById('qIndexLabel').textContent = `Question ${currentQ + 1} of ${activeQuestions.length}`;
       document.getElementById('qSectionLabel').textContent = q.section;
 
       const pArea = document.getElementById('qPromptArea');
@@ -600,11 +628,11 @@
       });
 
       document.getElementById('btnPrev').disabled = currentQ === 0;
-      document.getElementById('btnNext').textContent = (currentQ === ISEE_FULL_50.length - 1) ? "Review Palette" : "Next →";
+      document.getElementById('btnNext').textContent = (currentQ === activeQuestions.length - 1) ? "Review Palette" : "Next →";
 
       const fBtn = document.getElementById('btnFlag');
-      fBtn.style.background = flagged[currentQ] ? '#d97706' : 'transparent';
-      fBtn.style.color = flagged[currentQ] ? '#fff' : 'var(--text)';
+      fBtn.style.background = flagged[currentQ] ? '#d97706' : '#0f172a';
+      fBtn.style.color = '#fff';
       fBtn.textContent = flagged[currentQ] ? '🚩 Flagged' : '🚩 Flag';
 
       updatePal();
@@ -613,7 +641,7 @@
     function buildPal() {
       const g = document.getElementById('paletteGrid');
       g.innerHTML = '';
-      for (let i = 0; i < ISEE_FULL_50.length; i++) {
+      for (let i = 0; i < activeQuestions.length; i++) {
         const b = document.createElement('button');
         b.className = 'p-btn';
         b.id = `pal_${i}`;
@@ -626,7 +654,7 @@
 
     function updatePal() {
       let count = 0;
-      for (let i = 0; i < ISEE_FULL_50.length; i++) {
+      for (let i = 0; i < activeQuestions.length; i++) {
         const b = document.getElementById(`pal_${i}`);
         if (!b) continue;
         b.className = 'p-btn';
@@ -634,10 +662,10 @@
         if (answers[i] !== null) { b.classList.add('answered'); count++; }
         if (flagged[i]) b.classList.add('flagged');
       }
-      document.getElementById('answeredTracker').textContent = `${count}/${ISEE_FULL_50.length}`;
+      document.getElementById('answeredTracker').textContent = `${count}/${activeQuestions.length}`;
     }
 
-    function nextQ() { if (currentQ < ISEE_FULL_50.length - 1) { currentQ++; renderQ(); } }
+    function nextQ() { if (currentQ < activeQuestions.length - 1) { currentQ++; renderQ(); } }
     function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
     function flagQ() { flagged[currentQ] = !flagged[currentQ]; renderQ(); }
 
@@ -653,17 +681,18 @@
       document.getElementById('timerContainer').style.display = 'none';
 
       let correct = 0;
-      for (let i = 0; i < ISEE_FULL_50.length; i++) {
-        if (answers[i] === ISEE_FULL_50[i].answer) correct++;
+      for (let i = 0; i < activeQuestions.length; i++) {
+        if (answers[i] === activeQuestions[i].answer) correct++;
       }
 
       document.getElementById('scoreVal').textContent = correct;
+      document.getElementById('scoreDenom').textContent = `/ ${activeQuestions.length}`;
       document.getElementById('statCorrect').textContent = correct;
-      document.getElementById('statIncorrect').textContent = ISEE_FULL_50.length - correct;
-      const spent = (30 * 60) - timeLeft;
+      document.getElementById('statIncorrect').textContent = activeQuestions.length - correct;
+      const spent = (testMinutes * 60) - timeLeft;
       document.getElementById('statTime').textContent = `${Math.floor(spent/60)}m ${spent%60}s`;
 
-      const pct = Math.round((correct / ISEE_FULL_50.length) * 100);
+      const pct = Math.round((correct / activeQuestions.length) * 100);
       let est = "Stanine 5–6 (Average to Above Average)";
       if (pct >= 90) est = "Stanine 9 (96th+ Percentile - Superior Mastery)";
       else if (pct >= 80) est = "Stanine 8 (89th–95th Percentile - High Mastery)";
@@ -672,7 +701,7 @@
 
       const rList = document.getElementById('reportList');
       rList.innerHTML = '';
-      ISEE_FULL_50.forEach((q, idx) => {
+      activeQuestions.forEach((q, idx) => {
         const uAns = answers[idx];
         const isR = uAns === q.answer;
         const div = document.createElement('div');
@@ -697,6 +726,7 @@
       });
 
       setScreen('screenReport');
+      if (typeof confetti === 'function') confetti({ particleCount: 100, spread: 70 });
     }
   </script>
 </body>
