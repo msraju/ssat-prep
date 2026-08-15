@@ -1204,6 +1204,7 @@
 
     function switchActiveExam(type) {
       currentExamType = type;
+      window.location.hash = type.toLowerCase();
       document.getElementById('tabSSAT').className = `tab-btn ${type === 'SSAT' ? 'active' : ''}`;
       document.getElementById('tabISEE').className = `tab-btn ${type === 'ISEE' ? 'active-isee' : ''}`;
 
@@ -1276,9 +1277,6 @@
           </div>
         `;
       }
-
-      renderWordChecklist();
-    }
 
     function renderWordChecklist() {
       const list = currentExamType === 'SSAT' ? SSAT_VOCAB : ISEE_VOCAB;
@@ -1385,7 +1383,6 @@
           </div>
         `;
       } else {
-        // Sentence Completion (ISEE)
         const renderedSentence = q.prompt.replace("_______", `<span class="blank-pill">______</span>`);
         promptArea.innerHTML = `
           <div class="q-prompt-type">Select the word that best completes the sentence:</div>
@@ -1596,9 +1593,6 @@
       showScreen('screenWelcome');
     }
 
-    // ==========================================
-    // 4. FLASHCARD ENGINE
-    // ==========================================
     function openFlashcards() {
       currentCardIndex = 0;
       cardFlipped = false;
@@ -1648,8 +1642,16 @@
       renderCard();
     }
 
-    // Initialize Default View
-    switchActiveExam('SSAT');
+    // Initialize from URL Hash/Params
+    const hash = window.location.hash.toLowerCase();
+    const urlParams = new URLSearchParams(window.location.search);
+    const testParam = urlParams.get('test')?.toLowerCase();
+
+    if (hash.includes('isee') || testParam === 'isee') {
+      switchActiveExam('ISEE');
+    } else {
+      switchActiveExam('SSAT');
+    }
   </script>
 </body>
 </html>
