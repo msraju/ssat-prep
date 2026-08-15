@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Official SSAT Verbal Practice Examination (Elementary Level)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Test Header */
+    .test-header {
+      background: #1e293b;
+      border-bottom: 2px solid #334155;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .test-title-box h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .test-title-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .timer-widget {
+      background: #0f172a;
+      border: 1px solid #475569;
+      padding: 8px 18px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .timer-digits {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .timer-warning {
+      color: var(--danger) !important;
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse { from { opacity: 1; } to { opacity: 0.4; } }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* Student Intro Screen */
+    .intro-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 700px;
+      margin: 40px auto;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .intro-badge {
+      display: inline-block;
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid var(--primary);
+      color: #93c5fd;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .intro-card h2 { font-size: 2rem; margin-bottom: 12px; }
+    .intro-card p { color: var(--text-muted); margin-bottom: 24px; }
+
+    .student-input-group {
+      text-align: left;
+      margin-bottom: 24px;
+      background: #0f172a;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .student-input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+    .student-input-group input {
+      width: 100%;
+      background: #1e293b;
+      border: 1px solid #475569;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-family: inherit;
+    }
+    .student-input-group input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .instructions-box {
+      text-align: left;
+      background: #0f172a;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+      border-left: 4px solid var(--accent);
+    }
+    .instructions-box h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: #f1f5f9;
+    }
+    .instructions-box ul {
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+    .instructions-box li { margin-bottom: 6px; }
+
+    .btn {
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { background: var(--border); }
+    .btn-danger {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    /* Test Screen Layout */
+    .test-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 24px;
+    }
+    @media (max-width: 850px) {
+      .test-grid { grid-template-columns: 1fr; }
+    }
+
+    .question-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .q-num { font-size: 1.1rem; font-weight: 700; color: #38bdf8; }
+    .q-badge {
+      background: #334155;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .q-content {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .q-type-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .q-main-word {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+    .q-analogy-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .stem-hl { color: #38bdf8; font-weight: 800; }
+
+    .choices-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .choice-btn {
+      background: #1e293b;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .choice-btn:hover { border-color: #60a5fa; background: #334155; }
+    .choice-btn.selected {
+      border-color: #3b82f6;
+      background: rgba(37, 99, 235, 0.25);
+    }
+    .choice-bubble {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .choice-btn.selected .choice-bubble {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: #fff;
+    }
+    .choice-text {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #f1f5f9;
+    }
+
+    .q-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Palette Sidebar */
+    .palette-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      position: sticky;
+      top: 90px;
+    }
+    .palette-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .pal-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .p-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 0;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .p-btn.current { border-color: #38bdf8; color: #38bdf8; }
+    .p-btn.answered { background: #2563eb; color: #fff; border-color: #3b82f6; }
+    .p-btn.flagged { background: #d97706; color: #fff; border-color: #f59e0b; }
+
+    /* Results */
+    .score-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .score-big { font-size: 2.8rem; font-weight: 800; color: #fff; line-height: 1; }
+    .score-denom { font-size: 0.85rem; color: #a7f3d0; font-weight: 700; }
+
+    .review-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .review-item.correct { border-left: 6px solid var(--success); }
+    .review-item.incorrect { border-left: 6px solid var(--danger); }
+    .review-item.unanswered { border-left: 6px solid var(--accent); }
+    .exp-box {
+      margin-top: 12px;
+      background: #0f172a;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      border-left: 3px solid #38bdf8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Test Bar -->
+  <header class="test-header">
+    <div class="test-title-box">
+      <h1>SSAT Elementary Verbal Examination</h1>
+      <p id="studentNameDisplay">Official Format • 30 Questions (Synonyms & Analogies)</p>
+    </div>
+    <div id="timerContainer" class="timer-widget" style="display: none;">
+      <span>⏳</span>
+      <span id="timerText" class="timer-digits">20:00</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- 1. START TEST PAGE -->
+    <div id="screenIntro" class="screen active">
+      <div class="intro-card">
+        <span class="intro-badge">Official Test Sheet</span>
+        <h2>SSAT Verbal Practice Test</h2>
+        <p>Elementary Level • Grades 3 & 4 (Entering Grades 4 & 5)</p>
+
+        <div class="student-input-group">
+          <label for="studentName">Student Name:</label>
+          <input type="text" id="studentName" placeholder="Enter student's name here..." />
+        </div>
+
+        <div class="instructions-box">
+          <h3>📋 Examination Instructions:</h3>
+          <ul>
+            <li><strong>Total Time:</strong> Exactly <strong>20 minutes</strong> (standard SSAT timing).</li>
+            <li><strong>Total Questions:</strong> 30 questions (15 Synonyms + 15 Analogies).</li>
+            <li><strong>Answer Choices:</strong> 5 options per question (A, B, C, D, E).</li>
+            <li><strong>Scoring Rule:</strong> 1 point per correct answer. <em>There is NO penalty for wrong answers</em>, so guess if you are unsure!</li>
+          </ul>
+        </div>
+
+        <button class="btn btn-primary" style="font-size: 1.15rem; padding: 14px 32px;" onclick="beginTest()">
+          🚀 Start Timed Test (20 Min)
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. ACTIVE TEST PAGE -->
+    <div id="screenTest" class="screen">
+      <div class="test-grid">
+        <div>
+          <div class="question-panel">
+            <div class="q-top">
+              <span id="qIndexLabel" class="q-num">Question 1 of 30</span>
+              <span id="qSectionLabel" class="q-badge">SYNONYM</span>
+            </div>
+
+            <div id="qPromptArea"></div>
+            <div id="qChoicesList" class="choices-list"></div>
+
+            <div class="q-controls">
+              <button id="btnPrev" class="btn btn-outline" onclick="prevQ()">← Previous</button>
+              <div style="display: flex; gap: 10px;">
+                <button id="btnFlag" class="btn btn-outline" onclick="flagQ()">🚩 Flag</button>
+                <button id="btnNext" class="btn btn-primary" onclick="nextQ()">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="palette-box">
+            <div class="palette-head">
+              <span>Question Palette</span>
+              <span id="answeredTracker" style="color: #38bdf8;">0/30</span>
+            </div>
+            <div id="paletteGrid" class="pal-grid"></div>
+            <div style="margin-top: 20px;">
+              <button class="btn btn-danger" style="width: 100%; justify-content: center;" onclick="confirmSubmit()">
+                🏁 Finish & Grade Test
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SCORE & BREAKDOWN REPORT -->
+    <div id="screenReport" class="screen">
+      <div class="score-card">
+        <div class="score-circle">
+          <span id="scoreVal" class="score-big">28</span>
+          <span class="score-denom">/ 30</span>
+        </div>
+        <h2 id="reportGreeting" style="font-size: 1.8rem;">Outstanding Job!</h2>
+        <p id="reportSub" style="color: var(--text-muted); margin-bottom: 24px;">Estimated Scaled Score: <strong>580–600 / 600</strong> (95th+ Percentile)</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px;">
+          <div style="background: #0f172a; padding: 14px; border-radius: 10px; border: 1px solid var(--border);">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">CORRECT</div>
+            <div id="statCorrect" style="font-size: 1.4rem; font-weight: 700; color: #10b981;">28</div>
+          </div>
+          <div style="background: #0f172a; padding: 14px; border-radius: 10px; border: 1px solid var(--border);">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">INCORRECT / SKIPPED</div>
+            <div id="statIncorrect" style="font-size: 1.4rem; font-weight: 700; color: #ef4444;">2</div>
+          </div>
+          <div style="background: #0f172a; padding: 14px; border-radius: 10px; border: 1px solid var(--border);">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">TIME SPENT</div>
+            <div id="statTime" style="font-size: 1.4rem; font-weight: 700; color: #38bdf8;">14m 12s</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="location.reload()">🔄 Retake Test</button>
+      </div>
+
+      <h3 style="font-size: 1.4rem; margin: 24px 0 16px;">Question Explanations & Vocabulary Notes</h3>
+      <div id="reportList"></div>
+    </div>
+
+  </div>
+
+  <script>
+    const SSAT_EXAM_QUESTIONS = [
+      // 15 Synonyms
+      { id: 1, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ABOLISH", choices: [{ text: "create", key: "A" }, { text: "eliminate", key: "B" }, { text: "decorate", key: "C" }, { text: "allow", key: "D" }, { text: "repair", key: "E" }], answer: "B", explanation: "ABOLISH means to permanently end or eliminate something." },
+      { id: 2, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ADHESIVE", choices: [{ text: "slippery", key: "A" }, { text: "glue", key: "B" }, { text: "scissors", key: "C" }, { text: "fragile", key: "D" }, { text: "heavy", key: "E" }], answer: "B", explanation: "ADHESIVE is a sticky substance like glue." },
+      { id: 3, type: "synonym", section: "PART 1: SYNONYMS", prompt: "APPROXIMATE", choices: [{ text: "estimated", key: "A" }, { text: "exact", key: "B" }, { text: "expensive", key: "C" }, { text: "distant", key: "D" }, { text: "colorful", key: "E" }], answer: "A", explanation: "APPROXIMATE means estimated or close to exact." },
+      { id: 4, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BLUNT", choices: [{ text: "sharp", key: "A" }, { text: "dull", key: "B" }, { text: "quick", key: "C" }, { text: "polite", key: "D" }, { text: "smooth", key: "E" }], answer: "B", explanation: "BLUNT means having a dull, unsharpened edge." },
+      { id: 5, type: "synonym", section: "PART 1: SYNONYMS", prompt: "BURROW", choices: [{ text: "fly", key: "A" }, { text: "tunnel", key: "B" }, { text: "climb", key: "C" }, { text: "swim", key: "D" }, { text: "eat", key: "E" }], answer: "B", explanation: "A BURROW is an underground tunnel dug by an animal." },
+      { id: 6, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CAPABLE", choices: [{ text: "unable", key: "A" }, { text: "clumsy", key: "B" }, { text: "skilled", key: "C" }, { text: "careless", key: "D" }, { text: "slow", key: "E" }], answer: "C", explanation: "CAPABLE means having the skill or power to do something." },
+      { id: 7, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONCEAL", choices: [{ text: "display", key: "A" }, { text: "protect", key: "B" }, { text: "hide", key: "C" }, { text: "steal", key: "D" }, { text: "open", key: "E" }], answer: "C", explanation: "CONCEAL means to hide or keep from sight." },
+      { id: 8, type: "synonym", section: "PART 1: SYNONYMS", prompt: "CONTRADICTION", choices: [{ text: "agreement", key: "A" }, { text: "opposite", key: "B" }, { text: "summary", key: "C" }, { text: "question", key: "D" }, { text: "promise", key: "E" }], answer: "B", explanation: "A CONTRADICTION is an opposite or conflicting statement." },
+      { id: 9, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DEBATE", choices: [{ text: "argument", key: "A" }, { text: "whisper", key: "B" }, { text: "silence", key: "C" }, { text: "story", key: "D" }, { text: "celebration", key: "E" }], answer: "A", explanation: "A DEBATE is a structured discussion or formal argument." },
+      { id: 10, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DECLINE", choices: [{ text: "increase", key: "A" }, { text: "refuse", key: "B" }, { text: "accept", key: "C" }, { text: "build", key: "D" }, { text: "climb", key: "E" }], answer: "B", explanation: "DECLINE means to politely turn down or refuse." },
+      { id: 11, type: "synonym", section: "PART 1: SYNONYMS", prompt: "DETRIMENTAL", choices: [{ text: "helpful", key: "A" }, { text: "harmful", key: "B" }, { text: "speedy", key: "C" }, { text: "pleasant", key: "D" }, { text: "generous", key: "E" }], answer: "B", explanation: "DETRIMENTAL means damaging or harmful." },
+      { id: 12, type: "synonym", section: "PART 1: SYNONYMS", prompt: "ENVY", choices: [{ text: "sympathy", key: "A" }, { text: "jealousy", key: "B" }, { text: "kindness", key: "C" }, { text: "joy", key: "D" }, { text: "fear", key: "E" }], answer: "B", explanation: "ENVY means feeling jealous of someone else's traits." },
+      { id: 13, type: "synonym", section: "PART 1: SYNONYMS", prompt: "EVACUATE", choices: [{ text: "enter", key: "A" }, { text: "vacate", key: "B" }, { text: "gather", key: "C" }, { text: "rebuild", key: "D" }, { text: "protect", key: "E" }], answer: "B", explanation: "EVACUATE means to vacate or leave an area of danger." },
+      { id: 14, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FRAGILE", choices: [{ text: "sturdy", key: "A" }, { text: "delicate", key: "B" }, { text: "tough", key: "C" }, { text: "flexible", key: "D" }, { text: "heavy", key: "E" }], answer: "B", explanation: "FRAGILE means delicate or easily broken." },
+      { id: 15, type: "synonym", section: "PART 1: SYNONYMS", prompt: "FURIOUS", choices: [{ text: "calm", key: "A" }, { text: "enraged", key: "B" }, { text: "cheerful", key: "C" }, { text: "tired", key: "D" }, { text: "curious", key: "E" }], answer: "B", explanation: "FURIOUS means extremely angry or enraged." },
+
+      // 15 Analogies
+      { id: 16, type: "analogy", section: "PART 2: ANALOGIES", stem: "BLUNT is to SHARP as", choices: [{ text: "shabby is to luxurious", key: "A" }, { text: "valiant is to brave", key: "B" }, { text: "fragile is to delicate", key: "C" }, { text: "adhesive is to glue", key: "D" }, { text: "weary is to tired", key: "E" }], answer: "A", explanation: "Antonyms: BLUNT is the opposite of SHARP, as SHABBY is the opposite of LUXURIOUS." },
+      { id: 17, type: "analogy", section: "PART 2: ANALOGIES", stem: "ADHESIVE is to TAPE as", choices: [{ text: "ink is to pen", key: "A" }, { text: "hazard is to safety", key: "B" }, { text: "burrow is to bird", key: "C" }, { text: "orchard is to fish", key: "D" }, { text: "tragedy is to joy", key: "E" }], answer: "A", explanation: "Material trait: ADHESIVE is the substance in TAPE, as INK is in a PEN." },
+      { id: 18, type: "analogy", section: "PART 2: ANALOGIES", stem: "RABBIT is to BURROW as", choices: [{ text: "apple is to orchard", key: "A" }, { text: "bird is to nest", key: "B" }, { text: "fish is to sky", key: "C" }, { text: "guardian is to danger", key: "D" }, { text: "protagonist is to villain", key: "E" }], answer: "B", explanation: "Animal to Habitat: A RABBIT lives in a BURROW, as a BIRD lives in a NEST." },
+      { id: 19, type: "analogy", section: "PART 2: ANALOGIES", stem: "CONCEAL is to REVEAL as", choices: [{ text: "withdraw is to advance", key: "A" }, { text: "salvage is to save", key: "B" }, { text: "taunt is to mock", key: "C" }, { text: "envy is to jealousy", key: "D" }, { text: "uproot is to plant", key: "E" }], answer: "A", explanation: "Antonyms: CONCEAL is the opposite of REVEAL, as WITHDRAW is the opposite of ADVANCE." },
+      { id: 20, type: "analogy", section: "PART 2: ANALOGIES", stem: "PLENTIFUL is to SCARCE as", choices: [{ text: "furious is to calm", key: "A" }, { text: "vivid is to bright", key: "B" }, { text: "capable is to skilled", key: "C" }, { text: "approximate is to rough", key: "D" }, { text: "moral is to lesson", key: "E" }], answer: "A", explanation: "Antonyms: PLENTIFUL is opposite of SCARCE, as FURIOUS is opposite of CALM." },
+      { id: 21, type: "analogy", section: "PART 2: ANALOGIES", stem: "FRAGILE is to SHATTER as", choices: [{ text: "combustible is to burn", key: "A" }, { text: "hazard is to protect", key: "B" }, { text: "nonchalant is to worry", key: "C" }, { text: "jagged is to smooth", key: "D" }, { text: "kin is to enemy", key: "E" }], answer: "A", explanation: "Outcome trait: Something FRAGILE will SHATTER, as something COMBUSTIBLE will BURN." },
+      { id: 22, type: "analogy", section: "PART 2: ANALOGIES", stem: "APPLE is to ORCHARD as", choices: [{ text: "grape is to vineyard", key: "A" }, { text: "route is to map", key: "B" }, { text: "novel is to cover", key: "C" }, { text: "guardian is to child", key: "D" }, { text: "debate is to quiet", key: "E" }], answer: "A", explanation: "Agricultural location: APPLES grow in an ORCHARD, as GRAPES grow in a VINEYARD." },
+      { id: 23, type: "analogy", section: "PART 2: ANALOGIES", stem: "PROTAGONIST is to HERO as", choices: [{ text: "antagonist is to villain", key: "A" }, { text: "tragedy is to comedy", key: "B" }, { text: "myth is to fact", key: "C" }, { text: "debate is to agreement", key: "D" }, { text: "taunt is to compliment", key: "E" }], answer: "A", explanation: "Story roles: PROTAGONIST is the HERO, as ANTAGONIST is the VILLAIN." },
+      { id: 24, type: "analogy", section: "PART 2: ANALOGIES", stem: "DANGER is to HAZARD as", choices: [{ text: "family is to kin", key: "A" }, { text: "darkness is to illuminate", key: "B" }, { text: "truth is to contradiction", key: "C" }, { text: "bravery is to fear", key: "D" }, { text: "peace is to war", key: "E" }], answer: "A", explanation: "Synonyms: DANGER means HAZARD, as FAMILY means KIN." },
+      { id: 25, type: "analogy", section: "PART 2: ANALOGIES", stem: "SALVAGE is to WRECK as", choices: [{ text: "evacuate is to danger", key: "A" }, { text: "destroy is to build", key: "B" }, { text: "taunt is to cheer", key: "C" }, { text: "envy is to admire", key: "D" }, { text: "petrify is to soothe", key: "E" }], answer: "A", explanation: "Action in Crisis: You SALVAGE items from a WRECK, as you EVACUATE people from DANGER." },
+      { id: 26, type: "analogy", section: "PART 2: ANALOGIES", stem: "JAGGED is to SMOOTH as", choices: [{ text: "vivid is to dull", key: "A" }, { text: "generous is to kind", key: "B" }, { text: "capable is to able", key: "C" }, { text: "moral is to ethical", key: "D" }, { text: "weary is to exhausted", key: "E" }], answer: "A", explanation: "Antonyms: JAGGED is opposite of SMOOTH, as VIVID is opposite of DULL." },
+      { id: 27, type: "analogy", section: "PART 2: ANALOGIES", stem: "GUARDIAN is to PROTECT as", choices: [{ text: "teacher is to instruct", key: "A" }, { text: "thief is to return", key: "B" }, { text: "enemy is to help", key: "C" }, { text: "novel is to sing", key: "D" }, { text: "hardship is to enjoy", key: "E" }], answer: "A", explanation: "Agent to Purpose: A GUARDIAN is meant to PROTECT, as a TEACHER is meant to INSTRUCT." },
+      { id: 28, type: "analogy", section: "PART 2: ANALOGIES", stem: "UPROOT is to TREE as", choices: [{ text: "demolish is to building", key: "A" }, { text: "illuminate is to darkness", key: "B" }, { text: "paint is to canvas", key: "C" }, { text: "drive is to road", key: "D" }, { text: "read is to book", key: "E" }], answer: "A", explanation: "Total removal: UPROOT removes a TREE, as DEMOLISH destroys a BUILDING." },
+      { id: 29, type: "analogy", section: "PART 2: ANALOGIES", stem: "FEAR is to PETRIFIED as", choices: [{ text: "anger is to furious", key: "A" }, { text: "joy is to sorrow", key: "B" }, { text: "tired is to energetic", key: "C" }, { text: "calm is to excited", key: "D" }, { text: "brave is to cowardly", key: "E" }], answer: "A", explanation: "Emotion to Extreme: Extreme FEAR makes one PETRIFIED, as extreme ANGER makes one FURIOUS." },
+      { id: 30, type: "analogy", section: "PART 2: ANALOGIES", stem: "TRAGEDY is to SORROW as", choices: [{ text: "celebration is to jubilation", key: "A" }, { text: "hazard is to safety", key: "B" }, { text: "defeat is to victory", key: "C" }, { text: "decline is to rise", key: "D" }, { text: "debate is to silence", key: "E" }], answer: "A", explanation: "Cause to Emotion: A TRAGEDY causes SORROW, as a CELEBRATION causes JUBILATION." }
+    ];
+
+    let currentQ = 0;
+    let answers = new Array(SSAT_EXAM_QUESTIONS.length).fill(null);
+    let flagged = new Array(SSAT_EXAM_QUESTIONS.length).fill(false);
+    let timeLeft = 20 * 60;
+    let timerInt = null;
+
+    function setScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0,0);
+    }
+
+    function beginTest() {
+      const sName = document.getElementById('studentName').value.trim() || "Student";
+      document.getElementById('studentNameDisplay').textContent = `Candidate: ${sName} • Official SSAT Elementary Verbal Section`;
+      document.getElementById('timerContainer').style.display = 'flex';
+
+      buildPal();
+      renderQ();
+      setScreen('screenTest');
+
+      timerInt = setInterval(() => {
+        timeLeft--;
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        const el = document.getElementById('timerText');
+        el.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        if (timeLeft <= 180) el.classList.add('timer-warning');
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInt);
+          alert("⏱️ Time is up! Submitting your test for scoring.");
+          gradeTest();
+        }
+      }, 1000);
+    }
+
+    function renderQ() {
+      const q = SSAT_EXAM_QUESTIONS[currentQ];
+      document.getElementById('qIndexLabel').textContent = `Question ${currentQ + 1} of ${SSAT_EXAM_QUESTIONS.length}`;
+      document.getElementById('qSectionLabel').textContent = q.section;
+
+      const pArea = document.getElementById('qPromptArea');
+      if (q.type === 'synonym') {
+        pArea.innerHTML = `
+          <div class="q-type-label">Select the word most nearly the SAME in meaning to:</div>
+          <div class="q-main-word">${q.prompt}</div>
+        `;
+      } else {
+        const parts = q.stem.split(" is to ");
+        const w1 = parts[0];
+        const w2 = parts[1].split(" as")[0];
+        pArea.innerHTML = `
+          <div class="q-type-label">Find the pair with the same relationship:</div>
+          <div class="q-analogy-text"><span class="stem-hl">${w1}</span> is to <span class="stem-hl">${w2}</span> as...</div>
+        `;
+      }
+
+      const cList = document.getElementById('qChoicesList');
+      cList.innerHTML = '';
+      q.choices.forEach(c => {
+        const isSel = answers[currentQ] === c.key;
+        const div = document.createElement('div');
+        div.className = `choice-btn ${isSel ? 'selected' : ''}`;
+        div.onclick = () => { answers[currentQ] = c.key; renderQ(); updatePal(); };
+        div.innerHTML = `<div class="choice-bubble">${c.key}</div><div class="choice-text">${c.text}</div>`;
+        cList.appendChild(div);
+      });
+
+      document.getElementById('btnPrev').disabled = currentQ === 0;
+      document.getElementById('btnNext').textContent = (currentQ === SSAT_EXAM_QUESTIONS.length - 1) ? "Review Palette" : "Next →";
+
+      const fBtn = document.getElementById('btnFlag');
+      fBtn.style.background = flagged[currentQ] ? '#d97706' : 'transparent';
+      fBtn.style.color = flagged[currentQ] ? '#fff' : 'var(--text)';
+      fBtn.textContent = flagged[currentQ] ? '🚩 Flagged' : '🚩 Flag';
+
+      updatePal();
+    }
+
+    function buildPal() {
+      const g = document.getElementById('paletteGrid');
+      g.innerHTML = '';
+      for (let i = 0; i < SSAT_EXAM_QUESTIONS.length; i++) {
+        const b = document.createElement('button');
+        b.className = 'p-btn';
+        b.id = `pal_${i}`;
+        b.textContent = i + 1;
+        b.onclick = () => { currentQ = i; renderQ(); };
+        g.appendChild(b);
+      }
+      updatePal();
+    }
+
+    function updatePal() {
+      let count = 0;
+      for (let i = 0; i < SSAT_EXAM_QUESTIONS.length; i++) {
+        const b = document.getElementById(`pal_${i}`);
+        if (!b) continue;
+        b.className = 'p-btn';
+        if (i === currentQ) b.classList.add('current');
+        if (answers[i] !== null) { b.classList.add('answered'); count++; }
+        if (flagged[i]) b.classList.add('flagged');
+      }
+      document.getElementById('answeredTracker').textContent = `${count}/${SSAT_EXAM_QUESTIONS.length}`;
+    }
+
+    function nextQ() { if (currentQ < SSAT_EXAM_QUESTIONS.length - 1) { currentQ++; renderQ(); } }
+    function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
+    function flagQ() { flagged[currentQ] = !flagged[currentQ]; renderQ(); }
+
+    function confirmSubmit() {
+      const un = answers.filter(a => a === null).length;
+      let msg = "Are you ready to submit your test?";
+      if (un > 0) msg = `You have ${un} unanswered question(s). Note: There is NO penalty for guessing! Submit now?`;
+      if (confirm(msg)) gradeTest();
+    }
+
+    function gradeTest() {
+      if (timerInt) clearInterval(timerInt);
+      document.getElementById('timerContainer').style.display = 'none';
+
+      let correct = 0;
+      for (let i = 0; i < SSAT_EXAM_QUESTIONS.length; i++) {
+        if (answers[i] === SSAT_EXAM_QUESTIONS[i].answer) correct++;
+      }
+
+      document.getElementById('scoreVal').textContent = correct;
+      document.getElementById('statCorrect').textContent = correct;
+      document.getElementById('statIncorrect').textContent = SSAT_EXAM_QUESTIONS.length - correct;
+      const spent = (20 * 60) - timeLeft;
+      document.getElementById('statTime').textContent = `${Math.floor(spent/60)}m ${spent%60}s`;
+
+      const pct = Math.round((correct / SSAT_EXAM_QUESTIONS.length) * 100);
+      let est = "480–510 / 600 (Proficient)";
+      if (pct >= 90) est = "580–600 / 600 (95th+ Percentile - Advanced Mastery)";
+      else if (pct >= 75) est = "530–570 / 600 (80th–90th Percentile - Strong)";
+      document.getElementById('reportSub').innerHTML = `Estimated Scaled Score: <strong>${est}</strong>`;
+
+      const rList = document.getElementById('reportList');
+      rList.innerHTML = '';
+      SSAT_EXAM_QUESTIONS.forEach((q, idx) => {
+        const uAns = answers[idx];
+        const isR = uAns === q.answer;
+        const div = document.createElement('div');
+        div.className = `review-item ${uAns === null ? 'unanswered' : (isR ? 'correct' : 'incorrect')}`;
+        const cObj = q.choices.find(c => c.key === q.answer);
+        const uObj = q.choices.find(c => c.key === uAns);
+
+        div.innerHTML = `
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <strong style="color:#38bdf8;">Question ${idx+1} (${q.type.toUpperCase()})</strong>
+            <strong style="color:${isR ? 'var(--success)' : 'var(--danger)'}">${isR ? '✓ Correct (+1)' : (uAns === null ? '⚠️ Skipped (0)' : '✗ Incorrect (0)')}</strong>
+          </div>
+          <div style="font-weight:600; margin-bottom:8px;">${q.type === 'synonym' ? `Word: <strong>${q.prompt}</strong>` : q.stem}</div>
+          <div style="font-size:0.9rem; margin-bottom:6px;">
+            <div>Your Answer: ${uAns ? `(${uAns}) ${uObj.text}` : '<em>None</em>'} | Correct Answer: <strong style="color:var(--success)">(${q.answer}) ${cObj.text}</strong></div>
+          </div>
+          <div class="exp-box">💡 <strong>Strategy & Bridge:</strong> ${q.explanation}</div>
+        `;
+        rList.appendChild(div);
+      });
+
+      setScreen('screenReport');
+    }
+  </script>
+</body>
+</html>
